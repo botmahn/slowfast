@@ -6,6 +6,7 @@ from .build import build_dataset, DATASET_REGISTRY  # noqa
 from .charades import Charades  # noqa
 from .imagenet import Imagenet  # noqa
 from .kinetics import Kinetics  # noqa
+from .daad import Daad
 from .ssv2 import Ssv2  # noqa
 
 try:

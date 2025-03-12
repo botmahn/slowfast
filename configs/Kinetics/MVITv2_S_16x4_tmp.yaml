@@ -1,6 +1,7 @@
 TRAIN:
   ENABLE: True
-  DATASET: kinetics
+  #DATASET: kinetics
+  DATASET: daad
   #BATCH_SIZE: 16
   BATCH_SIZE: 2
   EVAL_PERIOD: 10
@@ -16,7 +17,7 @@ DATA:
   TRAIN_CROP_SIZE: 224
   TEST_CROP_SIZE: 224
   INPUT_CHANNEL_NUM: [3]
-  PATH_TO_DATA_DIR: "/scratch/naman/slowfast/data/DAAD_test/"
+  PATH_TO_DATA_DIR: "/scratch/naman/slowfast/data/DAAD_multiview_test/"
   TRAIN_JITTER_SCALES_RELATIVE: [0.08, 1.0]
   TRAIN_JITTER_ASPECT_RELATIVE: [0.75, 1.3333]
 MVIT:
@@ -84,7 +85,8 @@ MODEL:
   DROPOUT_RATE: 0.5
 TEST:
   ENABLE: True
-  DATASET: kinetics
+  #DATASET: kinetics
+  DATASET: daad
   BATCH_SIZE: 64
   NUM_SPATIAL_CROPS: 1
   NUM_ENSEMBLE_VIEWS: 5
