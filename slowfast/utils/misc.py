@@ -92,33 +92,34 @@ def _get_model_analysis_input(cfg, use_train_input):
         inputs: the input for model analysis.
     """
     rgb_dimension = 3
+    num_views = cfg.DATA.NUM_VIEWS if hasattr(cfg.DATA, "NUM_VIEWS") else 1
     if use_train_input:
         if "imagenet" in cfg.TRAIN.DATASET:
             input_tensors = torch.rand(
                 rgb_dimension,
                 cfg.DATA.TRAIN_CROP_SIZE,
-                cfg.DATA.TRAIN_CROP_SIZE,
+                cfg.DATA.TRAIN_CROP_SIZE * num_views,
             )
         else:
             input_tensors = torch.rand(
                 rgb_dimension,
                 cfg.DATA.NUM_FRAMES,
                 cfg.DATA.TRAIN_CROP_SIZE,
-                cfg.DATA.TRAIN_CROP_SIZE,
+                cfg.DATA.TRAIN_CROP_SIZE * num_views,
             )
     else:
         if "imagenet" in cfg.TEST.DATASET:
             input_tensors = torch.rand(
                 rgb_dimension,
                 cfg.DATA.TEST_CROP_SIZE,
-                cfg.DATA.TEST_CROP_SIZE,
+                cfg.DATA.TEST_CROP_SIZE * num_views,
             )
         else:
             input_tensors = torch.rand(
                 rgb_dimension,
                 cfg.DATA.NUM_FRAMES,
                 cfg.DATA.TEST_CROP_SIZE,
-                cfg.DATA.TEST_CROP_SIZE,
+                cfg.DATA.TEST_CROP_SIZE * num_views,
             )
     model_inputs = pack_pathway_output(cfg, input_tensors)
     for i in range(len(model_inputs)):
