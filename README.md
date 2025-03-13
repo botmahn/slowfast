@@ -1,4 +1,4 @@
-# M2MVTxDAAD PySlowFast
+# M2MVT x DAAD PySlowFast
 
 PySlowFast is an open source video understanding codebase from FAIR that provides state-of-the-art video classification models with efficient training. This repository includes implementations of the following methods:
 
