@@ -1681,10 +1681,7 @@ class DAADMViT(nn.Module):
 
     def forward(self, x, bboxes=None, return_attn=False):
         
-        print(f"DAADMViT X: {len(x)}")
         x = x[0]
-        #x = x.view(6, x.shape[0], x.shape[1], x.shape[2], x.shape[3], x.shape[4] // self.num_views)
-        #x1, x2, x3, x4, x5, x6 = x[0], x[1], x[2], x[3], x[4], x[5]
 
         x_ = torch.split(x, x.shape[4] // self.num_views, dim=-1)
         x1, x2, x3, x4, x5, x6 = x_
