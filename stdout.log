@@ -15650,3 +15650,3772 @@ DAADMViT(
 )
 [03/12 13:02:33][INFO] misc.py:  189: Params: 34,784,368
 [03/12 13:02:33][INFO] misc.py:  190: Mem: 0.13019561767578125 MB
+[03/13 08:21:34][INFO] train_net.py:  518: Train with config:
+[03/13 08:21:34][INFO] train_net.py:  519: {'AUG': {'AA_TYPE': 'rand-m7-n4-mstd0.5-inc1',
+         'COLOR_JITTER': 0.4,
+         'ENABLE': True,
+         'GEN_MASK_LOADER': False,
+         'INTERPOLATION': 'bicubic',
+         'MASK_FRAMES': False,
+         'MASK_RATIO': 0.0,
+         'MASK_TUBE': False,
+         'MASK_WINDOW_SIZE': [8, 7, 7],
+         'MAX_MASK_PATCHES_PER_BLOCK': None,
+         'NUM_SAMPLE': 2,
+         'RE_COUNT': 1,
+         'RE_MODE': 'pixel',
+         'RE_PROB': 0.25,
+         'RE_SPLIT': False},
+ 'AVA': {'ANNOTATION_DIR': '/mnt/vol/gfsai-flash3-east/ai-group/users/haoqifan/ava/frame_list/',
+         'BGR': False,
+         'DETECTION_SCORE_THRESH': 0.9,
+         'EXCLUSION_FILE': 'ava_val_excluded_timestamps_v2.2.csv',
+         'FRAME_DIR': '/mnt/fair-flash3-east/ava_trainval_frames.img/',
+         'FRAME_LIST_DIR': '/mnt/vol/gfsai-flash3-east/ai-group/users/haoqifan/ava/frame_list/',
+         'FULL_TEST_ON_VAL': False,
+         'GROUNDTRUTH_FILE': 'ava_val_v2.2.csv',
+         'IMG_PROC_BACKEND': 'cv2',
+         'LABEL_MAP_FILE': 'ava_action_list_v2.2_for_activitynet_2019.pbtxt',
+         'TEST_FORCE_FLIP': False,
+         'TEST_LISTS': ['val.csv'],
+         'TEST_PREDICT_BOX_LISTS': ['ava_val_predicted_boxes.csv'],
+         'TRAIN_GT_BOX_LISTS': ['ava_train_v2.2.csv'],
+         'TRAIN_LISTS': ['train.csv'],
+         'TRAIN_PCA_JITTER_ONLY': True,
+         'TRAIN_PREDICT_BOX_LISTS': [],
+         'TRAIN_USE_COLOR_AUGMENTATION': False},
+ 'BENCHMARK': CfgNode({'NUM_EPOCHS': 5, 'LOG_PERIOD': 100, 'SHUFFLE': True}),
+ 'BN': {'GLOBAL_SYNC': False,
+        'NORM_TYPE': 'batchnorm',
+        'NUM_BATCHES_PRECISE': 200,
+        'NUM_SPLITS': 1,
+        'NUM_SYNC_DEVICES': 1,
+        'USE_PRECISE_STATS': False,
+        'WEIGHT_DECAY': 0.0},
+ 'CONTRASTIVE': {'BN_MLP': False,
+                 'BN_SYNC_MLP': False,
+                 'DELTA_CLIPS_MAX': inf,
+                 'DELTA_CLIPS_MIN': -inf,
+                 'DIM': 128,
+                 'INTERP_MEMORY': False,
+                 'KNN_ON': True,
+                 'LENGTH': 239975,
+                 'LOCAL_SHUFFLE_BN': True,
+                 'MEM_TYPE': '1d',
+                 'MLP_DIM': 2048,
+                 'MOCO_MULTI_VIEW_QUEUE': False,
+                 'MOMENTUM': 0.5,
+                 'MOMENTUM_ANNEALING': False,
+                 'NUM_CLASSES_DOWNSTREAM': 400,
+                 'NUM_MLP_LAYERS': 1,
+                 'PREDICTOR_DEPTHS': [],
+                 'QUEUE_LEN': 65536,
+                 'SEQUENTIAL': False,
+                 'SIMCLR_DIST_ON': True,
+                 'SWAV_QEUE_LEN': 0,
+                 'T': 0.07,
+                 'TYPE': 'mem'},
+ 'DATA': {'COLOR_RND_GRAYSCALE': 0.0,
+          'DECODING_BACKEND': 'torchvision',
+          'DECODING_SHORT_SIZE': 256,
+          'DUMMY_LOAD': False,
+          'ENSEMBLE_METHOD': 'sum',
+          'IN22K_TRAINVAL': False,
+          'IN22k_VAL_IN1K': '',
+          'INPUT_CHANNEL_NUM': [3],
+          'INV_UNIFORM_SAMPLE': False,
+          'IN_VAL_CROP_RATIO': 0.875,
+          'LOADER_CHUNK_OVERALL_SIZE': 0,
+          'LOADER_CHUNK_SIZE': 0,
+          'MEAN': [0.45, 0.45, 0.45],
+          'MULTI_LABEL': False,
+          'NUM_FRAMES': 2,
+          'NUM_VIEWS': 6,
+          'PATH_LABEL_SEPARATOR': ' ',
+          'PATH_PREFIX': '',
+          'PATH_TO_DATA_DIR': '/scratch/naman/slowfast/data/DAAD_multiview_test/',
+          'PATH_TO_PRELOAD_IMDB': '',
+          'RANDOM_FLIP': True,
+          'REVERSE_INPUT_CHANNEL': False,
+          'SAMPLING_RATE': 4,
+          'SKIP_ROWS': 0,
+          'SSL_BLUR_SIGMA_MAX': [0.0, 2.0],
+          'SSL_BLUR_SIGMA_MIN': [0.0, 0.1],
+          'SSL_COLOR_BRI_CON_SAT': [0.4, 0.4, 0.4],
+          'SSL_COLOR_HUE': 0.1,
+          'SSL_COLOR_JITTER': False,
+          'SSL_MOCOV2_AUG': False,
+          'STD': [0.225, 0.225, 0.225],
+          'TARGET_FPS': 30,
+          'TEST_CROP_SIZE': 224,
+          'TIME_DIFF_PROB': 0.0,
+          'TRAIN_CROP_NUM_SPATIAL': 1,
+          'TRAIN_CROP_NUM_TEMPORAL': 1,
+          'TRAIN_CROP_SIZE': 224,
+          'TRAIN_JITTER_ASPECT_RELATIVE': [0.75, 1.3333],
+          'TRAIN_JITTER_FPS': 0.0,
+          'TRAIN_JITTER_MOTION_SHIFT': False,
+          'TRAIN_JITTER_SCALES': [256, 320],
+          'TRAIN_JITTER_SCALES_RELATIVE': [0.08, 1.0],
+          'TRAIN_PCA_EIGVAL': [0.225, 0.224, 0.229],
+          'TRAIN_PCA_EIGVEC': [[-0.5675, 0.7192, 0.4009],
+                               [-0.5808, -0.0045, -0.814],
+                               [-0.5836, -0.6948, 0.4203]],
+          'USE_OFFSET_SAMPLING': True},
+ 'DATA_LOADER': {'ENABLE_MULTI_THREAD_DECODE': False,
+                 'NUM_WORKERS': 8,
+                 'PIN_MEMORY': True},
+ 'DEMO': {'BUFFER_SIZE': 0,
+          'CLIP_VIS_SIZE': 10,
+          'COMMON_CLASS_NAMES': ['watch (a person)',
+                                 'talk to (e.g., self, a person, a group)',
+                                 'listen to (a person)',
+                                 'touch (an object)',
+                                 'carry/hold (an object)',
+                                 'walk',
+                                 'sit',
+                                 'lie/sleep',
+                                 'bend/bow (at the waist)'],
+          'COMMON_CLASS_THRES': 0.7,
+          'DETECTRON2_CFG': 'COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml',
+          'DETECTRON2_THRESH': 0.9,
+          'DETECTRON2_WEIGHTS': 'detectron2://COCO-Detection/faster_rcnn_R_50_FPN_3x/137849458/model_final_280758.pkl',
+          'DISPLAY_HEIGHT': 0,
+          'DISPLAY_WIDTH': 0,
+          'ENABLE': False,
+          'FPS': 30,
+          'GT_BOXES': '',
+          'INPUT_FORMAT': 'BGR',
+          'INPUT_VIDEO': '',
+          'LABEL_FILE_PATH': '',
+          'NUM_CLIPS_SKIP': 0,
+          'NUM_VIS_INSTANCES': 2,
+          'OUTPUT_FILE': '',
+          'OUTPUT_FPS': -1,
+          'PREDS_BOXES': '',
+          'SLOWMO': 1,
+          'STARTING_SECOND': 900,
+          'THREAD_ENABLE': False,
+          'UNCOMMON_CLASS_THRES': 0.3,
+          'VIS_MODE': 'thres',
+          'WEBCAM': -1},
+ 'DETECTION': {'ALIGNED': True,
+               'ENABLE': False,
+               'ROI_XFORM_RESOLUTION': 7,
+               'SPATIAL_SCALE_FACTOR': 16},
+ 'DIST_BACKEND': 'nccl',
+ 'LOG_MODEL_INFO': True,
+ 'LOG_PERIOD': 10,
+ 'MASK': {'DECODER_DEPTH': 0,
+          'DECODER_EMBED_DIM': 512,
+          'DECODER_SEP_POS_EMBED': False,
+          'DEC_KV_KERNEL': [],
+          'DEC_KV_STRIDE': [],
+          'ENABLE': False,
+          'HEAD_TYPE': 'separate',
+          'MAE_ON': False,
+          'MAE_RND_MASK': False,
+          'NORM_PRED_PIXEL': True,
+          'PER_FRAME_MASKING': False,
+          'PRED_HOG': False,
+          'PRETRAIN_DEPTH': [15],
+          'SCALE_INIT_BY_DEPTH': False,
+          'TIME_STRIDE_LOSS': True},
+ 'MIXUP': {'ALPHA': 0.8,
+           'CUTMIX_ALPHA': 1.0,
+           'ENABLE': True,
+           'LABEL_SMOOTH_VALUE': 0.1,
+           'PROB': 1.0,
+           'SWITCH_PROB': 0.5},
+ 'MODEL': {'ACT_CHECKPOINT': False,
+           'ARCH': 'mvit',
+           'DETACH_FINAL_FC': False,
+           'DROPCONNECT_RATE': 0.0,
+           'DROPOUT_RATE': 0.5,
+           'FC_INIT_STD': 0.01,
+           'FP16_ALLREDUCE': False,
+           'FROZEN_BN': False,
+           'HEAD_ACT': 'softmax',
+           'LOSS_FUNC': 'soft_cross_entropy',
+           'MODEL_NAME': 'DAADMViT',
+           'MULTI_PATHWAY_ARCH': ['slowfast'],
+           'NUM_CLASSES': 400,
+           'SINGLE_PATHWAY_ARCH': ['2d',
+                                   'c2d',
+                                   'i3d',
+                                   'slow',
+                                   'x3d',
+                                   'mvit',
+                                   'maskmvit']},
+ 'MULTIGRID': {'BN_BASE_SIZE': 8,
+               'DEFAULT_B': 0,
+               'DEFAULT_S': 0,
+               'DEFAULT_T': 0,
+               'EPOCH_FACTOR': 1.5,
+               'EVAL_FREQ': 3,
+               'LONG_CYCLE': False,
+               'LONG_CYCLE_FACTORS': [(0.25, 0.7071067811865476),
+                                      (0.5, 0.7071067811865476),
+                                      (0.5, 1),
+                                      (1, 1)],
+               'LONG_CYCLE_SAMPLING_RATE': 0,
+               'SHORT_CYCLE': False,
+               'SHORT_CYCLE_FACTORS': [0.5, 0.7071067811865476]},
+ 'MVIT': {'CLS_EMBED_ON': True,
+          'DEPTH': 16,
+          'DIM_MUL': [[1, 2.0], [3, 2.0], [14, 2.0]],
+          'DIM_MUL_IN_ATT': True,
+          'DROPOUT_RATE': 0.0,
+          'DROPPATH_RATE': 0.2,
+          'EMBED_DIM': 96,
+          'HEAD_INIT_SCALE': 1.0,
+          'HEAD_MUL': [[1, 2.0], [3, 2.0], [14, 2.0]],
+          'LAYER_SCALE_INIT_VALUE': 0.0,
+          'MLP_RATIO': 4.0,
+          'MODE': 'conv',
+          'NORM': 'layernorm',
+          'NORM_STEM': False,
+          'NUM_HEADS': 1,
+          'PATCH_2D': False,
+          'PATCH_KERNEL': [3, 7, 7],
+          'PATCH_PADDING': [1, 3, 3],
+          'PATCH_STRIDE': [2, 4, 4],
+          'POOL_FIRST': False,
+          'POOL_KVQ_KERNEL': [3, 3, 3],
+          'POOL_KV_STRIDE': [],
+          'POOL_KV_STRIDE_ADAPTIVE': [1, 8, 8],
+          'POOL_Q_STRIDE': [[0, 1, 1, 1],
+                            [1, 1, 2, 2],
+                            [2, 1, 1, 1],
+                            [3, 1, 2, 2],
+                            [4, 1, 1, 1],
+                            [5, 1, 1, 1],
+                            [6, 1, 1, 1],
+                            [7, 1, 1, 1],
+                            [8, 1, 1, 1],
+                            [9, 1, 1, 1],
+                            [10, 1, 1, 1],
+                            [11, 1, 1, 1],
+                            [12, 1, 1, 1],
+                            [13, 1, 1, 1],
+                            [14, 1, 2, 2],
+                            [15, 1, 1, 1]],
+          'QKV_BIAS': True,
+          'REL_POS_SPATIAL': True,
+          'REL_POS_TEMPORAL': True,
+          'REL_POS_ZERO_INIT': False,
+          'RESIDUAL_POOLING': True,
+          'REV': {'BUFFER_LAYERS': [],
+                  'ENABLE': False,
+                  'PRE_Q_FUSION': 'avg',
+                  'RESPATH_FUSE': 'concat',
+                  'RES_PATH': 'conv'},
+          'SEPARATE_QKV': False,
+          'SEP_POS_EMBED': False,
+          'USE_ABS_POS': False,
+          'USE_FIXED_SINCOS_POS': False,
+          'USE_MEAN_POOLING': False,
+          'ZERO_DECAY_POS_CLS': False},
+ 'NONLOCAL': {'GROUP': [[1], [1], [1], [1]],
+              'INSTANTIATION': 'dot_product',
+              'LOCATION': [[[]], [[]], [[]], [[]]],
+              'POOL': [[[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]]]},
+ 'NUM_GPUS': 1,
+ 'NUM_SHARDS': 1,
+ 'OUTPUT_DIR': '.',
+ 'RESNET': {'DEPTH': 50,
+            'INPLACE_RELU': True,
+            'NUM_BLOCK_TEMP_KERNEL': [[3], [4], [6], [3]],
+            'NUM_GROUPS': 1,
+            'SPATIAL_DILATIONS': [[1], [1], [1], [1]],
+            'SPATIAL_STRIDES': [[1], [2], [2], [2]],
+            'STRIDE_1X1': False,
+            'TRANS_FUNC': 'bottleneck_transform',
+            'WIDTH_PER_GROUP': 64,
+            'ZERO_INIT_FINAL_BN': False,
+            'ZERO_INIT_FINAL_CONV': False},
+ 'RNG_SEED': 0,
+ 'SHARD_ID': 0,
+ 'SLOWFAST': {'ALPHA': 8,
+              'BETA_INV': 8,
+              'FUSION_CONV_CHANNEL_RATIO': 2,
+              'FUSION_KERNEL_SZ': 5},
+ 'SOLVER': {'BASE_LR': 0.0001,
+            'BASE_LR_SCALE_NUM_SHARDS': True,
+            'BETAS': (0.9, 0.999),
+            'CLIP_GRAD_L2NORM': 1.0,
+            'CLIP_GRAD_VAL': None,
+            'COSINE_AFTER_WARMUP': True,
+            'COSINE_END_LR': 1e-06,
+            'DAMPENING': 0.0,
+            'GAMMA': 0.1,
+            'LARS_ON': False,
+            'LAYER_DECAY': 1.0,
+            'LRS': [],
+            'LR_POLICY': 'cosine',
+            'MAX_EPOCH': 200,
+            'MOMENTUM': 0.9,
+            'NESTEROV': True,
+            'OPTIMIZING_METHOD': 'adamw',
+            'STEPS': [],
+            'STEP_SIZE': 1,
+            'WARMUP_EPOCHS': 30.0,
+            'WARMUP_FACTOR': 0.1,
+            'WARMUP_START_LR': 1e-06,
+            'WEIGHT_DECAY': 0.05,
+            'ZERO_WD_1D_PARAM': True},
+ 'TASK': '',
+ 'TENSORBOARD': {'CATEGORIES_PATH': '',
+                 'CLASS_NAMES_PATH': '',
+                 'CONFUSION_MATRIX': {'ENABLE': False,
+                                      'FIGSIZE': [8, 8],
+                                      'SUBSET_PATH': ''},
+                 'ENABLE': False,
+                 'HISTOGRAM': {'ENABLE': False,
+                               'FIGSIZE': [8, 8],
+                               'SUBSET_PATH': '',
+                               'TOPK': 10},
+                 'LOG_DIR': '',
+                 'MODEL_VIS': {'ACTIVATIONS': False,
+                               'COLORMAP': 'Pastel2',
+                               'ENABLE': False,
+                               'GRAD_CAM': {'COLORMAP': 'viridis',
+                                            'ENABLE': True,
+                                            'LAYER_LIST': [],
+                                            'USE_TRUE_LABEL': False},
+                               'INPUT_VIDEO': False,
+                               'LAYER_LIST': [],
+                               'MODEL_WEIGHTS': False,
+                               'TOPK_PREDS': 1},
+                 'PREDICTIONS_PATH': '',
+                 'WRONG_PRED_VIS': {'ENABLE': False,
+                                    'SUBSET_PATH': '',
+                                    'TAG': 'Incorrectly classified videos.'}},
+ 'TEST': {'BATCH_SIZE': 64,
+          'CHECKPOINT_FILE_PATH': '',
+          'CHECKPOINT_TYPE': 'pytorch',
+          'DATASET': 'daad',
+          'ENABLE': True,
+          'NUM_ENSEMBLE_VIEWS': 5,
+          'NUM_SPATIAL_CROPS': 1,
+          'NUM_TEMPORAL_CLIPS': [],
+          'SAVE_RESULTS_PATH': ''},
+ 'TRAIN': {'AUTO_RESUME': True,
+           'BATCH_SIZE': 2,
+           'CHECKPOINT_CLEAR_NAME_PATTERN': (),
+           'CHECKPOINT_EPOCH_RESET': False,
+           'CHECKPOINT_FILE_PATH': '',
+           'CHECKPOINT_INFLATE': False,
+           'CHECKPOINT_IN_INIT': False,
+           'CHECKPOINT_PERIOD': 10,
+           'CHECKPOINT_TYPE': 'pytorch',
+           'DATASET': 'daad',
+           'ENABLE': True,
+           'EVAL_PERIOD': 10,
+           'KILL_LOSS_EXPLOSION_FACTOR': 0.0,
+           'MIXED_PRECISION': False},
+ 'VIS_MASK': CfgNode({'ENABLE': False}),
+ 'X3D': {'BN_LIN5': False,
+         'BOTTLENECK_FACTOR': 1.0,
+         'CHANNELWISE_3x3x3': True,
+         'DEPTH_FACTOR': 1.0,
+         'DIM_C1': 12,
+         'DIM_C5': 2048,
+         'SCALE_RES2': False,
+         'WIDTH_FACTOR': 1.0}}
+[03/13 08:21:47][INFO] misc.py:  187: Model:
+DAADMViT(
+  (x1_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x2_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x3_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x4_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x5_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x6_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x1_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x2_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x3_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x4_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x5_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x6_projection): Linear(in_features=96, out_features=96, bias=True)
+  (blocks): ModuleList(
+    (0): MultiScaleBlock(
+      (norm1): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=96, out_features=288, bias=True)
+        (proj): Linear(in_features=96, out_features=96, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 8, 8), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 8, 8), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=96, out_features=384, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=384, out_features=96, bias=True)
+      )
+    )
+    (1): MultiScaleBlock(
+      (norm1): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=96, out_features=576, bias=True)
+        (proj): Linear(in_features=192, out_features=192, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=192, out_features=768, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=768, out_features=192, bias=True)
+      )
+      (proj): Linear(in_features=96, out_features=192, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (2): MultiScaleBlock(
+      (norm1): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=192, out_features=576, bias=True)
+        (proj): Linear(in_features=192, out_features=192, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=192, out_features=768, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=768, out_features=192, bias=True)
+      )
+    )
+    (3): MultiScaleBlock(
+      (norm1): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=192, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+      (proj): Linear(in_features=192, out_features=384, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (4): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (5): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (6): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (7): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (8): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (9): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (10): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (11): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (12): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (13): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (14): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=2304, bias=True)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+      )
+      (proj): Linear(in_features=384, out_features=768, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (15): MultiScaleBlock(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+      )
+    )
+  )
+  (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (head): TransformerBasicHead(
+    (dropout): Dropout(p=0.5, inplace=False)
+    (projection): Linear(in_features=768, out_features=400, bias=True)
+    (act): Softmax(dim=1)
+  )
+)
+[03/13 08:21:47][INFO] misc.py:  189: Params: 34,784,368
+[03/13 08:21:47][INFO] misc.py:  190: Mem: 0.13019561767578125 MB
+[03/13 08:27:12][INFO] train_net.py:  518: Train with config:
+[03/13 08:27:12][INFO] train_net.py:  519: {'AUG': {'AA_TYPE': 'rand-m7-n4-mstd0.5-inc1',
+         'COLOR_JITTER': 0.4,
+         'ENABLE': True,
+         'GEN_MASK_LOADER': False,
+         'INTERPOLATION': 'bicubic',
+         'MASK_FRAMES': False,
+         'MASK_RATIO': 0.0,
+         'MASK_TUBE': False,
+         'MASK_WINDOW_SIZE': [8, 7, 7],
+         'MAX_MASK_PATCHES_PER_BLOCK': None,
+         'NUM_SAMPLE': 2,
+         'RE_COUNT': 1,
+         'RE_MODE': 'pixel',
+         'RE_PROB': 0.25,
+         'RE_SPLIT': False},
+ 'AVA': {'ANNOTATION_DIR': '/mnt/vol/gfsai-flash3-east/ai-group/users/haoqifan/ava/frame_list/',
+         'BGR': False,
+         'DETECTION_SCORE_THRESH': 0.9,
+         'EXCLUSION_FILE': 'ava_val_excluded_timestamps_v2.2.csv',
+         'FRAME_DIR': '/mnt/fair-flash3-east/ava_trainval_frames.img/',
+         'FRAME_LIST_DIR': '/mnt/vol/gfsai-flash3-east/ai-group/users/haoqifan/ava/frame_list/',
+         'FULL_TEST_ON_VAL': False,
+         'GROUNDTRUTH_FILE': 'ava_val_v2.2.csv',
+         'IMG_PROC_BACKEND': 'cv2',
+         'LABEL_MAP_FILE': 'ava_action_list_v2.2_for_activitynet_2019.pbtxt',
+         'TEST_FORCE_FLIP': False,
+         'TEST_LISTS': ['val.csv'],
+         'TEST_PREDICT_BOX_LISTS': ['ava_val_predicted_boxes.csv'],
+         'TRAIN_GT_BOX_LISTS': ['ava_train_v2.2.csv'],
+         'TRAIN_LISTS': ['train.csv'],
+         'TRAIN_PCA_JITTER_ONLY': True,
+         'TRAIN_PREDICT_BOX_LISTS': [],
+         'TRAIN_USE_COLOR_AUGMENTATION': False},
+ 'BENCHMARK': CfgNode({'NUM_EPOCHS': 5, 'LOG_PERIOD': 100, 'SHUFFLE': True}),
+ 'BN': {'GLOBAL_SYNC': False,
+        'NORM_TYPE': 'batchnorm',
+        'NUM_BATCHES_PRECISE': 200,
+        'NUM_SPLITS': 1,
+        'NUM_SYNC_DEVICES': 1,
+        'USE_PRECISE_STATS': False,
+        'WEIGHT_DECAY': 0.0},
+ 'CONTRASTIVE': {'BN_MLP': False,
+                 'BN_SYNC_MLP': False,
+                 'DELTA_CLIPS_MAX': inf,
+                 'DELTA_CLIPS_MIN': -inf,
+                 'DIM': 128,
+                 'INTERP_MEMORY': False,
+                 'KNN_ON': True,
+                 'LENGTH': 239975,
+                 'LOCAL_SHUFFLE_BN': True,
+                 'MEM_TYPE': '1d',
+                 'MLP_DIM': 2048,
+                 'MOCO_MULTI_VIEW_QUEUE': False,
+                 'MOMENTUM': 0.5,
+                 'MOMENTUM_ANNEALING': False,
+                 'NUM_CLASSES_DOWNSTREAM': 400,
+                 'NUM_MLP_LAYERS': 1,
+                 'PREDICTOR_DEPTHS': [],
+                 'QUEUE_LEN': 65536,
+                 'SEQUENTIAL': False,
+                 'SIMCLR_DIST_ON': True,
+                 'SWAV_QEUE_LEN': 0,
+                 'T': 0.07,
+                 'TYPE': 'mem'},
+ 'DATA': {'COLOR_RND_GRAYSCALE': 0.0,
+          'DECODING_BACKEND': 'torchvision',
+          'DECODING_SHORT_SIZE': 256,
+          'DUMMY_LOAD': False,
+          'ENSEMBLE_METHOD': 'sum',
+          'IN22K_TRAINVAL': False,
+          'IN22k_VAL_IN1K': '',
+          'INPUT_CHANNEL_NUM': [3],
+          'INV_UNIFORM_SAMPLE': False,
+          'IN_VAL_CROP_RATIO': 0.875,
+          'LOADER_CHUNK_OVERALL_SIZE': 0,
+          'LOADER_CHUNK_SIZE': 0,
+          'MEAN': [0.45, 0.45, 0.45],
+          'MULTI_LABEL': False,
+          'NUM_FRAMES': 2,
+          'NUM_VIEWS': 6,
+          'PATH_LABEL_SEPARATOR': ' ',
+          'PATH_PREFIX': '',
+          'PATH_TO_DATA_DIR': '/scratch/naman/slowfast/data/DAAD_multiview_test/',
+          'PATH_TO_PRELOAD_IMDB': '',
+          'RANDOM_FLIP': True,
+          'REVERSE_INPUT_CHANNEL': False,
+          'SAMPLING_RATE': 4,
+          'SKIP_ROWS': 0,
+          'SSL_BLUR_SIGMA_MAX': [0.0, 2.0],
+          'SSL_BLUR_SIGMA_MIN': [0.0, 0.1],
+          'SSL_COLOR_BRI_CON_SAT': [0.4, 0.4, 0.4],
+          'SSL_COLOR_HUE': 0.1,
+          'SSL_COLOR_JITTER': False,
+          'SSL_MOCOV2_AUG': False,
+          'STD': [0.225, 0.225, 0.225],
+          'TARGET_FPS': 30,
+          'TEST_CROP_SIZE': 224,
+          'TIME_DIFF_PROB': 0.0,
+          'TRAIN_CROP_NUM_SPATIAL': 1,
+          'TRAIN_CROP_NUM_TEMPORAL': 1,
+          'TRAIN_CROP_SIZE': 224,
+          'TRAIN_JITTER_ASPECT_RELATIVE': [0.75, 1.3333],
+          'TRAIN_JITTER_FPS': 0.0,
+          'TRAIN_JITTER_MOTION_SHIFT': False,
+          'TRAIN_JITTER_SCALES': [256, 320],
+          'TRAIN_JITTER_SCALES_RELATIVE': [0.08, 1.0],
+          'TRAIN_PCA_EIGVAL': [0.225, 0.224, 0.229],
+          'TRAIN_PCA_EIGVEC': [[-0.5675, 0.7192, 0.4009],
+                               [-0.5808, -0.0045, -0.814],
+                               [-0.5836, -0.6948, 0.4203]],
+          'USE_OFFSET_SAMPLING': True},
+ 'DATA_LOADER': {'ENABLE_MULTI_THREAD_DECODE': False,
+                 'NUM_WORKERS': 8,
+                 'PIN_MEMORY': True},
+ 'DEMO': {'BUFFER_SIZE': 0,
+          'CLIP_VIS_SIZE': 10,
+          'COMMON_CLASS_NAMES': ['watch (a person)',
+                                 'talk to (e.g., self, a person, a group)',
+                                 'listen to (a person)',
+                                 'touch (an object)',
+                                 'carry/hold (an object)',
+                                 'walk',
+                                 'sit',
+                                 'lie/sleep',
+                                 'bend/bow (at the waist)'],
+          'COMMON_CLASS_THRES': 0.7,
+          'DETECTRON2_CFG': 'COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml',
+          'DETECTRON2_THRESH': 0.9,
+          'DETECTRON2_WEIGHTS': 'detectron2://COCO-Detection/faster_rcnn_R_50_FPN_3x/137849458/model_final_280758.pkl',
+          'DISPLAY_HEIGHT': 0,
+          'DISPLAY_WIDTH': 0,
+          'ENABLE': False,
+          'FPS': 30,
+          'GT_BOXES': '',
+          'INPUT_FORMAT': 'BGR',
+          'INPUT_VIDEO': '',
+          'LABEL_FILE_PATH': '',
+          'NUM_CLIPS_SKIP': 0,
+          'NUM_VIS_INSTANCES': 2,
+          'OUTPUT_FILE': '',
+          'OUTPUT_FPS': -1,
+          'PREDS_BOXES': '',
+          'SLOWMO': 1,
+          'STARTING_SECOND': 900,
+          'THREAD_ENABLE': False,
+          'UNCOMMON_CLASS_THRES': 0.3,
+          'VIS_MODE': 'thres',
+          'WEBCAM': -1},
+ 'DETECTION': {'ALIGNED': True,
+               'ENABLE': False,
+               'ROI_XFORM_RESOLUTION': 7,
+               'SPATIAL_SCALE_FACTOR': 16},
+ 'DIST_BACKEND': 'nccl',
+ 'LOG_MODEL_INFO': True,
+ 'LOG_PERIOD': 10,
+ 'MASK': {'DECODER_DEPTH': 0,
+          'DECODER_EMBED_DIM': 512,
+          'DECODER_SEP_POS_EMBED': False,
+          'DEC_KV_KERNEL': [],
+          'DEC_KV_STRIDE': [],
+          'ENABLE': False,
+          'HEAD_TYPE': 'separate',
+          'MAE_ON': False,
+          'MAE_RND_MASK': False,
+          'NORM_PRED_PIXEL': True,
+          'PER_FRAME_MASKING': False,
+          'PRED_HOG': False,
+          'PRETRAIN_DEPTH': [15],
+          'SCALE_INIT_BY_DEPTH': False,
+          'TIME_STRIDE_LOSS': True},
+ 'MIXUP': {'ALPHA': 0.8,
+           'CUTMIX_ALPHA': 1.0,
+           'ENABLE': True,
+           'LABEL_SMOOTH_VALUE': 0.1,
+           'PROB': 1.0,
+           'SWITCH_PROB': 0.5},
+ 'MODEL': {'ACT_CHECKPOINT': False,
+           'ARCH': 'mvit',
+           'DETACH_FINAL_FC': False,
+           'DROPCONNECT_RATE': 0.0,
+           'DROPOUT_RATE': 0.5,
+           'FC_INIT_STD': 0.01,
+           'FP16_ALLREDUCE': False,
+           'FROZEN_BN': False,
+           'HEAD_ACT': 'softmax',
+           'LOSS_FUNC': 'soft_cross_entropy',
+           'MODEL_NAME': 'DAADMViT',
+           'MULTI_PATHWAY_ARCH': ['slowfast'],
+           'NUM_CLASSES': 7,
+           'SINGLE_PATHWAY_ARCH': ['2d',
+                                   'c2d',
+                                   'i3d',
+                                   'slow',
+                                   'x3d',
+                                   'mvit',
+                                   'maskmvit']},
+ 'MULTIGRID': {'BN_BASE_SIZE': 8,
+               'DEFAULT_B': 0,
+               'DEFAULT_S': 0,
+               'DEFAULT_T': 0,
+               'EPOCH_FACTOR': 1.5,
+               'EVAL_FREQ': 3,
+               'LONG_CYCLE': False,
+               'LONG_CYCLE_FACTORS': [(0.25, 0.7071067811865476),
+                                      (0.5, 0.7071067811865476),
+                                      (0.5, 1),
+                                      (1, 1)],
+               'LONG_CYCLE_SAMPLING_RATE': 0,
+               'SHORT_CYCLE': False,
+               'SHORT_CYCLE_FACTORS': [0.5, 0.7071067811865476]},
+ 'MVIT': {'CLS_EMBED_ON': True,
+          'DEPTH': 16,
+          'DIM_MUL': [[1, 2.0], [3, 2.0], [14, 2.0]],
+          'DIM_MUL_IN_ATT': True,
+          'DROPOUT_RATE': 0.0,
+          'DROPPATH_RATE': 0.2,
+          'EMBED_DIM': 96,
+          'HEAD_INIT_SCALE': 1.0,
+          'HEAD_MUL': [[1, 2.0], [3, 2.0], [14, 2.0]],
+          'LAYER_SCALE_INIT_VALUE': 0.0,
+          'MLP_RATIO': 4.0,
+          'MODE': 'conv',
+          'NORM': 'layernorm',
+          'NORM_STEM': False,
+          'NUM_HEADS': 1,
+          'PATCH_2D': False,
+          'PATCH_KERNEL': [3, 7, 7],
+          'PATCH_PADDING': [1, 3, 3],
+          'PATCH_STRIDE': [2, 4, 4],
+          'POOL_FIRST': False,
+          'POOL_KVQ_KERNEL': [3, 3, 3],
+          'POOL_KV_STRIDE': [],
+          'POOL_KV_STRIDE_ADAPTIVE': [1, 8, 8],
+          'POOL_Q_STRIDE': [[0, 1, 1, 1],
+                            [1, 1, 2, 2],
+                            [2, 1, 1, 1],
+                            [3, 1, 2, 2],
+                            [4, 1, 1, 1],
+                            [5, 1, 1, 1],
+                            [6, 1, 1, 1],
+                            [7, 1, 1, 1],
+                            [8, 1, 1, 1],
+                            [9, 1, 1, 1],
+                            [10, 1, 1, 1],
+                            [11, 1, 1, 1],
+                            [12, 1, 1, 1],
+                            [13, 1, 1, 1],
+                            [14, 1, 2, 2],
+                            [15, 1, 1, 1]],
+          'QKV_BIAS': True,
+          'REL_POS_SPATIAL': True,
+          'REL_POS_TEMPORAL': True,
+          'REL_POS_ZERO_INIT': False,
+          'RESIDUAL_POOLING': True,
+          'REV': {'BUFFER_LAYERS': [],
+                  'ENABLE': False,
+                  'PRE_Q_FUSION': 'avg',
+                  'RESPATH_FUSE': 'concat',
+                  'RES_PATH': 'conv'},
+          'SEPARATE_QKV': False,
+          'SEP_POS_EMBED': False,
+          'USE_ABS_POS': False,
+          'USE_FIXED_SINCOS_POS': False,
+          'USE_MEAN_POOLING': False,
+          'ZERO_DECAY_POS_CLS': False},
+ 'NONLOCAL': {'GROUP': [[1], [1], [1], [1]],
+              'INSTANTIATION': 'dot_product',
+              'LOCATION': [[[]], [[]], [[]], [[]]],
+              'POOL': [[[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]]]},
+ 'NUM_GPUS': 1,
+ 'NUM_SHARDS': 1,
+ 'OUTPUT_DIR': '.',
+ 'RESNET': {'DEPTH': 50,
+            'INPLACE_RELU': True,
+            'NUM_BLOCK_TEMP_KERNEL': [[3], [4], [6], [3]],
+            'NUM_GROUPS': 1,
+            'SPATIAL_DILATIONS': [[1], [1], [1], [1]],
+            'SPATIAL_STRIDES': [[1], [2], [2], [2]],
+            'STRIDE_1X1': False,
+            'TRANS_FUNC': 'bottleneck_transform',
+            'WIDTH_PER_GROUP': 64,
+            'ZERO_INIT_FINAL_BN': False,
+            'ZERO_INIT_FINAL_CONV': False},
+ 'RNG_SEED': 0,
+ 'SHARD_ID': 0,
+ 'SLOWFAST': {'ALPHA': 8,
+              'BETA_INV': 8,
+              'FUSION_CONV_CHANNEL_RATIO': 2,
+              'FUSION_KERNEL_SZ': 5},
+ 'SOLVER': {'BASE_LR': 0.0001,
+            'BASE_LR_SCALE_NUM_SHARDS': True,
+            'BETAS': (0.9, 0.999),
+            'CLIP_GRAD_L2NORM': 1.0,
+            'CLIP_GRAD_VAL': None,
+            'COSINE_AFTER_WARMUP': True,
+            'COSINE_END_LR': 1e-06,
+            'DAMPENING': 0.0,
+            'GAMMA': 0.1,
+            'LARS_ON': False,
+            'LAYER_DECAY': 1.0,
+            'LRS': [],
+            'LR_POLICY': 'cosine',
+            'MAX_EPOCH': 200,
+            'MOMENTUM': 0.9,
+            'NESTEROV': True,
+            'OPTIMIZING_METHOD': 'adamw',
+            'STEPS': [],
+            'STEP_SIZE': 1,
+            'WARMUP_EPOCHS': 30.0,
+            'WARMUP_FACTOR': 0.1,
+            'WARMUP_START_LR': 1e-06,
+            'WEIGHT_DECAY': 0.05,
+            'ZERO_WD_1D_PARAM': True},
+ 'TASK': '',
+ 'TENSORBOARD': {'CATEGORIES_PATH': '',
+                 'CLASS_NAMES_PATH': '',
+                 'CONFUSION_MATRIX': {'ENABLE': False,
+                                      'FIGSIZE': [8, 8],
+                                      'SUBSET_PATH': ''},
+                 'ENABLE': False,
+                 'HISTOGRAM': {'ENABLE': False,
+                               'FIGSIZE': [8, 8],
+                               'SUBSET_PATH': '',
+                               'TOPK': 10},
+                 'LOG_DIR': '',
+                 'MODEL_VIS': {'ACTIVATIONS': False,
+                               'COLORMAP': 'Pastel2',
+                               'ENABLE': False,
+                               'GRAD_CAM': {'COLORMAP': 'viridis',
+                                            'ENABLE': True,
+                                            'LAYER_LIST': [],
+                                            'USE_TRUE_LABEL': False},
+                               'INPUT_VIDEO': False,
+                               'LAYER_LIST': [],
+                               'MODEL_WEIGHTS': False,
+                               'TOPK_PREDS': 1},
+                 'PREDICTIONS_PATH': '',
+                 'WRONG_PRED_VIS': {'ENABLE': False,
+                                    'SUBSET_PATH': '',
+                                    'TAG': 'Incorrectly classified videos.'}},
+ 'TEST': {'BATCH_SIZE': 64,
+          'CHECKPOINT_FILE_PATH': '',
+          'CHECKPOINT_TYPE': 'pytorch',
+          'DATASET': 'daad',
+          'ENABLE': True,
+          'NUM_ENSEMBLE_VIEWS': 5,
+          'NUM_SPATIAL_CROPS': 1,
+          'NUM_TEMPORAL_CLIPS': [],
+          'SAVE_RESULTS_PATH': ''},
+ 'TRAIN': {'AUTO_RESUME': True,
+           'BATCH_SIZE': 2,
+           'CHECKPOINT_CLEAR_NAME_PATTERN': (),
+           'CHECKPOINT_EPOCH_RESET': False,
+           'CHECKPOINT_FILE_PATH': '',
+           'CHECKPOINT_INFLATE': False,
+           'CHECKPOINT_IN_INIT': False,
+           'CHECKPOINT_PERIOD': 10,
+           'CHECKPOINT_TYPE': 'pytorch',
+           'DATASET': 'daad',
+           'ENABLE': True,
+           'EVAL_PERIOD': 10,
+           'KILL_LOSS_EXPLOSION_FACTOR': 0.0,
+           'MIXED_PRECISION': False},
+ 'VIS_MASK': CfgNode({'ENABLE': False}),
+ 'X3D': {'BN_LIN5': False,
+         'BOTTLENECK_FACTOR': 1.0,
+         'CHANNELWISE_3x3x3': True,
+         'DEPTH_FACTOR': 1.0,
+         'DIM_C1': 12,
+         'DIM_C5': 2048,
+         'SCALE_RES2': False,
+         'WIDTH_FACTOR': 1.0}}
+[03/13 08:27:15][INFO] misc.py:  187: Model:
+DAADMViT(
+  (x1_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x2_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x3_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x4_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x5_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x6_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x1_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x2_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x3_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x4_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x5_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x6_projection): Linear(in_features=96, out_features=96, bias=True)
+  (blocks): ModuleList(
+    (0): MultiScaleBlock(
+      (norm1): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=96, out_features=288, bias=True)
+        (proj): Linear(in_features=96, out_features=96, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 8, 8), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 8, 8), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=96, out_features=384, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=384, out_features=96, bias=True)
+      )
+    )
+    (1): MultiScaleBlock(
+      (norm1): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=96, out_features=576, bias=True)
+        (proj): Linear(in_features=192, out_features=192, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=192, out_features=768, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=768, out_features=192, bias=True)
+      )
+      (proj): Linear(in_features=96, out_features=192, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (2): MultiScaleBlock(
+      (norm1): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=192, out_features=576, bias=True)
+        (proj): Linear(in_features=192, out_features=192, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=192, out_features=768, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=768, out_features=192, bias=True)
+      )
+    )
+    (3): MultiScaleBlock(
+      (norm1): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=192, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+      (proj): Linear(in_features=192, out_features=384, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (4): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (5): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (6): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (7): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (8): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (9): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (10): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (11): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (12): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (13): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (14): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=2304, bias=True)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+      )
+      (proj): Linear(in_features=384, out_features=768, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (15): MultiScaleBlock(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+      )
+    )
+  )
+  (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (head): TransformerBasicHead(
+    (dropout): Dropout(p=0.5, inplace=False)
+    (projection): Linear(in_features=768, out_features=7, bias=True)
+    (act): Softmax(dim=1)
+  )
+)
+[03/13 08:27:15][INFO] misc.py:  189: Params: 34,482,151
+[03/13 08:27:15][INFO] misc.py:  190: Mem: 0.12881040573120117 MB
+[03/13 08:28:17][INFO] train_net.py:  518: Train with config:
+[03/13 08:28:17][INFO] train_net.py:  519: {'AUG': {'AA_TYPE': 'rand-m7-n4-mstd0.5-inc1',
+         'COLOR_JITTER': 0.4,
+         'ENABLE': True,
+         'GEN_MASK_LOADER': False,
+         'INTERPOLATION': 'bicubic',
+         'MASK_FRAMES': False,
+         'MASK_RATIO': 0.0,
+         'MASK_TUBE': False,
+         'MASK_WINDOW_SIZE': [8, 7, 7],
+         'MAX_MASK_PATCHES_PER_BLOCK': None,
+         'NUM_SAMPLE': 2,
+         'RE_COUNT': 1,
+         'RE_MODE': 'pixel',
+         'RE_PROB': 0.25,
+         'RE_SPLIT': False},
+ 'AVA': {'ANNOTATION_DIR': '/mnt/vol/gfsai-flash3-east/ai-group/users/haoqifan/ava/frame_list/',
+         'BGR': False,
+         'DETECTION_SCORE_THRESH': 0.9,
+         'EXCLUSION_FILE': 'ava_val_excluded_timestamps_v2.2.csv',
+         'FRAME_DIR': '/mnt/fair-flash3-east/ava_trainval_frames.img/',
+         'FRAME_LIST_DIR': '/mnt/vol/gfsai-flash3-east/ai-group/users/haoqifan/ava/frame_list/',
+         'FULL_TEST_ON_VAL': False,
+         'GROUNDTRUTH_FILE': 'ava_val_v2.2.csv',
+         'IMG_PROC_BACKEND': 'cv2',
+         'LABEL_MAP_FILE': 'ava_action_list_v2.2_for_activitynet_2019.pbtxt',
+         'TEST_FORCE_FLIP': False,
+         'TEST_LISTS': ['val.csv'],
+         'TEST_PREDICT_BOX_LISTS': ['ava_val_predicted_boxes.csv'],
+         'TRAIN_GT_BOX_LISTS': ['ava_train_v2.2.csv'],
+         'TRAIN_LISTS': ['train.csv'],
+         'TRAIN_PCA_JITTER_ONLY': True,
+         'TRAIN_PREDICT_BOX_LISTS': [],
+         'TRAIN_USE_COLOR_AUGMENTATION': False},
+ 'BENCHMARK': CfgNode({'NUM_EPOCHS': 5, 'LOG_PERIOD': 100, 'SHUFFLE': True}),
+ 'BN': {'GLOBAL_SYNC': False,
+        'NORM_TYPE': 'batchnorm',
+        'NUM_BATCHES_PRECISE': 200,
+        'NUM_SPLITS': 1,
+        'NUM_SYNC_DEVICES': 1,
+        'USE_PRECISE_STATS': False,
+        'WEIGHT_DECAY': 0.0},
+ 'CONTRASTIVE': {'BN_MLP': False,
+                 'BN_SYNC_MLP': False,
+                 'DELTA_CLIPS_MAX': inf,
+                 'DELTA_CLIPS_MIN': -inf,
+                 'DIM': 128,
+                 'INTERP_MEMORY': False,
+                 'KNN_ON': True,
+                 'LENGTH': 239975,
+                 'LOCAL_SHUFFLE_BN': True,
+                 'MEM_TYPE': '1d',
+                 'MLP_DIM': 2048,
+                 'MOCO_MULTI_VIEW_QUEUE': False,
+                 'MOMENTUM': 0.5,
+                 'MOMENTUM_ANNEALING': False,
+                 'NUM_CLASSES_DOWNSTREAM': 400,
+                 'NUM_MLP_LAYERS': 1,
+                 'PREDICTOR_DEPTHS': [],
+                 'QUEUE_LEN': 65536,
+                 'SEQUENTIAL': False,
+                 'SIMCLR_DIST_ON': True,
+                 'SWAV_QEUE_LEN': 0,
+                 'T': 0.07,
+                 'TYPE': 'mem'},
+ 'DATA': {'COLOR_RND_GRAYSCALE': 0.0,
+          'DECODING_BACKEND': 'torchvision',
+          'DECODING_SHORT_SIZE': 256,
+          'DUMMY_LOAD': False,
+          'ENSEMBLE_METHOD': 'sum',
+          'IN22K_TRAINVAL': False,
+          'IN22k_VAL_IN1K': '',
+          'INPUT_CHANNEL_NUM': [3],
+          'INV_UNIFORM_SAMPLE': False,
+          'IN_VAL_CROP_RATIO': 0.875,
+          'LOADER_CHUNK_OVERALL_SIZE': 0,
+          'LOADER_CHUNK_SIZE': 0,
+          'MEAN': [0.45, 0.45, 0.45],
+          'MULTI_LABEL': False,
+          'NUM_FRAMES': 2,
+          'NUM_VIEWS': 6,
+          'PATH_LABEL_SEPARATOR': ' ',
+          'PATH_PREFIX': '',
+          'PATH_TO_DATA_DIR': '/scratch/naman/slowfast/data/DAAD_multiview_test/',
+          'PATH_TO_PRELOAD_IMDB': '',
+          'RANDOM_FLIP': True,
+          'REVERSE_INPUT_CHANNEL': False,
+          'SAMPLING_RATE': 4,
+          'SKIP_ROWS': 0,
+          'SSL_BLUR_SIGMA_MAX': [0.0, 2.0],
+          'SSL_BLUR_SIGMA_MIN': [0.0, 0.1],
+          'SSL_COLOR_BRI_CON_SAT': [0.4, 0.4, 0.4],
+          'SSL_COLOR_HUE': 0.1,
+          'SSL_COLOR_JITTER': False,
+          'SSL_MOCOV2_AUG': False,
+          'STD': [0.225, 0.225, 0.225],
+          'TARGET_FPS': 30,
+          'TEST_CROP_SIZE': 224,
+          'TIME_DIFF_PROB': 0.0,
+          'TRAIN_CROP_NUM_SPATIAL': 1,
+          'TRAIN_CROP_NUM_TEMPORAL': 1,
+          'TRAIN_CROP_SIZE': 224,
+          'TRAIN_JITTER_ASPECT_RELATIVE': [0.75, 1.3333],
+          'TRAIN_JITTER_FPS': 0.0,
+          'TRAIN_JITTER_MOTION_SHIFT': False,
+          'TRAIN_JITTER_SCALES': [256, 320],
+          'TRAIN_JITTER_SCALES_RELATIVE': [0.08, 1.0],
+          'TRAIN_PCA_EIGVAL': [0.225, 0.224, 0.229],
+          'TRAIN_PCA_EIGVEC': [[-0.5675, 0.7192, 0.4009],
+                               [-0.5808, -0.0045, -0.814],
+                               [-0.5836, -0.6948, 0.4203]],
+          'USE_OFFSET_SAMPLING': True},
+ 'DATA_LOADER': {'ENABLE_MULTI_THREAD_DECODE': False,
+                 'NUM_WORKERS': 8,
+                 'PIN_MEMORY': True},
+ 'DEMO': {'BUFFER_SIZE': 0,
+          'CLIP_VIS_SIZE': 10,
+          'COMMON_CLASS_NAMES': ['watch (a person)',
+                                 'talk to (e.g., self, a person, a group)',
+                                 'listen to (a person)',
+                                 'touch (an object)',
+                                 'carry/hold (an object)',
+                                 'walk',
+                                 'sit',
+                                 'lie/sleep',
+                                 'bend/bow (at the waist)'],
+          'COMMON_CLASS_THRES': 0.7,
+          'DETECTRON2_CFG': 'COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml',
+          'DETECTRON2_THRESH': 0.9,
+          'DETECTRON2_WEIGHTS': 'detectron2://COCO-Detection/faster_rcnn_R_50_FPN_3x/137849458/model_final_280758.pkl',
+          'DISPLAY_HEIGHT': 0,
+          'DISPLAY_WIDTH': 0,
+          'ENABLE': False,
+          'FPS': 30,
+          'GT_BOXES': '',
+          'INPUT_FORMAT': 'BGR',
+          'INPUT_VIDEO': '',
+          'LABEL_FILE_PATH': '',
+          'NUM_CLIPS_SKIP': 0,
+          'NUM_VIS_INSTANCES': 2,
+          'OUTPUT_FILE': '',
+          'OUTPUT_FPS': -1,
+          'PREDS_BOXES': '',
+          'SLOWMO': 1,
+          'STARTING_SECOND': 900,
+          'THREAD_ENABLE': False,
+          'UNCOMMON_CLASS_THRES': 0.3,
+          'VIS_MODE': 'thres',
+          'WEBCAM': -1},
+ 'DETECTION': {'ALIGNED': True,
+               'ENABLE': False,
+               'ROI_XFORM_RESOLUTION': 7,
+               'SPATIAL_SCALE_FACTOR': 16},
+ 'DIST_BACKEND': 'nccl',
+ 'LOG_MODEL_INFO': True,
+ 'LOG_PERIOD': 10,
+ 'MASK': {'DECODER_DEPTH': 0,
+          'DECODER_EMBED_DIM': 512,
+          'DECODER_SEP_POS_EMBED': False,
+          'DEC_KV_KERNEL': [],
+          'DEC_KV_STRIDE': [],
+          'ENABLE': False,
+          'HEAD_TYPE': 'separate',
+          'MAE_ON': False,
+          'MAE_RND_MASK': False,
+          'NORM_PRED_PIXEL': True,
+          'PER_FRAME_MASKING': False,
+          'PRED_HOG': False,
+          'PRETRAIN_DEPTH': [15],
+          'SCALE_INIT_BY_DEPTH': False,
+          'TIME_STRIDE_LOSS': True},
+ 'MIXUP': {'ALPHA': 0.8,
+           'CUTMIX_ALPHA': 1.0,
+           'ENABLE': True,
+           'LABEL_SMOOTH_VALUE': 0.1,
+           'PROB': 1.0,
+           'SWITCH_PROB': 0.5},
+ 'MODEL': {'ACT_CHECKPOINT': False,
+           'ARCH': 'mvit',
+           'DETACH_FINAL_FC': False,
+           'DROPCONNECT_RATE': 0.0,
+           'DROPOUT_RATE': 0.5,
+           'FC_INIT_STD': 0.01,
+           'FP16_ALLREDUCE': False,
+           'FROZEN_BN': False,
+           'HEAD_ACT': 'softmax',
+           'LOSS_FUNC': 'soft_cross_entropy',
+           'MODEL_NAME': 'DAADMViT',
+           'MULTI_PATHWAY_ARCH': ['slowfast'],
+           'NUM_CLASSES': 7,
+           'SINGLE_PATHWAY_ARCH': ['2d',
+                                   'c2d',
+                                   'i3d',
+                                   'slow',
+                                   'x3d',
+                                   'mvit',
+                                   'maskmvit']},
+ 'MULTIGRID': {'BN_BASE_SIZE': 8,
+               'DEFAULT_B': 0,
+               'DEFAULT_S': 0,
+               'DEFAULT_T': 0,
+               'EPOCH_FACTOR': 1.5,
+               'EVAL_FREQ': 3,
+               'LONG_CYCLE': False,
+               'LONG_CYCLE_FACTORS': [(0.25, 0.7071067811865476),
+                                      (0.5, 0.7071067811865476),
+                                      (0.5, 1),
+                                      (1, 1)],
+               'LONG_CYCLE_SAMPLING_RATE': 0,
+               'SHORT_CYCLE': False,
+               'SHORT_CYCLE_FACTORS': [0.5, 0.7071067811865476]},
+ 'MVIT': {'CLS_EMBED_ON': True,
+          'DEPTH': 16,
+          'DIM_MUL': [[1, 2.0], [3, 2.0], [14, 2.0]],
+          'DIM_MUL_IN_ATT': True,
+          'DROPOUT_RATE': 0.0,
+          'DROPPATH_RATE': 0.2,
+          'EMBED_DIM': 96,
+          'HEAD_INIT_SCALE': 1.0,
+          'HEAD_MUL': [[1, 2.0], [3, 2.0], [14, 2.0]],
+          'LAYER_SCALE_INIT_VALUE': 0.0,
+          'MLP_RATIO': 4.0,
+          'MODE': 'conv',
+          'NORM': 'layernorm',
+          'NORM_STEM': False,
+          'NUM_HEADS': 1,
+          'PATCH_2D': False,
+          'PATCH_KERNEL': [3, 7, 7],
+          'PATCH_PADDING': [1, 3, 3],
+          'PATCH_STRIDE': [2, 4, 4],
+          'POOL_FIRST': False,
+          'POOL_KVQ_KERNEL': [3, 3, 3],
+          'POOL_KV_STRIDE': [],
+          'POOL_KV_STRIDE_ADAPTIVE': [1, 8, 8],
+          'POOL_Q_STRIDE': [[0, 1, 1, 1],
+                            [1, 1, 2, 2],
+                            [2, 1, 1, 1],
+                            [3, 1, 2, 2],
+                            [4, 1, 1, 1],
+                            [5, 1, 1, 1],
+                            [6, 1, 1, 1],
+                            [7, 1, 1, 1],
+                            [8, 1, 1, 1],
+                            [9, 1, 1, 1],
+                            [10, 1, 1, 1],
+                            [11, 1, 1, 1],
+                            [12, 1, 1, 1],
+                            [13, 1, 1, 1],
+                            [14, 1, 2, 2],
+                            [15, 1, 1, 1]],
+          'QKV_BIAS': True,
+          'REL_POS_SPATIAL': True,
+          'REL_POS_TEMPORAL': True,
+          'REL_POS_ZERO_INIT': False,
+          'RESIDUAL_POOLING': True,
+          'REV': {'BUFFER_LAYERS': [],
+                  'ENABLE': False,
+                  'PRE_Q_FUSION': 'avg',
+                  'RESPATH_FUSE': 'concat',
+                  'RES_PATH': 'conv'},
+          'SEPARATE_QKV': False,
+          'SEP_POS_EMBED': False,
+          'USE_ABS_POS': False,
+          'USE_FIXED_SINCOS_POS': False,
+          'USE_MEAN_POOLING': False,
+          'ZERO_DECAY_POS_CLS': False},
+ 'NONLOCAL': {'GROUP': [[1], [1], [1], [1]],
+              'INSTANTIATION': 'dot_product',
+              'LOCATION': [[[]], [[]], [[]], [[]]],
+              'POOL': [[[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]]]},
+ 'NUM_GPUS': 1,
+ 'NUM_SHARDS': 1,
+ 'OUTPUT_DIR': '.',
+ 'RESNET': {'DEPTH': 50,
+            'INPLACE_RELU': True,
+            'NUM_BLOCK_TEMP_KERNEL': [[3], [4], [6], [3]],
+            'NUM_GROUPS': 1,
+            'SPATIAL_DILATIONS': [[1], [1], [1], [1]],
+            'SPATIAL_STRIDES': [[1], [2], [2], [2]],
+            'STRIDE_1X1': False,
+            'TRANS_FUNC': 'bottleneck_transform',
+            'WIDTH_PER_GROUP': 64,
+            'ZERO_INIT_FINAL_BN': False,
+            'ZERO_INIT_FINAL_CONV': False},
+ 'RNG_SEED': 0,
+ 'SHARD_ID': 0,
+ 'SLOWFAST': {'ALPHA': 8,
+              'BETA_INV': 8,
+              'FUSION_CONV_CHANNEL_RATIO': 2,
+              'FUSION_KERNEL_SZ': 5},
+ 'SOLVER': {'BASE_LR': 0.0001,
+            'BASE_LR_SCALE_NUM_SHARDS': True,
+            'BETAS': (0.9, 0.999),
+            'CLIP_GRAD_L2NORM': 1.0,
+            'CLIP_GRAD_VAL': None,
+            'COSINE_AFTER_WARMUP': True,
+            'COSINE_END_LR': 1e-06,
+            'DAMPENING': 0.0,
+            'GAMMA': 0.1,
+            'LARS_ON': False,
+            'LAYER_DECAY': 1.0,
+            'LRS': [],
+            'LR_POLICY': 'cosine',
+            'MAX_EPOCH': 200,
+            'MOMENTUM': 0.9,
+            'NESTEROV': True,
+            'OPTIMIZING_METHOD': 'adamw',
+            'STEPS': [],
+            'STEP_SIZE': 1,
+            'WARMUP_EPOCHS': 30.0,
+            'WARMUP_FACTOR': 0.1,
+            'WARMUP_START_LR': 1e-06,
+            'WEIGHT_DECAY': 0.05,
+            'ZERO_WD_1D_PARAM': True},
+ 'TASK': '',
+ 'TENSORBOARD': {'CATEGORIES_PATH': '',
+                 'CLASS_NAMES_PATH': '',
+                 'CONFUSION_MATRIX': {'ENABLE': False,
+                                      'FIGSIZE': [8, 8],
+                                      'SUBSET_PATH': ''},
+                 'ENABLE': False,
+                 'HISTOGRAM': {'ENABLE': False,
+                               'FIGSIZE': [8, 8],
+                               'SUBSET_PATH': '',
+                               'TOPK': 10},
+                 'LOG_DIR': '',
+                 'MODEL_VIS': {'ACTIVATIONS': False,
+                               'COLORMAP': 'Pastel2',
+                               'ENABLE': False,
+                               'GRAD_CAM': {'COLORMAP': 'viridis',
+                                            'ENABLE': True,
+                                            'LAYER_LIST': [],
+                                            'USE_TRUE_LABEL': False},
+                               'INPUT_VIDEO': False,
+                               'LAYER_LIST': [],
+                               'MODEL_WEIGHTS': False,
+                               'TOPK_PREDS': 1},
+                 'PREDICTIONS_PATH': '',
+                 'WRONG_PRED_VIS': {'ENABLE': False,
+                                    'SUBSET_PATH': '',
+                                    'TAG': 'Incorrectly classified videos.'}},
+ 'TEST': {'BATCH_SIZE': 64,
+          'CHECKPOINT_FILE_PATH': '',
+          'CHECKPOINT_TYPE': 'pytorch',
+          'DATASET': 'daad',
+          'ENABLE': True,
+          'NUM_ENSEMBLE_VIEWS': 5,
+          'NUM_SPATIAL_CROPS': 1,
+          'NUM_TEMPORAL_CLIPS': [],
+          'SAVE_RESULTS_PATH': ''},
+ 'TRAIN': {'AUTO_RESUME': True,
+           'BATCH_SIZE': 2,
+           'CHECKPOINT_CLEAR_NAME_PATTERN': (),
+           'CHECKPOINT_EPOCH_RESET': False,
+           'CHECKPOINT_FILE_PATH': '',
+           'CHECKPOINT_INFLATE': False,
+           'CHECKPOINT_IN_INIT': False,
+           'CHECKPOINT_PERIOD': 10,
+           'CHECKPOINT_TYPE': 'pytorch',
+           'DATASET': 'daad',
+           'ENABLE': True,
+           'EVAL_PERIOD': 10,
+           'KILL_LOSS_EXPLOSION_FACTOR': 0.0,
+           'MIXED_PRECISION': False},
+ 'VIS_MASK': CfgNode({'ENABLE': False}),
+ 'X3D': {'BN_LIN5': False,
+         'BOTTLENECK_FACTOR': 1.0,
+         'CHANNELWISE_3x3x3': True,
+         'DEPTH_FACTOR': 1.0,
+         'DIM_C1': 12,
+         'DIM_C5': 2048,
+         'SCALE_RES2': False,
+         'WIDTH_FACTOR': 1.0}}
+[03/13 08:28:19][INFO] misc.py:  187: Model:
+DAADMViT(
+  (x1_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x2_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x3_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x4_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x5_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x6_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x1_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x2_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x3_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x4_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x5_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x6_projection): Linear(in_features=96, out_features=96, bias=True)
+  (blocks): ModuleList(
+    (0): MultiScaleBlock(
+      (norm1): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=96, out_features=288, bias=True)
+        (proj): Linear(in_features=96, out_features=96, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 8, 8), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 8, 8), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=96, out_features=384, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=384, out_features=96, bias=True)
+      )
+    )
+    (1): MultiScaleBlock(
+      (norm1): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=96, out_features=576, bias=True)
+        (proj): Linear(in_features=192, out_features=192, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=192, out_features=768, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=768, out_features=192, bias=True)
+      )
+      (proj): Linear(in_features=96, out_features=192, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (2): MultiScaleBlock(
+      (norm1): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=192, out_features=576, bias=True)
+        (proj): Linear(in_features=192, out_features=192, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=192, out_features=768, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=768, out_features=192, bias=True)
+      )
+    )
+    (3): MultiScaleBlock(
+      (norm1): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=192, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+      (proj): Linear(in_features=192, out_features=384, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (4): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (5): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (6): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (7): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (8): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (9): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (10): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (11): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (12): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (13): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (14): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=2304, bias=True)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+      )
+      (proj): Linear(in_features=384, out_features=768, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (15): MultiScaleBlock(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+      )
+    )
+  )
+  (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (head): TransformerBasicHead(
+    (dropout): Dropout(p=0.5, inplace=False)
+    (projection): Linear(in_features=768, out_features=7, bias=True)
+    (act): Softmax(dim=1)
+  )
+)
+[03/13 08:28:19][INFO] misc.py:  189: Params: 34,482,151
+[03/13 08:28:19][INFO] misc.py:  190: Mem: 0.12881040573120117 MB
+[03/13 08:29:41][INFO] train_net.py:  518: Train with config:
+[03/13 08:29:41][INFO] train_net.py:  519: {'AUG': {'AA_TYPE': 'rand-m7-n4-mstd0.5-inc1',
+         'COLOR_JITTER': 0.4,
+         'ENABLE': True,
+         'GEN_MASK_LOADER': False,
+         'INTERPOLATION': 'bicubic',
+         'MASK_FRAMES': False,
+         'MASK_RATIO': 0.0,
+         'MASK_TUBE': False,
+         'MASK_WINDOW_SIZE': [8, 7, 7],
+         'MAX_MASK_PATCHES_PER_BLOCK': None,
+         'NUM_SAMPLE': 2,
+         'RE_COUNT': 1,
+         'RE_MODE': 'pixel',
+         'RE_PROB': 0.25,
+         'RE_SPLIT': False},
+ 'AVA': {'ANNOTATION_DIR': '/mnt/vol/gfsai-flash3-east/ai-group/users/haoqifan/ava/frame_list/',
+         'BGR': False,
+         'DETECTION_SCORE_THRESH': 0.9,
+         'EXCLUSION_FILE': 'ava_val_excluded_timestamps_v2.2.csv',
+         'FRAME_DIR': '/mnt/fair-flash3-east/ava_trainval_frames.img/',
+         'FRAME_LIST_DIR': '/mnt/vol/gfsai-flash3-east/ai-group/users/haoqifan/ava/frame_list/',
+         'FULL_TEST_ON_VAL': False,
+         'GROUNDTRUTH_FILE': 'ava_val_v2.2.csv',
+         'IMG_PROC_BACKEND': 'cv2',
+         'LABEL_MAP_FILE': 'ava_action_list_v2.2_for_activitynet_2019.pbtxt',
+         'TEST_FORCE_FLIP': False,
+         'TEST_LISTS': ['val.csv'],
+         'TEST_PREDICT_BOX_LISTS': ['ava_val_predicted_boxes.csv'],
+         'TRAIN_GT_BOX_LISTS': ['ava_train_v2.2.csv'],
+         'TRAIN_LISTS': ['train.csv'],
+         'TRAIN_PCA_JITTER_ONLY': True,
+         'TRAIN_PREDICT_BOX_LISTS': [],
+         'TRAIN_USE_COLOR_AUGMENTATION': False},
+ 'BENCHMARK': CfgNode({'NUM_EPOCHS': 5, 'LOG_PERIOD': 100, 'SHUFFLE': True}),
+ 'BN': {'GLOBAL_SYNC': False,
+        'NORM_TYPE': 'batchnorm',
+        'NUM_BATCHES_PRECISE': 200,
+        'NUM_SPLITS': 1,
+        'NUM_SYNC_DEVICES': 1,
+        'USE_PRECISE_STATS': False,
+        'WEIGHT_DECAY': 0.0},
+ 'CONTRASTIVE': {'BN_MLP': False,
+                 'BN_SYNC_MLP': False,
+                 'DELTA_CLIPS_MAX': inf,
+                 'DELTA_CLIPS_MIN': -inf,
+                 'DIM': 128,
+                 'INTERP_MEMORY': False,
+                 'KNN_ON': True,
+                 'LENGTH': 239975,
+                 'LOCAL_SHUFFLE_BN': True,
+                 'MEM_TYPE': '1d',
+                 'MLP_DIM': 2048,
+                 'MOCO_MULTI_VIEW_QUEUE': False,
+                 'MOMENTUM': 0.5,
+                 'MOMENTUM_ANNEALING': False,
+                 'NUM_CLASSES_DOWNSTREAM': 400,
+                 'NUM_MLP_LAYERS': 1,
+                 'PREDICTOR_DEPTHS': [],
+                 'QUEUE_LEN': 65536,
+                 'SEQUENTIAL': False,
+                 'SIMCLR_DIST_ON': True,
+                 'SWAV_QEUE_LEN': 0,
+                 'T': 0.07,
+                 'TYPE': 'mem'},
+ 'DATA': {'COLOR_RND_GRAYSCALE': 0.0,
+          'DECODING_BACKEND': 'torchvision',
+          'DECODING_SHORT_SIZE': 256,
+          'DUMMY_LOAD': False,
+          'ENSEMBLE_METHOD': 'sum',
+          'IN22K_TRAINVAL': False,
+          'IN22k_VAL_IN1K': '',
+          'INPUT_CHANNEL_NUM': [3],
+          'INV_UNIFORM_SAMPLE': False,
+          'IN_VAL_CROP_RATIO': 0.875,
+          'LOADER_CHUNK_OVERALL_SIZE': 0,
+          'LOADER_CHUNK_SIZE': 0,
+          'MEAN': [0.45, 0.45, 0.45],
+          'MULTI_LABEL': False,
+          'NUM_FRAMES': 2,
+          'NUM_VIEWS': 6,
+          'PATH_LABEL_SEPARATOR': ' ',
+          'PATH_PREFIX': '',
+          'PATH_TO_DATA_DIR': '/scratch/naman/slowfast/data/DAAD_multiview_test/',
+          'PATH_TO_PRELOAD_IMDB': '',
+          'RANDOM_FLIP': True,
+          'REVERSE_INPUT_CHANNEL': False,
+          'SAMPLING_RATE': 4,
+          'SKIP_ROWS': 0,
+          'SSL_BLUR_SIGMA_MAX': [0.0, 2.0],
+          'SSL_BLUR_SIGMA_MIN': [0.0, 0.1],
+          'SSL_COLOR_BRI_CON_SAT': [0.4, 0.4, 0.4],
+          'SSL_COLOR_HUE': 0.1,
+          'SSL_COLOR_JITTER': False,
+          'SSL_MOCOV2_AUG': False,
+          'STD': [0.225, 0.225, 0.225],
+          'TARGET_FPS': 30,
+          'TEST_CROP_SIZE': 224,
+          'TIME_DIFF_PROB': 0.0,
+          'TRAIN_CROP_NUM_SPATIAL': 1,
+          'TRAIN_CROP_NUM_TEMPORAL': 1,
+          'TRAIN_CROP_SIZE': 224,
+          'TRAIN_JITTER_ASPECT_RELATIVE': [0.75, 1.3333],
+          'TRAIN_JITTER_FPS': 0.0,
+          'TRAIN_JITTER_MOTION_SHIFT': False,
+          'TRAIN_JITTER_SCALES': [256, 320],
+          'TRAIN_JITTER_SCALES_RELATIVE': [0.08, 1.0],
+          'TRAIN_PCA_EIGVAL': [0.225, 0.224, 0.229],
+          'TRAIN_PCA_EIGVEC': [[-0.5675, 0.7192, 0.4009],
+                               [-0.5808, -0.0045, -0.814],
+                               [-0.5836, -0.6948, 0.4203]],
+          'USE_OFFSET_SAMPLING': True},
+ 'DATA_LOADER': {'ENABLE_MULTI_THREAD_DECODE': False,
+                 'NUM_WORKERS': 8,
+                 'PIN_MEMORY': True},
+ 'DEMO': {'BUFFER_SIZE': 0,
+          'CLIP_VIS_SIZE': 10,
+          'COMMON_CLASS_NAMES': ['watch (a person)',
+                                 'talk to (e.g., self, a person, a group)',
+                                 'listen to (a person)',
+                                 'touch (an object)',
+                                 'carry/hold (an object)',
+                                 'walk',
+                                 'sit',
+                                 'lie/sleep',
+                                 'bend/bow (at the waist)'],
+          'COMMON_CLASS_THRES': 0.7,
+          'DETECTRON2_CFG': 'COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml',
+          'DETECTRON2_THRESH': 0.9,
+          'DETECTRON2_WEIGHTS': 'detectron2://COCO-Detection/faster_rcnn_R_50_FPN_3x/137849458/model_final_280758.pkl',
+          'DISPLAY_HEIGHT': 0,
+          'DISPLAY_WIDTH': 0,
+          'ENABLE': False,
+          'FPS': 30,
+          'GT_BOXES': '',
+          'INPUT_FORMAT': 'BGR',
+          'INPUT_VIDEO': '',
+          'LABEL_FILE_PATH': '',
+          'NUM_CLIPS_SKIP': 0,
+          'NUM_VIS_INSTANCES': 2,
+          'OUTPUT_FILE': '',
+          'OUTPUT_FPS': -1,
+          'PREDS_BOXES': '',
+          'SLOWMO': 1,
+          'STARTING_SECOND': 900,
+          'THREAD_ENABLE': False,
+          'UNCOMMON_CLASS_THRES': 0.3,
+          'VIS_MODE': 'thres',
+          'WEBCAM': -1},
+ 'DETECTION': {'ALIGNED': True,
+               'ENABLE': False,
+               'ROI_XFORM_RESOLUTION': 7,
+               'SPATIAL_SCALE_FACTOR': 16},
+ 'DIST_BACKEND': 'nccl',
+ 'LOG_MODEL_INFO': True,
+ 'LOG_PERIOD': 10,
+ 'MASK': {'DECODER_DEPTH': 0,
+          'DECODER_EMBED_DIM': 512,
+          'DECODER_SEP_POS_EMBED': False,
+          'DEC_KV_KERNEL': [],
+          'DEC_KV_STRIDE': [],
+          'ENABLE': False,
+          'HEAD_TYPE': 'separate',
+          'MAE_ON': False,
+          'MAE_RND_MASK': False,
+          'NORM_PRED_PIXEL': True,
+          'PER_FRAME_MASKING': False,
+          'PRED_HOG': False,
+          'PRETRAIN_DEPTH': [15],
+          'SCALE_INIT_BY_DEPTH': False,
+          'TIME_STRIDE_LOSS': True},
+ 'MIXUP': {'ALPHA': 0.8,
+           'CUTMIX_ALPHA': 1.0,
+           'ENABLE': True,
+           'LABEL_SMOOTH_VALUE': 0.1,
+           'PROB': 1.0,
+           'SWITCH_PROB': 0.5},
+ 'MODEL': {'ACT_CHECKPOINT': False,
+           'ARCH': 'mvit',
+           'DETACH_FINAL_FC': False,
+           'DROPCONNECT_RATE': 0.0,
+           'DROPOUT_RATE': 0.5,
+           'FC_INIT_STD': 0.01,
+           'FP16_ALLREDUCE': False,
+           'FROZEN_BN': False,
+           'HEAD_ACT': 'softmax',
+           'LOSS_FUNC': 'soft_cross_entropy',
+           'MODEL_NAME': 'DAADMViT',
+           'MULTI_PATHWAY_ARCH': ['slowfast'],
+           'NUM_CLASSES': 7,
+           'SINGLE_PATHWAY_ARCH': ['2d',
+                                   'c2d',
+                                   'i3d',
+                                   'slow',
+                                   'x3d',
+                                   'mvit',
+                                   'maskmvit']},
+ 'MULTIGRID': {'BN_BASE_SIZE': 8,
+               'DEFAULT_B': 0,
+               'DEFAULT_S': 0,
+               'DEFAULT_T': 0,
+               'EPOCH_FACTOR': 1.5,
+               'EVAL_FREQ': 3,
+               'LONG_CYCLE': False,
+               'LONG_CYCLE_FACTORS': [(0.25, 0.7071067811865476),
+                                      (0.5, 0.7071067811865476),
+                                      (0.5, 1),
+                                      (1, 1)],
+               'LONG_CYCLE_SAMPLING_RATE': 0,
+               'SHORT_CYCLE': False,
+               'SHORT_CYCLE_FACTORS': [0.5, 0.7071067811865476]},
+ 'MVIT': {'CLS_EMBED_ON': True,
+          'DEPTH': 16,
+          'DIM_MUL': [[1, 2.0], [3, 2.0], [14, 2.0]],
+          'DIM_MUL_IN_ATT': True,
+          'DROPOUT_RATE': 0.0,
+          'DROPPATH_RATE': 0.2,
+          'EMBED_DIM': 96,
+          'HEAD_INIT_SCALE': 1.0,
+          'HEAD_MUL': [[1, 2.0], [3, 2.0], [14, 2.0]],
+          'LAYER_SCALE_INIT_VALUE': 0.0,
+          'MLP_RATIO': 4.0,
+          'MODE': 'conv',
+          'NORM': 'layernorm',
+          'NORM_STEM': False,
+          'NUM_HEADS': 1,
+          'PATCH_2D': False,
+          'PATCH_KERNEL': [3, 7, 7],
+          'PATCH_PADDING': [1, 3, 3],
+          'PATCH_STRIDE': [2, 4, 4],
+          'POOL_FIRST': False,
+          'POOL_KVQ_KERNEL': [3, 3, 3],
+          'POOL_KV_STRIDE': [],
+          'POOL_KV_STRIDE_ADAPTIVE': [1, 8, 8],
+          'POOL_Q_STRIDE': [[0, 1, 1, 1],
+                            [1, 1, 2, 2],
+                            [2, 1, 1, 1],
+                            [3, 1, 2, 2],
+                            [4, 1, 1, 1],
+                            [5, 1, 1, 1],
+                            [6, 1, 1, 1],
+                            [7, 1, 1, 1],
+                            [8, 1, 1, 1],
+                            [9, 1, 1, 1],
+                            [10, 1, 1, 1],
+                            [11, 1, 1, 1],
+                            [12, 1, 1, 1],
+                            [13, 1, 1, 1],
+                            [14, 1, 2, 2],
+                            [15, 1, 1, 1]],
+          'QKV_BIAS': True,
+          'REL_POS_SPATIAL': True,
+          'REL_POS_TEMPORAL': True,
+          'REL_POS_ZERO_INIT': False,
+          'RESIDUAL_POOLING': True,
+          'REV': {'BUFFER_LAYERS': [],
+                  'ENABLE': False,
+                  'PRE_Q_FUSION': 'avg',
+                  'RESPATH_FUSE': 'concat',
+                  'RES_PATH': 'conv'},
+          'SEPARATE_QKV': False,
+          'SEP_POS_EMBED': False,
+          'USE_ABS_POS': False,
+          'USE_FIXED_SINCOS_POS': False,
+          'USE_MEAN_POOLING': False,
+          'ZERO_DECAY_POS_CLS': False},
+ 'NONLOCAL': {'GROUP': [[1], [1], [1], [1]],
+              'INSTANTIATION': 'dot_product',
+              'LOCATION': [[[]], [[]], [[]], [[]]],
+              'POOL': [[[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]]]},
+ 'NUM_GPUS': 1,
+ 'NUM_SHARDS': 1,
+ 'OUTPUT_DIR': '.',
+ 'RESNET': {'DEPTH': 50,
+            'INPLACE_RELU': True,
+            'NUM_BLOCK_TEMP_KERNEL': [[3], [4], [6], [3]],
+            'NUM_GROUPS': 1,
+            'SPATIAL_DILATIONS': [[1], [1], [1], [1]],
+            'SPATIAL_STRIDES': [[1], [2], [2], [2]],
+            'STRIDE_1X1': False,
+            'TRANS_FUNC': 'bottleneck_transform',
+            'WIDTH_PER_GROUP': 64,
+            'ZERO_INIT_FINAL_BN': False,
+            'ZERO_INIT_FINAL_CONV': False},
+ 'RNG_SEED': 0,
+ 'SHARD_ID': 0,
+ 'SLOWFAST': {'ALPHA': 8,
+              'BETA_INV': 8,
+              'FUSION_CONV_CHANNEL_RATIO': 2,
+              'FUSION_KERNEL_SZ': 5},
+ 'SOLVER': {'BASE_LR': 0.0001,
+            'BASE_LR_SCALE_NUM_SHARDS': True,
+            'BETAS': (0.9, 0.999),
+            'CLIP_GRAD_L2NORM': 1.0,
+            'CLIP_GRAD_VAL': None,
+            'COSINE_AFTER_WARMUP': True,
+            'COSINE_END_LR': 1e-06,
+            'DAMPENING': 0.0,
+            'GAMMA': 0.1,
+            'LARS_ON': False,
+            'LAYER_DECAY': 1.0,
+            'LRS': [],
+            'LR_POLICY': 'cosine',
+            'MAX_EPOCH': 200,
+            'MOMENTUM': 0.9,
+            'NESTEROV': True,
+            'OPTIMIZING_METHOD': 'adamw',
+            'STEPS': [],
+            'STEP_SIZE': 1,
+            'WARMUP_EPOCHS': 30.0,
+            'WARMUP_FACTOR': 0.1,
+            'WARMUP_START_LR': 1e-06,
+            'WEIGHT_DECAY': 0.05,
+            'ZERO_WD_1D_PARAM': True},
+ 'TASK': '',
+ 'TENSORBOARD': {'CATEGORIES_PATH': '',
+                 'CLASS_NAMES_PATH': '',
+                 'CONFUSION_MATRIX': {'ENABLE': False,
+                                      'FIGSIZE': [8, 8],
+                                      'SUBSET_PATH': ''},
+                 'ENABLE': False,
+                 'HISTOGRAM': {'ENABLE': False,
+                               'FIGSIZE': [8, 8],
+                               'SUBSET_PATH': '',
+                               'TOPK': 10},
+                 'LOG_DIR': '',
+                 'MODEL_VIS': {'ACTIVATIONS': False,
+                               'COLORMAP': 'Pastel2',
+                               'ENABLE': False,
+                               'GRAD_CAM': {'COLORMAP': 'viridis',
+                                            'ENABLE': True,
+                                            'LAYER_LIST': [],
+                                            'USE_TRUE_LABEL': False},
+                               'INPUT_VIDEO': False,
+                               'LAYER_LIST': [],
+                               'MODEL_WEIGHTS': False,
+                               'TOPK_PREDS': 1},
+                 'PREDICTIONS_PATH': '',
+                 'WRONG_PRED_VIS': {'ENABLE': False,
+                                    'SUBSET_PATH': '',
+                                    'TAG': 'Incorrectly classified videos.'}},
+ 'TEST': {'BATCH_SIZE': 64,
+          'CHECKPOINT_FILE_PATH': '',
+          'CHECKPOINT_TYPE': 'pytorch',
+          'DATASET': 'daad',
+          'ENABLE': True,
+          'NUM_ENSEMBLE_VIEWS': 5,
+          'NUM_SPATIAL_CROPS': 1,
+          'NUM_TEMPORAL_CLIPS': [],
+          'SAVE_RESULTS_PATH': ''},
+ 'TRAIN': {'AUTO_RESUME': True,
+           'BATCH_SIZE': 2,
+           'CHECKPOINT_CLEAR_NAME_PATTERN': (),
+           'CHECKPOINT_EPOCH_RESET': False,
+           'CHECKPOINT_FILE_PATH': '',
+           'CHECKPOINT_INFLATE': False,
+           'CHECKPOINT_IN_INIT': False,
+           'CHECKPOINT_PERIOD': 10,
+           'CHECKPOINT_TYPE': 'pytorch',
+           'DATASET': 'daad',
+           'ENABLE': True,
+           'EVAL_PERIOD': 10,
+           'KILL_LOSS_EXPLOSION_FACTOR': 0.0,
+           'MIXED_PRECISION': False},
+ 'VIS_MASK': CfgNode({'ENABLE': False}),
+ 'X3D': {'BN_LIN5': False,
+         'BOTTLENECK_FACTOR': 1.0,
+         'CHANNELWISE_3x3x3': True,
+         'DEPTH_FACTOR': 1.0,
+         'DIM_C1': 12,
+         'DIM_C5': 2048,
+         'SCALE_RES2': False,
+         'WIDTH_FACTOR': 1.0}}
+[03/13 08:29:44][INFO] misc.py:  187: Model:
+DAADMViT(
+  (x1_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x2_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x3_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x4_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x5_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x6_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x1_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x2_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x3_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x4_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x5_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x6_projection): Linear(in_features=96, out_features=96, bias=True)
+  (blocks): ModuleList(
+    (0): MultiScaleBlock(
+      (norm1): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=96, out_features=288, bias=True)
+        (proj): Linear(in_features=96, out_features=96, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 8, 8), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 8, 8), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=96, out_features=384, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=384, out_features=96, bias=True)
+      )
+    )
+    (1): MultiScaleBlock(
+      (norm1): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=96, out_features=576, bias=True)
+        (proj): Linear(in_features=192, out_features=192, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=192, out_features=768, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=768, out_features=192, bias=True)
+      )
+      (proj): Linear(in_features=96, out_features=192, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (2): MultiScaleBlock(
+      (norm1): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=192, out_features=576, bias=True)
+        (proj): Linear(in_features=192, out_features=192, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=192, out_features=768, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=768, out_features=192, bias=True)
+      )
+    )
+    (3): MultiScaleBlock(
+      (norm1): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=192, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+      (proj): Linear(in_features=192, out_features=384, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (4): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (5): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (6): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (7): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (8): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (9): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (10): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (11): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (12): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (13): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (14): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=2304, bias=True)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+      )
+      (proj): Linear(in_features=384, out_features=768, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (15): MultiScaleBlock(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+      )
+    )
+  )
+  (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (head): TransformerBasicHead(
+    (dropout): Dropout(p=0.5, inplace=False)
+    (projection): Linear(in_features=1536, out_features=7, bias=True)
+    (act): Softmax(dim=1)
+  )
+)
+[03/13 08:29:44][INFO] misc.py:  189: Params: 34,487,527
+[03/13 08:29:44][INFO] misc.py:  190: Mem: 0.1288304328918457 MB
+[03/13 08:29:49][WARNING] jit_analysis.py:  499: Unsupported operator aten::add encountered 164 time(s)
+[03/13 08:29:49][WARNING] jit_analysis.py:  499: Unsupported operator aten::norm encountered 1 time(s)
+[03/13 08:29:49][WARNING] jit_analysis.py:  499: Unsupported operator aten::clamp_min encountered 1 time(s)
+[03/13 08:29:49][WARNING] jit_analysis.py:  499: Unsupported operator aten::expand_as encountered 1 time(s)
+[03/13 08:29:49][WARNING] jit_analysis.py:  499: Unsupported operator aten::div encountered 137 time(s)
+[03/13 08:29:49][WARNING] jit_analysis.py:  499: Unsupported operator aten::mul encountered 978 time(s)
+[03/13 08:29:49][WARNING] jit_analysis.py:  499: Unsupported operator aten::sub encountered 192 time(s)
+[03/13 08:29:49][WARNING] jit_analysis.py:  499: Unsupported operator aten::add_ encountered 128 time(s)
+[03/13 08:29:49][WARNING] jit_analysis.py:  499: Unsupported operator aten::softmax encountered 33 time(s)
+[03/13 08:29:49][WARNING] jit_analysis.py:  499: Unsupported operator aten::gelu encountered 32 time(s)
+[03/13 08:29:49][WARNING] jit_analysis.py:  499: Unsupported operator aten::max_pool3d encountered 6 time(s)
+[03/13 08:29:49][WARNING] jit_analysis.py:  511: The following submodules of the model were never called during the trace of the graph. They may be unused, or they were accessed by direct calls to .forward() or via other python methods. In the latter case they will have zeros for statistics, though their statistics will still contribute to their parent calling module.
+blocks.1.drop_path, blocks.10.drop_path, blocks.11.drop_path, blocks.12.drop_path, blocks.13.drop_path, blocks.14.drop_path, blocks.15.drop_path, blocks.2.drop_path, blocks.3.drop_path, blocks.4.drop_path, blocks.5.drop_path, blocks.6.drop_path, blocks.7.drop_path, blocks.8.drop_path, blocks.9.drop_path
+[03/13 08:29:49][INFO] misc.py:  192: Flops: 13.70758592 G
+[03/13 08:29:52][WARNING] jit_analysis.py:  499: Unsupported operator aten::add encountered 164 time(s)
+[03/13 08:29:52][WARNING] jit_analysis.py:  499: Unsupported operator aten::norm encountered 1 time(s)
+[03/13 08:29:52][WARNING] jit_analysis.py:  499: Unsupported operator aten::clamp_min encountered 1 time(s)
+[03/13 08:29:52][WARNING] jit_analysis.py:  499: Unsupported operator aten::expand_as encountered 1 time(s)
+[03/13 08:29:52][WARNING] jit_analysis.py:  499: Unsupported operator aten::div encountered 137 time(s)
+[03/13 08:29:52][WARNING] jit_analysis.py:  499: Unsupported operator aten::layer_norm encountered 162 time(s)
+[03/13 08:29:52][WARNING] jit_analysis.py:  499: Unsupported operator aten::mul encountered 978 time(s)
+[03/13 08:29:52][WARNING] jit_analysis.py:  499: Unsupported operator aten::sub encountered 192 time(s)
+[03/13 08:29:52][WARNING] jit_analysis.py:  499: Unsupported operator aten::add_ encountered 128 time(s)
+[03/13 08:29:52][WARNING] jit_analysis.py:  499: Unsupported operator aten::softmax encountered 33 time(s)
+[03/13 08:29:52][WARNING] jit_analysis.py:  499: Unsupported operator aten::gelu encountered 32 time(s)
+[03/13 08:29:52][WARNING] jit_analysis.py:  499: Unsupported operator aten::max_pool3d encountered 6 time(s)
+[03/13 08:29:52][WARNING] jit_analysis.py:  511: The following submodules of the model were never called during the trace of the graph. They may be unused, or they were accessed by direct calls to .forward() or via other python methods. In the latter case they will have zeros for statistics, though their statistics will still contribute to their parent calling module.
+blocks.1.drop_path, blocks.10.drop_path, blocks.11.drop_path, blocks.12.drop_path, blocks.13.drop_path, blocks.14.drop_path, blocks.15.drop_path, blocks.2.drop_path, blocks.3.drop_path, blocks.4.drop_path, blocks.5.drop_path, blocks.6.drop_path, blocks.7.drop_path, blocks.8.drop_path, blocks.9.drop_path
+[03/13 08:29:52][INFO] misc.py:  193: Activations: 48.651247 M
+[03/13 08:29:52][INFO] misc.py:  198: nvidia-smi
+[03/13 08:29:53][INFO] daad.py:   99: Constructing DAAD train...
+[03/13 08:30:55][INFO] train_net.py:  518: Train with config:
+[03/13 08:30:55][INFO] train_net.py:  519: {'AUG': {'AA_TYPE': 'rand-m7-n4-mstd0.5-inc1',
+         'COLOR_JITTER': 0.4,
+         'ENABLE': True,
+         'GEN_MASK_LOADER': False,
+         'INTERPOLATION': 'bicubic',
+         'MASK_FRAMES': False,
+         'MASK_RATIO': 0.0,
+         'MASK_TUBE': False,
+         'MASK_WINDOW_SIZE': [8, 7, 7],
+         'MAX_MASK_PATCHES_PER_BLOCK': None,
+         'NUM_SAMPLE': 2,
+         'RE_COUNT': 1,
+         'RE_MODE': 'pixel',
+         'RE_PROB': 0.25,
+         'RE_SPLIT': False},
+ 'AVA': {'ANNOTATION_DIR': '/mnt/vol/gfsai-flash3-east/ai-group/users/haoqifan/ava/frame_list/',
+         'BGR': False,
+         'DETECTION_SCORE_THRESH': 0.9,
+         'EXCLUSION_FILE': 'ava_val_excluded_timestamps_v2.2.csv',
+         'FRAME_DIR': '/mnt/fair-flash3-east/ava_trainval_frames.img/',
+         'FRAME_LIST_DIR': '/mnt/vol/gfsai-flash3-east/ai-group/users/haoqifan/ava/frame_list/',
+         'FULL_TEST_ON_VAL': False,
+         'GROUNDTRUTH_FILE': 'ava_val_v2.2.csv',
+         'IMG_PROC_BACKEND': 'cv2',
+         'LABEL_MAP_FILE': 'ava_action_list_v2.2_for_activitynet_2019.pbtxt',
+         'TEST_FORCE_FLIP': False,
+         'TEST_LISTS': ['val.csv'],
+         'TEST_PREDICT_BOX_LISTS': ['ava_val_predicted_boxes.csv'],
+         'TRAIN_GT_BOX_LISTS': ['ava_train_v2.2.csv'],
+         'TRAIN_LISTS': ['train.csv'],
+         'TRAIN_PCA_JITTER_ONLY': True,
+         'TRAIN_PREDICT_BOX_LISTS': [],
+         'TRAIN_USE_COLOR_AUGMENTATION': False},
+ 'BENCHMARK': CfgNode({'NUM_EPOCHS': 5, 'LOG_PERIOD': 100, 'SHUFFLE': True}),
+ 'BN': {'GLOBAL_SYNC': False,
+        'NORM_TYPE': 'batchnorm',
+        'NUM_BATCHES_PRECISE': 200,
+        'NUM_SPLITS': 1,
+        'NUM_SYNC_DEVICES': 1,
+        'USE_PRECISE_STATS': False,
+        'WEIGHT_DECAY': 0.0},
+ 'CONTRASTIVE': {'BN_MLP': False,
+                 'BN_SYNC_MLP': False,
+                 'DELTA_CLIPS_MAX': inf,
+                 'DELTA_CLIPS_MIN': -inf,
+                 'DIM': 128,
+                 'INTERP_MEMORY': False,
+                 'KNN_ON': True,
+                 'LENGTH': 239975,
+                 'LOCAL_SHUFFLE_BN': True,
+                 'MEM_TYPE': '1d',
+                 'MLP_DIM': 2048,
+                 'MOCO_MULTI_VIEW_QUEUE': False,
+                 'MOMENTUM': 0.5,
+                 'MOMENTUM_ANNEALING': False,
+                 'NUM_CLASSES_DOWNSTREAM': 400,
+                 'NUM_MLP_LAYERS': 1,
+                 'PREDICTOR_DEPTHS': [],
+                 'QUEUE_LEN': 65536,
+                 'SEQUENTIAL': False,
+                 'SIMCLR_DIST_ON': True,
+                 'SWAV_QEUE_LEN': 0,
+                 'T': 0.07,
+                 'TYPE': 'mem'},
+ 'DATA': {'COLOR_RND_GRAYSCALE': 0.0,
+          'DECODING_BACKEND': 'torchvision',
+          'DECODING_SHORT_SIZE': 256,
+          'DUMMY_LOAD': False,
+          'ENSEMBLE_METHOD': 'sum',
+          'IN22K_TRAINVAL': False,
+          'IN22k_VAL_IN1K': '',
+          'INPUT_CHANNEL_NUM': [3],
+          'INV_UNIFORM_SAMPLE': False,
+          'IN_VAL_CROP_RATIO': 0.875,
+          'LOADER_CHUNK_OVERALL_SIZE': 0,
+          'LOADER_CHUNK_SIZE': 0,
+          'MEAN': [0.45, 0.45, 0.45],
+          'MULTI_LABEL': False,
+          'NUM_FRAMES': 2,
+          'NUM_VIEWS': 6,
+          'PATH_LABEL_SEPARATOR': ' ',
+          'PATH_PREFIX': '',
+          'PATH_TO_DATA_DIR': '/scratch/naman/slowfast/data/daad/dipx/trainval/',
+          'PATH_TO_PRELOAD_IMDB': '',
+          'RANDOM_FLIP': True,
+          'REVERSE_INPUT_CHANNEL': False,
+          'SAMPLING_RATE': 4,
+          'SKIP_ROWS': 0,
+          'SSL_BLUR_SIGMA_MAX': [0.0, 2.0],
+          'SSL_BLUR_SIGMA_MIN': [0.0, 0.1],
+          'SSL_COLOR_BRI_CON_SAT': [0.4, 0.4, 0.4],
+          'SSL_COLOR_HUE': 0.1,
+          'SSL_COLOR_JITTER': False,
+          'SSL_MOCOV2_AUG': False,
+          'STD': [0.225, 0.225, 0.225],
+          'TARGET_FPS': 30,
+          'TEST_CROP_SIZE': 224,
+          'TIME_DIFF_PROB': 0.0,
+          'TRAIN_CROP_NUM_SPATIAL': 1,
+          'TRAIN_CROP_NUM_TEMPORAL': 1,
+          'TRAIN_CROP_SIZE': 224,
+          'TRAIN_JITTER_ASPECT_RELATIVE': [0.75, 1.3333],
+          'TRAIN_JITTER_FPS': 0.0,
+          'TRAIN_JITTER_MOTION_SHIFT': False,
+          'TRAIN_JITTER_SCALES': [256, 320],
+          'TRAIN_JITTER_SCALES_RELATIVE': [0.08, 1.0],
+          'TRAIN_PCA_EIGVAL': [0.225, 0.224, 0.229],
+          'TRAIN_PCA_EIGVEC': [[-0.5675, 0.7192, 0.4009],
+                               [-0.5808, -0.0045, -0.814],
+                               [-0.5836, -0.6948, 0.4203]],
+          'USE_OFFSET_SAMPLING': True},
+ 'DATA_LOADER': {'ENABLE_MULTI_THREAD_DECODE': False,
+                 'NUM_WORKERS': 8,
+                 'PIN_MEMORY': True},
+ 'DEMO': {'BUFFER_SIZE': 0,
+          'CLIP_VIS_SIZE': 10,
+          'COMMON_CLASS_NAMES': ['watch (a person)',
+                                 'talk to (e.g., self, a person, a group)',
+                                 'listen to (a person)',
+                                 'touch (an object)',
+                                 'carry/hold (an object)',
+                                 'walk',
+                                 'sit',
+                                 'lie/sleep',
+                                 'bend/bow (at the waist)'],
+          'COMMON_CLASS_THRES': 0.7,
+          'DETECTRON2_CFG': 'COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml',
+          'DETECTRON2_THRESH': 0.9,
+          'DETECTRON2_WEIGHTS': 'detectron2://COCO-Detection/faster_rcnn_R_50_FPN_3x/137849458/model_final_280758.pkl',
+          'DISPLAY_HEIGHT': 0,
+          'DISPLAY_WIDTH': 0,
+          'ENABLE': False,
+          'FPS': 30,
+          'GT_BOXES': '',
+          'INPUT_FORMAT': 'BGR',
+          'INPUT_VIDEO': '',
+          'LABEL_FILE_PATH': '',
+          'NUM_CLIPS_SKIP': 0,
+          'NUM_VIS_INSTANCES': 2,
+          'OUTPUT_FILE': '',
+          'OUTPUT_FPS': -1,
+          'PREDS_BOXES': '',
+          'SLOWMO': 1,
+          'STARTING_SECOND': 900,
+          'THREAD_ENABLE': False,
+          'UNCOMMON_CLASS_THRES': 0.3,
+          'VIS_MODE': 'thres',
+          'WEBCAM': -1},
+ 'DETECTION': {'ALIGNED': True,
+               'ENABLE': False,
+               'ROI_XFORM_RESOLUTION': 7,
+               'SPATIAL_SCALE_FACTOR': 16},
+ 'DIST_BACKEND': 'nccl',
+ 'LOG_MODEL_INFO': True,
+ 'LOG_PERIOD': 10,
+ 'MASK': {'DECODER_DEPTH': 0,
+          'DECODER_EMBED_DIM': 512,
+          'DECODER_SEP_POS_EMBED': False,
+          'DEC_KV_KERNEL': [],
+          'DEC_KV_STRIDE': [],
+          'ENABLE': False,
+          'HEAD_TYPE': 'separate',
+          'MAE_ON': False,
+          'MAE_RND_MASK': False,
+          'NORM_PRED_PIXEL': True,
+          'PER_FRAME_MASKING': False,
+          'PRED_HOG': False,
+          'PRETRAIN_DEPTH': [15],
+          'SCALE_INIT_BY_DEPTH': False,
+          'TIME_STRIDE_LOSS': True},
+ 'MIXUP': {'ALPHA': 0.8,
+           'CUTMIX_ALPHA': 1.0,
+           'ENABLE': True,
+           'LABEL_SMOOTH_VALUE': 0.1,
+           'PROB': 1.0,
+           'SWITCH_PROB': 0.5},
+ 'MODEL': {'ACT_CHECKPOINT': False,
+           'ARCH': 'mvit',
+           'DETACH_FINAL_FC': False,
+           'DROPCONNECT_RATE': 0.0,
+           'DROPOUT_RATE': 0.5,
+           'FC_INIT_STD': 0.01,
+           'FP16_ALLREDUCE': False,
+           'FROZEN_BN': False,
+           'HEAD_ACT': 'softmax',
+           'LOSS_FUNC': 'soft_cross_entropy',
+           'MODEL_NAME': 'DAADMViT',
+           'MULTI_PATHWAY_ARCH': ['slowfast'],
+           'NUM_CLASSES': 7,
+           'SINGLE_PATHWAY_ARCH': ['2d',
+                                   'c2d',
+                                   'i3d',
+                                   'slow',
+                                   'x3d',
+                                   'mvit',
+                                   'maskmvit']},
+ 'MULTIGRID': {'BN_BASE_SIZE': 8,
+               'DEFAULT_B': 0,
+               'DEFAULT_S': 0,
+               'DEFAULT_T': 0,
+               'EPOCH_FACTOR': 1.5,
+               'EVAL_FREQ': 3,
+               'LONG_CYCLE': False,
+               'LONG_CYCLE_FACTORS': [(0.25, 0.7071067811865476),
+                                      (0.5, 0.7071067811865476),
+                                      (0.5, 1),
+                                      (1, 1)],
+               'LONG_CYCLE_SAMPLING_RATE': 0,
+               'SHORT_CYCLE': False,
+               'SHORT_CYCLE_FACTORS': [0.5, 0.7071067811865476]},
+ 'MVIT': {'CLS_EMBED_ON': True,
+          'DEPTH': 16,
+          'DIM_MUL': [[1, 2.0], [3, 2.0], [14, 2.0]],
+          'DIM_MUL_IN_ATT': True,
+          'DROPOUT_RATE': 0.0,
+          'DROPPATH_RATE': 0.2,
+          'EMBED_DIM': 96,
+          'HEAD_INIT_SCALE': 1.0,
+          'HEAD_MUL': [[1, 2.0], [3, 2.0], [14, 2.0]],
+          'LAYER_SCALE_INIT_VALUE': 0.0,
+          'MLP_RATIO': 4.0,
+          'MODE': 'conv',
+          'NORM': 'layernorm',
+          'NORM_STEM': False,
+          'NUM_HEADS': 1,
+          'PATCH_2D': False,
+          'PATCH_KERNEL': [3, 7, 7],
+          'PATCH_PADDING': [1, 3, 3],
+          'PATCH_STRIDE': [2, 4, 4],
+          'POOL_FIRST': False,
+          'POOL_KVQ_KERNEL': [3, 3, 3],
+          'POOL_KV_STRIDE': [],
+          'POOL_KV_STRIDE_ADAPTIVE': [1, 8, 8],
+          'POOL_Q_STRIDE': [[0, 1, 1, 1],
+                            [1, 1, 2, 2],
+                            [2, 1, 1, 1],
+                            [3, 1, 2, 2],
+                            [4, 1, 1, 1],
+                            [5, 1, 1, 1],
+                            [6, 1, 1, 1],
+                            [7, 1, 1, 1],
+                            [8, 1, 1, 1],
+                            [9, 1, 1, 1],
+                            [10, 1, 1, 1],
+                            [11, 1, 1, 1],
+                            [12, 1, 1, 1],
+                            [13, 1, 1, 1],
+                            [14, 1, 2, 2],
+                            [15, 1, 1, 1]],
+          'QKV_BIAS': True,
+          'REL_POS_SPATIAL': True,
+          'REL_POS_TEMPORAL': True,
+          'REL_POS_ZERO_INIT': False,
+          'RESIDUAL_POOLING': True,
+          'REV': {'BUFFER_LAYERS': [],
+                  'ENABLE': False,
+                  'PRE_Q_FUSION': 'avg',
+                  'RESPATH_FUSE': 'concat',
+                  'RES_PATH': 'conv'},
+          'SEPARATE_QKV': False,
+          'SEP_POS_EMBED': False,
+          'USE_ABS_POS': False,
+          'USE_FIXED_SINCOS_POS': False,
+          'USE_MEAN_POOLING': False,
+          'ZERO_DECAY_POS_CLS': False},
+ 'NONLOCAL': {'GROUP': [[1], [1], [1], [1]],
+              'INSTANTIATION': 'dot_product',
+              'LOCATION': [[[]], [[]], [[]], [[]]],
+              'POOL': [[[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]],
+                       [[1, 2, 2], [1, 2, 2]]]},
+ 'NUM_GPUS': 1,
+ 'NUM_SHARDS': 1,
+ 'OUTPUT_DIR': '.',
+ 'RESNET': {'DEPTH': 50,
+            'INPLACE_RELU': True,
+            'NUM_BLOCK_TEMP_KERNEL': [[3], [4], [6], [3]],
+            'NUM_GROUPS': 1,
+            'SPATIAL_DILATIONS': [[1], [1], [1], [1]],
+            'SPATIAL_STRIDES': [[1], [2], [2], [2]],
+            'STRIDE_1X1': False,
+            'TRANS_FUNC': 'bottleneck_transform',
+            'WIDTH_PER_GROUP': 64,
+            'ZERO_INIT_FINAL_BN': False,
+            'ZERO_INIT_FINAL_CONV': False},
+ 'RNG_SEED': 0,
+ 'SHARD_ID': 0,
+ 'SLOWFAST': {'ALPHA': 8,
+              'BETA_INV': 8,
+              'FUSION_CONV_CHANNEL_RATIO': 2,
+              'FUSION_KERNEL_SZ': 5},
+ 'SOLVER': {'BASE_LR': 0.0001,
+            'BASE_LR_SCALE_NUM_SHARDS': True,
+            'BETAS': (0.9, 0.999),
+            'CLIP_GRAD_L2NORM': 1.0,
+            'CLIP_GRAD_VAL': None,
+            'COSINE_AFTER_WARMUP': True,
+            'COSINE_END_LR': 1e-06,
+            'DAMPENING': 0.0,
+            'GAMMA': 0.1,
+            'LARS_ON': False,
+            'LAYER_DECAY': 1.0,
+            'LRS': [],
+            'LR_POLICY': 'cosine',
+            'MAX_EPOCH': 200,
+            'MOMENTUM': 0.9,
+            'NESTEROV': True,
+            'OPTIMIZING_METHOD': 'adamw',
+            'STEPS': [],
+            'STEP_SIZE': 1,
+            'WARMUP_EPOCHS': 30.0,
+            'WARMUP_FACTOR': 0.1,
+            'WARMUP_START_LR': 1e-06,
+            'WEIGHT_DECAY': 0.05,
+            'ZERO_WD_1D_PARAM': True},
+ 'TASK': '',
+ 'TENSORBOARD': {'CATEGORIES_PATH': '',
+                 'CLASS_NAMES_PATH': '',
+                 'CONFUSION_MATRIX': {'ENABLE': False,
+                                      'FIGSIZE': [8, 8],
+                                      'SUBSET_PATH': ''},
+                 'ENABLE': False,
+                 'HISTOGRAM': {'ENABLE': False,
+                               'FIGSIZE': [8, 8],
+                               'SUBSET_PATH': '',
+                               'TOPK': 10},
+                 'LOG_DIR': '',
+                 'MODEL_VIS': {'ACTIVATIONS': False,
+                               'COLORMAP': 'Pastel2',
+                               'ENABLE': False,
+                               'GRAD_CAM': {'COLORMAP': 'viridis',
+                                            'ENABLE': True,
+                                            'LAYER_LIST': [],
+                                            'USE_TRUE_LABEL': False},
+                               'INPUT_VIDEO': False,
+                               'LAYER_LIST': [],
+                               'MODEL_WEIGHTS': False,
+                               'TOPK_PREDS': 1},
+                 'PREDICTIONS_PATH': '',
+                 'WRONG_PRED_VIS': {'ENABLE': False,
+                                    'SUBSET_PATH': '',
+                                    'TAG': 'Incorrectly classified videos.'}},
+ 'TEST': {'BATCH_SIZE': 64,
+          'CHECKPOINT_FILE_PATH': '',
+          'CHECKPOINT_TYPE': 'pytorch',
+          'DATASET': 'daad',
+          'ENABLE': True,
+          'NUM_ENSEMBLE_VIEWS': 5,
+          'NUM_SPATIAL_CROPS': 1,
+          'NUM_TEMPORAL_CLIPS': [],
+          'SAVE_RESULTS_PATH': ''},
+ 'TRAIN': {'AUTO_RESUME': True,
+           'BATCH_SIZE': 2,
+           'CHECKPOINT_CLEAR_NAME_PATTERN': (),
+           'CHECKPOINT_EPOCH_RESET': False,
+           'CHECKPOINT_FILE_PATH': '',
+           'CHECKPOINT_INFLATE': False,
+           'CHECKPOINT_IN_INIT': False,
+           'CHECKPOINT_PERIOD': 10,
+           'CHECKPOINT_TYPE': 'pytorch',
+           'DATASET': 'daad',
+           'ENABLE': True,
+           'EVAL_PERIOD': 10,
+           'KILL_LOSS_EXPLOSION_FACTOR': 0.0,
+           'MIXED_PRECISION': False},
+ 'VIS_MASK': CfgNode({'ENABLE': False}),
+ 'X3D': {'BN_LIN5': False,
+         'BOTTLENECK_FACTOR': 1.0,
+         'CHANNELWISE_3x3x3': True,
+         'DEPTH_FACTOR': 1.0,
+         'DIM_C1': 12,
+         'DIM_C5': 2048,
+         'SCALE_RES2': False,
+         'WIDTH_FACTOR': 1.0}}
+[03/13 08:30:58][INFO] misc.py:  187: Model:
+DAADMViT(
+  (x1_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x2_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x3_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x4_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x5_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x6_patch_embed): PatchEmbed(
+    (proj): Conv3d(3, 96, kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3))
+  )
+  (x1_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x2_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x3_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x4_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x5_projection): Linear(in_features=96, out_features=96, bias=True)
+  (x6_projection): Linear(in_features=96, out_features=96, bias=True)
+  (blocks): ModuleList(
+    (0): MultiScaleBlock(
+      (norm1): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=96, out_features=288, bias=True)
+        (proj): Linear(in_features=96, out_features=96, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 8, 8), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 8, 8), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=96, out_features=384, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=384, out_features=96, bias=True)
+      )
+    )
+    (1): MultiScaleBlock(
+      (norm1): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=96, out_features=576, bias=True)
+        (proj): Linear(in_features=192, out_features=192, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=192, out_features=768, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=768, out_features=192, bias=True)
+      )
+      (proj): Linear(in_features=96, out_features=192, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (2): MultiScaleBlock(
+      (norm1): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=192, out_features=576, bias=True)
+        (proj): Linear(in_features=192, out_features=192, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 4, 4), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=192, out_features=768, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=768, out_features=192, bias=True)
+      )
+    )
+    (3): MultiScaleBlock(
+      (norm1): LayerNorm((192,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=192, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+      (proj): Linear(in_features=192, out_features=384, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (4): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (5): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (6): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (7): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (8): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (9): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (10): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (11): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (12): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (13): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+      )
+    )
+    (14): MultiScaleBlock(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=384, out_features=2304, bias=True)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+      )
+      (proj): Linear(in_features=384, out_features=768, bias=True)
+      (pool_skip): MaxPool3d(kernel_size=[1, 3, 3], stride=[1, 2, 2], padding=[0, 1, 1], dilation=1, ceil_mode=False)
+    )
+    (15): MultiScaleBlock(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): MultiScaleAttention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (pool_q): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_q): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_k): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_k): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+        (pool_v): Conv3d(96, 96, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), groups=96, bias=False)
+        (norm_v): LayerNorm((96,), eps=1e-06, elementwise_affine=True)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU(approximate='none')
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+      )
+    )
+  )
+  (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  (head): TransformerBasicHead(
+    (dropout): Dropout(p=0.5, inplace=False)
+    (projection): Linear(in_features=1536, out_features=7, bias=True)
+    (act): Softmax(dim=1)
+  )
+)
+[03/13 08:30:58][INFO] misc.py:  189: Params: 34,487,527
+[03/13 08:30:58][INFO] misc.py:  190: Mem: 0.1288304328918457 MB
+[03/13 08:31:03][WARNING] jit_analysis.py:  499: Unsupported operator aten::add encountered 164 time(s)
+[03/13 08:31:03][WARNING] jit_analysis.py:  499: Unsupported operator aten::norm encountered 1 time(s)
+[03/13 08:31:03][WARNING] jit_analysis.py:  499: Unsupported operator aten::clamp_min encountered 1 time(s)
+[03/13 08:31:03][WARNING] jit_analysis.py:  499: Unsupported operator aten::expand_as encountered 1 time(s)
+[03/13 08:31:03][WARNING] jit_analysis.py:  499: Unsupported operator aten::div encountered 137 time(s)
+[03/13 08:31:03][WARNING] jit_analysis.py:  499: Unsupported operator aten::mul encountered 978 time(s)
+[03/13 08:31:03][WARNING] jit_analysis.py:  499: Unsupported operator aten::sub encountered 192 time(s)
+[03/13 08:31:03][WARNING] jit_analysis.py:  499: Unsupported operator aten::add_ encountered 128 time(s)
+[03/13 08:31:03][WARNING] jit_analysis.py:  499: Unsupported operator aten::softmax encountered 33 time(s)
+[03/13 08:31:03][WARNING] jit_analysis.py:  499: Unsupported operator aten::gelu encountered 32 time(s)
+[03/13 08:31:03][WARNING] jit_analysis.py:  499: Unsupported operator aten::max_pool3d encountered 6 time(s)
+[03/13 08:31:03][WARNING] jit_analysis.py:  511: The following submodules of the model were never called during the trace of the graph. They may be unused, or they were accessed by direct calls to .forward() or via other python methods. In the latter case they will have zeros for statistics, though their statistics will still contribute to their parent calling module.
+blocks.1.drop_path, blocks.10.drop_path, blocks.11.drop_path, blocks.12.drop_path, blocks.13.drop_path, blocks.14.drop_path, blocks.15.drop_path, blocks.2.drop_path, blocks.3.drop_path, blocks.4.drop_path, blocks.5.drop_path, blocks.6.drop_path, blocks.7.drop_path, blocks.8.drop_path, blocks.9.drop_path
+[03/13 08:31:03][INFO] misc.py:  192: Flops: 13.70758592 G
+[03/13 08:31:07][WARNING] jit_analysis.py:  499: Unsupported operator aten::add encountered 164 time(s)
+[03/13 08:31:07][WARNING] jit_analysis.py:  499: Unsupported operator aten::norm encountered 1 time(s)
+[03/13 08:31:07][WARNING] jit_analysis.py:  499: Unsupported operator aten::clamp_min encountered 1 time(s)
+[03/13 08:31:07][WARNING] jit_analysis.py:  499: Unsupported operator aten::expand_as encountered 1 time(s)
+[03/13 08:31:07][WARNING] jit_analysis.py:  499: Unsupported operator aten::div encountered 137 time(s)
+[03/13 08:31:07][WARNING] jit_analysis.py:  499: Unsupported operator aten::layer_norm encountered 162 time(s)
+[03/13 08:31:07][WARNING] jit_analysis.py:  499: Unsupported operator aten::mul encountered 978 time(s)
+[03/13 08:31:07][WARNING] jit_analysis.py:  499: Unsupported operator aten::sub encountered 192 time(s)
+[03/13 08:31:07][WARNING] jit_analysis.py:  499: Unsupported operator aten::add_ encountered 128 time(s)
+[03/13 08:31:07][WARNING] jit_analysis.py:  499: Unsupported operator aten::softmax encountered 33 time(s)
+[03/13 08:31:07][WARNING] jit_analysis.py:  499: Unsupported operator aten::gelu encountered 32 time(s)
+[03/13 08:31:07][WARNING] jit_analysis.py:  499: Unsupported operator aten::max_pool3d encountered 6 time(s)
+[03/13 08:31:07][WARNING] jit_analysis.py:  511: The following submodules of the model were never called during the trace of the graph. They may be unused, or they were accessed by direct calls to .forward() or via other python methods. In the latter case they will have zeros for statistics, though their statistics will still contribute to their parent calling module.
+blocks.1.drop_path, blocks.10.drop_path, blocks.11.drop_path, blocks.12.drop_path, blocks.13.drop_path, blocks.14.drop_path, blocks.15.drop_path, blocks.2.drop_path, blocks.3.drop_path, blocks.4.drop_path, blocks.5.drop_path, blocks.6.drop_path, blocks.7.drop_path, blocks.8.drop_path, blocks.9.drop_path
+[03/13 08:31:07][INFO] misc.py:  193: Activations: 48.651247 M
+[03/13 08:31:07][INFO] misc.py:  198: nvidia-smi
+[03/13 08:31:07][INFO] daad.py:   99: Constructing DAAD train...
+[03/13 08:31:07][INFO] daad.py:  171: Constructing DAAD dataloader (size: 1097 skip_rows 0) from /scratch/naman/slowfast/data/daad/dipx/trainval/train.csv
+[03/13 08:31:07][INFO] daad.py:   99: Constructing DAAD val...
+[03/13 08:31:07][INFO] daad.py:  171: Constructing DAAD dataloader (size: 313 skip_rows 0) from /scratch/naman/slowfast/data/daad/dipx/trainval/val.csv
+[03/13 08:31:07][INFO] train_net.py:  611: Start epoch: 1
+[03/13 08:31:25][INFO] decoder.py:  340: TV decode FAILED try decode all
+[03/13 08:31:27][INFO] decoder.py:  340: TV decode FAILED try decode all
+[03/13 08:31:45][INFO] decoder.py:  340: TV decode FAILED try decode all
+[03/13 08:32:00][INFO] decoder.py:  340: TV decode FAILED try decode all
+[03/13 08:32:06][INFO] logging.py:   98: json_stats: {"_type": "train_iter_", "dt": 3.22227, "dt_data": 2.82624, "dt_net": 0.39603, "epoch": "1/200", "eta": "4 days, 2:05:28", "gpu_mem": "1.83G", "grad_norm": 157.13087, "iter": "10/548", "loss": 2.42768, "lr": 0.00000, "top1_err": 75.00000, "top5_err": 25.00000}
+[03/13 08:32:11][INFO] decoder.py:  340: TV decode FAILED try decode all
+[03/13 08:32:13][INFO] decoder.py:  340: TV decode FAILED try decode all
+[03/13 08:32:17][INFO] decoder.py:  340: TV decode FAILED try decode all
