@@ -177,7 +177,6 @@ class MultiScaleAttention(nn.Module):
         rel_pos_zero_init=False,
         residual_pooling=False,
         separate_qkv=False,
-        num_memory_tokens=0,
     ):
         super().__init__()
         self.pool_first = pool_first
@@ -299,9 +298,8 @@ class MultiScaleAttention(nn.Module):
 
         self.residual_pooling = residual_pooling
 
-        if num_memory_tokens > 0:
-            self.memory = nn.Parameter(torch.zeros(1, dim))
-            nn.init.trunc_normal_(self.memory, std=0.02)
+        self.memory = nn.Parameter(torch.zeros(1, dim))
+        nn.init.trunc_normal_(self.memory, std=0.02)
 
     def forward(self, x, thw_shape, num_memory_tokens):
         B, N, _ = x.shape
@@ -355,13 +353,9 @@ class MultiScaleAttention(nn.Module):
             has_cls_embed=self.has_cls_embed,
             norm=getattr(self, "norm_v", None),
         )
-        #print(f"*** K Shape Before: {k.shape}") #[1, 1, 393, 96]
-        #print(f"*** V Shape Before: {v.shape}") #[1, 1, 393, 96]
         if num_memory_tokens > 0:
             k = torch.cat([memory_k, k], dim=2)
-            #print(f"*** K Shape: {k.shape}") #[1, 1, 405, 96]
             v = torch.cat([memory_v, v], dim=2)
-            #print(f"*** V Shape: {v.shape}") #[1, 1, 405, 96]
 
         if self.pool_first:
             q_N = numpy.prod(q_shape) + 1 if self.has_cls_embed else numpy.prod(q_shape)
@@ -383,7 +377,6 @@ class MultiScaleAttention(nn.Module):
         N_kv = k.shape[2]
 
         attn = (q * self.scale) @ k.transpose(-2, -1)
-        #print(f"*** Attention Shape: {attn.shape}") #[1, 1, 25089, 405]
 
         if num_memory_tokens > 0:
             mask = torch.ones(B, self.num_heads, N_q, N_kv, device=x.device)
@@ -408,7 +401,6 @@ class MultiScaleAttention(nn.Module):
                 num_memory_tokens,
             )
 
-            #print(f"After POS SPATIAL ATTN: {attn.shape}")  #[[1, 1, 25089, 393]]
 
         if self.rel_pos_temporal:
             attn = cal_rel_pos_temporal(
@@ -467,7 +459,6 @@ class MultiScaleBlock(nn.Module):
         residual_pooling=False,
         dim_mul_in_att=False,
         separate_qkv=False,
-        num_memory_tokens=0,
     ):
         super().__init__()
         self.dim = dim
@@ -478,7 +469,6 @@ class MultiScaleBlock(nn.Module):
         stride_skip = stride_q
         padding_skip = [int(skip // 2) for skip in kernel_skip]
         att_dim = dim_out if dim_mul_in_att else dim
-        self.num_memory_tokens = num_memory_tokens
         self.attn = MultiScaleAttention(
             dim,
             att_dim,
@@ -499,7 +489,6 @@ class MultiScaleBlock(nn.Module):
             rel_pos_zero_init=rel_pos_zero_init,
             residual_pooling=residual_pooling,
             separate_qkv=separate_qkv,
-            num_memory_tokens=num_memory_tokens
         )
         self.drop_path = DropPath(drop_path) if drop_path > 0.0 else nn.Identity()
         self.norm2 = norm_layer(att_dim)

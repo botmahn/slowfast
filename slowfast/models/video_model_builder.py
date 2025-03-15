@@ -1165,7 +1165,6 @@ class MViT(nn.Module):
 
     def forward(self, x, bboxes=None, return_attn=False):
         x = x[0]
-        #print(f"Input Tensor Shape: {x.shape}")
         x, bcthw = self.patch_embed(x)
         bcthw = list(bcthw)
         if len(bcthw) == 4:  # Fix bcthw in case of 4D tensor
@@ -1298,7 +1297,8 @@ class DAADMViT(nn.Module):
         self.sep_pos_embed = cfg.MVIT.SEP_POS_EMBED
         self.rel_pos_spatial = cfg.MVIT.REL_POS_SPATIAL
         self.rel_pos_temporal = cfg.MVIT.REL_POS_TEMPORAL
-        self.num_memory_tokens = cfg.MVIT.NUM_MEMORY_TOKENS
+        self.num_outview_memory_tokens = cfg.MVIT.NUM_OUTVIEW_MEMORY_TOKENS
+        self.num_gaze_memory_tokens = cfg.MVIT.NUM_GAZE_MEMORY_TOKENS
         if cfg.MVIT.NORM == "layernorm":
             norm_layer = partial(nn.LayerNorm, eps=1e-6)
         else:
@@ -1533,7 +1533,6 @@ class DAADMViT(nn.Module):
                     residual_pooling=cfg.MVIT.RESIDUAL_POOLING,
                     dim_mul_in_att=cfg.MVIT.DIM_MUL_IN_ATT,
                     separate_qkv=cfg.MVIT.SEPARATE_QKV,
-                    num_memory_tokens=cfg.MVIT.NUM_MEMORY_TOKENS,
                 )
 
                 if cfg.MODEL.ACT_CHECKPOINT:
@@ -1706,7 +1705,6 @@ class DAADMViT(nn.Module):
         x6, _ = self.x6_patch_embed(x6) #[batch_size, num_tokens, embed_dim]
         x6 = self.x6_projection(x6) #[batch_size, num_tokens, embed_dim]
 
-        #x = torch.cat([x1, x2, x3, x4, x5], dim=1) #Fusion Along the tokens dimension: #[batch_size, 5 x num_tokens, embed_dim]
         x = x1 + x2 + x3 + x4 + x5 #Add and norm acc to https://arxiv.org/pdf/2210.00843 paper.
         x = F.normalize(x, p=2, dim=-1)
 
@@ -1787,10 +1785,10 @@ class DAADMViT(nn.Module):
 
         else:
             for blk in self.blocks:
-                x, thw = blk(x, thw, num_memory_tokens=10)
+                x, thw = blk(x, thw, num_memory_tokens=self.num_outview_memory_tokens)
 
             for blk in self.blocks:
-                x6, x6_thw = blk(x6, x6_thw, num_memory_tokens=2)
+                x6, x6_thw = blk(x6, x6_thw, num_memory_tokens=self.num_gaze_memory_tokens)
 
             if self.enable_detection:
                 assert not self.enable_rev

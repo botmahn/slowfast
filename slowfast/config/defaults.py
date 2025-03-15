@@ -558,7 +558,8 @@ _C.MVIT.USE_MEAN_POOLING = False
 _C.MVIT.USE_FIXED_SINCOS_POS = False
 
 # Add learnable memory tokens to the model.
-_C.MVIT.NUM_MEMORY_TOKENS = 0
+_C.MVIT.NUM_OUTVIEW_MEMORY_TOKENS = 0
+_C.MVIT.NUM_GAZE_MEMORY_TOKENS = 0
 
 # -----------------------------------------------------------------------------
 # Masked pretraining options
