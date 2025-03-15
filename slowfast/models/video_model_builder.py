@@ -1305,43 +1305,7 @@ class DAADMViT(nn.Module):
             raise NotImplementedError("Only supports layernorm.")
         self.num_classes = num_classes
 
-        self.x1_patch_embed = stem_helper.PatchEmbed(
-            dim_in=in_chans,
-            dim_out=embed_dim,
-            kernel=cfg.MVIT.PATCH_KERNEL,
-            stride=cfg.MVIT.PATCH_STRIDE,
-            padding=cfg.MVIT.PATCH_PADDING,
-            conv_2d=self.use_2d_patch,
-        )
-
-        self.x2_patch_embed = stem_helper.PatchEmbed(
-            dim_in=in_chans,
-            dim_out=embed_dim,
-            kernel=cfg.MVIT.PATCH_KERNEL,
-            stride=cfg.MVIT.PATCH_STRIDE,
-            padding=cfg.MVIT.PATCH_PADDING,
-            conv_2d=self.use_2d_patch,
-        )
-
-        self.x3_patch_embed = stem_helper.PatchEmbed(
-            dim_in=in_chans,
-            dim_out=embed_dim,
-            kernel=cfg.MVIT.PATCH_KERNEL,
-            stride=cfg.MVIT.PATCH_STRIDE,
-            padding=cfg.MVIT.PATCH_PADDING,
-            conv_2d=self.use_2d_patch,
-        )
-
-        self.x4_patch_embed = stem_helper.PatchEmbed(
-            dim_in=in_chans,
-            dim_out=embed_dim,
-            kernel=cfg.MVIT.PATCH_KERNEL,
-            stride=cfg.MVIT.PATCH_STRIDE,
-            padding=cfg.MVIT.PATCH_PADDING,
-            conv_2d=self.use_2d_patch,
-        )
-
-        self.x5_patch_embed = stem_helper.PatchEmbed(
+        self.patch_embed = stem_helper.PatchEmbed(
             dim_in=in_chans,
             dim_out=embed_dim,
             kernel=cfg.MVIT.PATCH_KERNEL,
@@ -1359,13 +1323,8 @@ class DAADMViT(nn.Module):
             conv_2d=self.use_2d_patch,
         )
 
-        self.x1_projection = nn.Linear(embed_dim, embed_dim)
-        self.x2_projection = nn.Linear(embed_dim, embed_dim)
-        self.x3_projection = nn.Linear(embed_dim, embed_dim)
-        self.x4_projection = nn.Linear(embed_dim, embed_dim)
-        self.x5_projection = nn.Linear(embed_dim, embed_dim)
+        self.projection = nn.Linear(embed_dim, embed_dim)
         self.x6_projection = nn.Linear(embed_dim, embed_dim)
-
 
         if cfg.MODEL.ACT_CHECKPOINT:
             self.patch_embed = checkpoint_wrapper(self.patch_embed)
@@ -1700,25 +1659,28 @@ class DAADMViT(nn.Module):
         x_ = torch.split(x, x.shape[4] // self.num_views, dim=-1)
         x1, x2, x3, x4, x5, x6 = x_
 
-        x1, bcthw = self.x1_patch_embed(x1) #[batch_size, num_tokens, embed_dim]
-        x1 = self.x1_projection(x1) #[batch_size, num_tokens, embed_dim]
+        x1, bcthw = self.patch_embed(x1) #[batch_size, num_tokens, embed_dim]
+        x1 = self.projection(x1) #[batch_size, num_tokens, embed_dim]
 
-        x2, _ = self.x2_patch_embed(x2) 
-        x2 = self.x2_projection(x2) #[batch_size, num_tokens, embed_dim]
+        x2, _ = self.patch_embed(x2) 
+        x2 = self.projection(x2) #[batch_size, num_tokens, embed_dim]
         
-        x3, _ = self.x3_patch_embed(x3) #[batch_size, num_tokens, embed_dim]
-        x3 = self.x3_projection(x3) #[batch_size, num_tokens, embed_dim]
+        x3, _ = self.patch_embed(x3) #[batch_size, num_tokens, embed_dim]
+        x3 = self.projection(x3) #[batch_size, num_tokens, embed_dim]
 
-        x4, _ = self.x4_patch_embed(x4) #[batch_size, num_tokens, embed_dim]
-        x4 = self.x4_projection(x4) #[batch_size, num_tokens, embed_dim]
+        x4, _ = self.patch_embed(x4) #[batch_size, num_tokens, embed_dim]
+        x4 = self.projection(x4) #[batch_size, num_tokens, embed_dim]
 
-        x5, _ = self.x5_patch_embed(x5) #[batch_size, num_tokens, embed_dim]
-        x5 = self.x5_projection(x5) #[batch_size, num_tokens, embed_dim]
-
+        x5, _ = self.patch_embed(x5) #[batch_size, num_tokens, embed_dim]
+        x5 = self.projection(x5) #[batch_size, num_tokens, embed_dim]
+        
+        #Separate patch embed and projection used for gaze view.
         x6, _ = self.x6_patch_embed(x6) #[batch_size, num_tokens, embed_dim]
         x6 = self.x6_projection(x6) #[batch_size, num_tokens, embed_dim]
-
-        x = x1 + x2 + x3 + x4 + x5 #Add and norm acc to https://arxiv.org/pdf/2210.00843 paper.
+        
+        #Early fusion for the first 5 views and late fusion for the last view. 
+        #Add and norm acc to https://arxiv.org/pdf/2210.00843 paper.
+        x = x1 + x2 + x3 + x4 + x5
         x = F.normalize(x, p=2, dim=-1)
 
         bcthw = list(bcthw)
