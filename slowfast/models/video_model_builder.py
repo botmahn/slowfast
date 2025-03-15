@@ -1759,9 +1759,11 @@ class DAADMViT(nn.Module):
         else:
             for blk in self.blocks:
                 x, thw = blk(x, thw, num_memory_tokens=self.num_outview_memory_tokens)
-
-            for blk in self.blocks:
                 x6, x6_thw = blk(x6, x6_thw, num_memory_tokens=self.num_gaze_memory_tokens)
+            
+            # Do not use 2 separate for loops -- inefficient.
+            # for blk in self.blocks:
+            #     x6, x6_thw = blk(x6, x6_thw, num_memory_tokens=self.num_gaze_memory_tokens)
 
             if self.enable_detection:
                 assert not self.enable_rev

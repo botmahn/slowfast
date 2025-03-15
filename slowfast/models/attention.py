@@ -197,8 +197,9 @@ class MultiScaleAttention(nn.Module):
             self.v = nn.Linear(dim, dim_out, bias=qkv_bias)
         else:
             self.qkv = nn.Linear(dim, dim_out * 3, bias=qkv_bias)
-            self.memory_k_linear = nn.Linear(dim, dim_out, bias=qkv_bias)
-            self.memory_v_linear = nn.Linear(dim, dim_out, bias=qkv_bias)
+
+        self.memory_k_linear = nn.Linear(dim, dim_out, bias=qkv_bias)
+        self.memory_v_linear = nn.Linear(dim, dim_out, bias=qkv_bias)
 
         self.proj = nn.Linear(dim_out, dim_out)
         if drop_rate > 0.0:
@@ -353,9 +354,6 @@ class MultiScaleAttention(nn.Module):
             has_cls_embed=self.has_cls_embed,
             norm=getattr(self, "norm_v", None),
         )
-        if num_memory_tokens > 0:
-            k = torch.cat([memory_k, k], dim=2)
-            v = torch.cat([memory_v, v], dim=2)
 
         if self.pool_first:
             q_N = numpy.prod(q_shape) + 1 if self.has_cls_embed else numpy.prod(q_shape)
@@ -371,6 +369,10 @@ class MultiScaleAttention(nn.Module):
             k = k.permute(0, 2, 1, 3).reshape(B, k_N, -1)
             k = self.k(k).reshape(B, k_N, self.num_heads, -1).permute(0, 2, 1, 3)
 
+        if num_memory_tokens > 0:
+            k = torch.cat([memory_k, k], dim=2)
+            v = torch.cat([memory_v, v], dim=2)
+
         N = q.shape[2]
 
         N_q = q.shape[2]
@@ -383,16 +385,11 @@ class MultiScaleAttention(nn.Module):
             mask[:, :, :, :num_memory_tokens] = 0
             attn = attn.masked_fill(mask == 0, -1e9)
 
-            #k_shape = [k.shape[0], k.shape[1], k.shape[2], k.shape[3]]
-            #v_shape = [v.shape[0], v.shape[1], v.shape[2], v.shape[3]]
-
         if self.rel_pos_spatial:
             attn = cal_rel_pos_spatial(
                 attn,
-                #attn[:, :, :, num_memory_tokens:],
                 q,
                 k,
-                #k[:, :, num_memory_tokens:, :],
                 self.has_cls_embed,
                 q_shape,
                 k_shape,
