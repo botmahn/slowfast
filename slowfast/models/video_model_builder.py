@@ -1573,11 +1573,15 @@ class DAADMViT(nn.Module):
         if self.use_abs_pos:
             if self.sep_pos_embed:
                 trunc_normal_(self.pos_embed_spatial, std=0.02)
+                trunc_normal_(self.x6_pos_embed_spatial, std=0.02)
                 trunc_normal_(self.pos_embed_temporal, std=0.02)
+                trunc_normal_(self.x6_pos_embed_temporal, std=0.02)
                 if self.cls_embed_on:
                     trunc_normal_(self.pos_embed_class, std=0.02)
+                    trunc_normal_(self.x6_pos_embed_class, std=0.02)
             else:
                 trunc_normal_(self.pos_embed, std=0.02)
+                trunc_normal_(self.x6_pos_embed, std=0.02)
                 if self.use_fixed_sincos_pos:
                     pos_embed = get_3d_sincos_pos_embed(
                         self.pos_embed.shape[-1],
@@ -1585,8 +1589,17 @@ class DAADMViT(nn.Module):
                         self.T,
                         cls_token=self.cls_embed_on,
                     )
+                    x6_pos_embed = get_3d_sincos_pos_embed(
+                        self.x6_pos_embed.shape[-1],
+                        self.H,
+                        self.T,
+                        cls_token=self.cls_embed_on,
+                    )
                     self.pos_embed.data.copy_(
                         torch.from_numpy(pos_embed).float().unsqueeze(0)
+                    )
+                    self.x6_pos_embed.data.copy_(
+                        torch.from_numpy(x6_pos_embed).float().unsqueeze(0)
                     )
 
         if self.cls_embed_on:
@@ -1708,8 +1721,6 @@ class DAADMViT(nn.Module):
         x = x1 + x2 + x3 + x4 + x5 #Add and norm acc to https://arxiv.org/pdf/2210.00843 paper.
         x = F.normalize(x, p=2, dim=-1)
 
-        # TODO: Add episodic memory
-
         bcthw = list(bcthw)
         if len(bcthw) == 4:  # Fix bcthw in case of 4D tensor
             bcthw.insert(2, torch.tensor(self.T))
@@ -1773,7 +1784,7 @@ class DAADMViT(nn.Module):
 
         if self.norm_stem:
             x = self.norm_stem(x)
-            x6 = self.pos_drop(x6)
+            x6 = self.norm_stem(x6)
 
         thw = [T, H, W]
         x6_thw = [T, H, W]
