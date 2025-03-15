@@ -557,6 +557,9 @@ _C.MVIT.USE_MEAN_POOLING = False
 # If True, use frozen sin cos positional embedding.
 _C.MVIT.USE_FIXED_SINCOS_POS = False
 
+# Add learnable memory tokens to the model.
+_C.MVIT.NUM_MEMORY_TOKENS = 0
+
 # -----------------------------------------------------------------------------
 # Masked pretraining options
 # -----------------------------------------------------------------------------

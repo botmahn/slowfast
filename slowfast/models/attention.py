@@ -63,11 +63,15 @@ def get_rel_pos(rel_pos, d):
 
 
 def cal_rel_pos_spatial(
-    attn, q, k, has_cls_embed, q_shape, k_shape, rel_pos_h, rel_pos_w
+    attn, q, k, has_cls_embed, q_shape, k_shape, rel_pos_h, rel_pos_w, num_memory_tokens
 ):
     """
     Decomposed Spatial Relative Positional Embeddings.
     """
+
+    if num_memory_tokens > 0:
+        k = k[:, :, num_memory_tokens:, :]
+
     sp_idx = 1 if has_cls_embed else 0
     q_t, q_h, q_w = q_shape
     k_t, k_h, k_w = k_shape
@@ -99,9 +103,10 @@ def cal_rel_pos_spatial(
     r_q = q[:, :, sp_idx:].reshape(B, n_head, q_t, q_h, q_w, dim)
     rel_h_q = torch.einsum("bythwc,hkc->bythwk", r_q, Rh)  # [B, H, q_t, qh, qw, k_h]
     rel_w_q = torch.einsum("bythwc,wkc->bythwk", r_q, Rw)  # [B, H, q_t, qh, qw, k_w]
+    
 
-    attn[:, :, sp_idx:, sp_idx:] = (
-        attn[:, :, sp_idx:, sp_idx:].view(B, -1, q_t, q_h, q_w, k_t, k_h, k_w)
+    attn[:, :, sp_idx:, num_memory_tokens + sp_idx:] = (
+        attn[:, :, sp_idx:, num_memory_tokens + sp_idx:].view(B, -1, q_t, q_h, q_w, k_t, k_h, k_w)
         + rel_h_q[:, :, :, :, :, None, :, None]
         + rel_w_q[:, :, :, :, :, None, None, :]
     ).view(B, -1, q_t * q_h * q_w, k_t * k_h * k_w)
@@ -109,7 +114,7 @@ def cal_rel_pos_spatial(
     return attn
 
 
-def cal_rel_pos_temporal(attn, q, has_cls_embed, q_shape, k_shape, rel_pos_t):
+def cal_rel_pos_temporal(attn, q, has_cls_embed, q_shape, k_shape, rel_pos_t, num_memory_tokens):
     """
     Temporal Relative Positional Embeddings.
     """
@@ -140,8 +145,8 @@ def cal_rel_pos_temporal(attn, q, has_cls_embed, q_shape, k_shape, rel_pos_t):
     # [B*H*q_h*q_w, q_t, k_t] -> [B, H, q_t, q_h, q_w, k_t]
     rel = rel.view(B, n_head, q_h, q_w, q_t, k_t).permute(0, 1, 4, 2, 3, 5)
 
-    attn[:, :, sp_idx:, sp_idx:] = (
-        attn[:, :, sp_idx:, sp_idx:].view(B, -1, q_t, q_h, q_w, k_t, k_h, k_w)
+    attn[:, :, sp_idx:, num_memory_tokens + sp_idx:] = (
+        attn[:, :, sp_idx:, num_memory_tokens + sp_idx:].view(B, -1, q_t, q_h, q_w, k_t, k_h, k_w)
         + rel[:, :, :, :, :, :, None, None]
     ).view(B, -1, q_t * q_h * q_w, k_t * k_h * k_w)
 
@@ -172,6 +177,7 @@ class MultiScaleAttention(nn.Module):
         rel_pos_zero_init=False,
         residual_pooling=False,
         separate_qkv=False,
+        num_memory_tokens=0,
     ):
         super().__init__()
         self.pool_first = pool_first
@@ -192,6 +198,8 @@ class MultiScaleAttention(nn.Module):
             self.v = nn.Linear(dim, dim_out, bias=qkv_bias)
         else:
             self.qkv = nn.Linear(dim, dim_out * 3, bias=qkv_bias)
+            self.memory_k_linear = nn.Linear(dim, dim_out, bias=qkv_bias)
+            self.memory_v_linear = nn.Linear(dim, dim_out, bias=qkv_bias)
 
         self.proj = nn.Linear(dim_out, dim_out)
         if drop_rate > 0.0:
@@ -291,7 +299,11 @@ class MultiScaleAttention(nn.Module):
 
         self.residual_pooling = residual_pooling
 
-    def forward(self, x, thw_shape):
+        if num_memory_tokens > 0:
+            self.memory = nn.Parameter(torch.zeros(1, dim))
+            nn.init.trunc_normal_(self.memory, std=0.02)
+
+    def forward(self, x, thw_shape, num_memory_tokens):
         B, N, _ = x.shape
 
         if self.pool_first:
@@ -316,6 +328,12 @@ class MultiScaleAttention(nn.Module):
                 k = self.k(k).reshape(B, N, self.num_heads, -1).permute(0, 2, 1, 3)
                 v = self.v(v).reshape(B, N, self.num_heads, -1).permute(0, 2, 1, 3)
 
+        if num_memory_tokens > 0:
+            memory_k = self.memory.unsqueeze(0).expand(B, num_memory_tokens, -1)
+            memory_k = self.memory_k_linear(memory_k).reshape(B, num_memory_tokens, self.num_heads, -1).permute(0, 2, 1, 3)
+            memory_v = self.memory.unsqueeze(0).expand(B, num_memory_tokens, -1)
+            memory_v = self.memory_v_linear(memory_v).reshape(B, num_memory_tokens, self.num_heads, -1).permute(0, 2, 1, 3)
+
         q, q_shape = attention_pool(
             q,
             self.pool_q,
@@ -337,6 +355,13 @@ class MultiScaleAttention(nn.Module):
             has_cls_embed=self.has_cls_embed,
             norm=getattr(self, "norm_v", None),
         )
+        #print(f"*** K Shape Before: {k.shape}") #[1, 1, 393, 96]
+        #print(f"*** V Shape Before: {v.shape}") #[1, 1, 393, 96]
+        if num_memory_tokens > 0:
+            k = torch.cat([memory_k, k], dim=2)
+            #print(f"*** K Shape: {k.shape}") #[1, 1, 405, 96]
+            v = torch.cat([memory_v, v], dim=2)
+            #print(f"*** V Shape: {v.shape}") #[1, 1, 405, 96]
 
         if self.pool_first:
             q_N = numpy.prod(q_shape) + 1 if self.has_cls_embed else numpy.prod(q_shape)
@@ -353,18 +378,37 @@ class MultiScaleAttention(nn.Module):
             k = self.k(k).reshape(B, k_N, self.num_heads, -1).permute(0, 2, 1, 3)
 
         N = q.shape[2]
+
+        N_q = q.shape[2]
+        N_kv = k.shape[2]
+
         attn = (q * self.scale) @ k.transpose(-2, -1)
+        #print(f"*** Attention Shape: {attn.shape}") #[1, 1, 25089, 405]
+
+        if num_memory_tokens > 0:
+            mask = torch.ones(B, self.num_heads, N_q, N_kv, device=x.device)
+            mask[:, :, :, :num_memory_tokens] = 0
+            attn = attn.masked_fill(mask == 0, -1e9)
+
+            #k_shape = [k.shape[0], k.shape[1], k.shape[2], k.shape[3]]
+            #v_shape = [v.shape[0], v.shape[1], v.shape[2], v.shape[3]]
+
         if self.rel_pos_spatial:
             attn = cal_rel_pos_spatial(
                 attn,
+                #attn[:, :, :, num_memory_tokens:],
                 q,
                 k,
+                #k[:, :, num_memory_tokens:, :],
                 self.has_cls_embed,
                 q_shape,
                 k_shape,
                 self.rel_pos_h,
                 self.rel_pos_w,
+                num_memory_tokens,
             )
+
+            #print(f"After POS SPATIAL ATTN: {attn.shape}")  #[[1, 1, 25089, 393]]
 
         if self.rel_pos_temporal:
             attn = cal_rel_pos_temporal(
@@ -374,6 +418,7 @@ class MultiScaleAttention(nn.Module):
                 q_shape,
                 k_shape,
                 self.rel_pos_t,
+                num_memory_tokens,
             )
         attn = attn.softmax(dim=-1)
 
@@ -422,6 +467,7 @@ class MultiScaleBlock(nn.Module):
         residual_pooling=False,
         dim_mul_in_att=False,
         separate_qkv=False,
+        num_memory_tokens=0,
     ):
         super().__init__()
         self.dim = dim
@@ -432,6 +478,7 @@ class MultiScaleBlock(nn.Module):
         stride_skip = stride_q
         padding_skip = [int(skip // 2) for skip in kernel_skip]
         att_dim = dim_out if dim_mul_in_att else dim
+        self.num_memory_tokens = num_memory_tokens
         self.attn = MultiScaleAttention(
             dim,
             att_dim,
@@ -452,6 +499,7 @@ class MultiScaleBlock(nn.Module):
             rel_pos_zero_init=rel_pos_zero_init,
             residual_pooling=residual_pooling,
             separate_qkv=separate_qkv,
+            num_memory_tokens=num_memory_tokens
         )
         self.drop_path = DropPath(drop_path) if drop_path > 0.0 else nn.Identity()
         self.norm2 = norm_layer(att_dim)
@@ -489,9 +537,9 @@ class MultiScaleBlock(nn.Module):
             else None
         )
 
-    def forward(self, x, thw_shape=None):
+    def forward(self, x, thw_shape=None, num_memory_tokens=0):
         x_norm = self.norm1(x)
-        x_block, thw_shape_new = self.attn(x_norm, thw_shape)
+        x_block, thw_shape_new = self.attn(x_norm, thw_shape, num_memory_tokens)
         if self.dim_mul_in_att and self.dim != self.dim_out:
             x = self.proj(x_norm)
         x_res, _ = attention_pool(

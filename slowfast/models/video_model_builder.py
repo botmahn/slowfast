@@ -1298,6 +1298,7 @@ class DAADMViT(nn.Module):
         self.sep_pos_embed = cfg.MVIT.SEP_POS_EMBED
         self.rel_pos_spatial = cfg.MVIT.REL_POS_SPATIAL
         self.rel_pos_temporal = cfg.MVIT.REL_POS_TEMPORAL
+        self.num_memory_tokens = cfg.MVIT.NUM_MEMORY_TOKENS
         if cfg.MVIT.NORM == "layernorm":
             norm_layer = partial(nn.LayerNorm, eps=1e-6)
         else:
@@ -1532,6 +1533,7 @@ class DAADMViT(nn.Module):
                     residual_pooling=cfg.MVIT.RESIDUAL_POOLING,
                     dim_mul_in_att=cfg.MVIT.DIM_MUL_IN_ATT,
                     separate_qkv=cfg.MVIT.SEPARATE_QKV,
+                    num_memory_tokens=cfg.MVIT.NUM_MEMORY_TOKENS,
                 )
 
                 if cfg.MODEL.ACT_CHECKPOINT:
@@ -1785,10 +1787,10 @@ class DAADMViT(nn.Module):
 
         else:
             for blk in self.blocks:
-                x, thw = blk(x, thw)
+                x, thw = blk(x, thw, num_memory_tokens=10)
 
             for blk in self.blocks:
-                x6, x6_thw = blk(x6, x6_thw)
+                x6, x6_thw = blk(x6, x6_thw, num_memory_tokens=2)
 
             if self.enable_detection:
                 assert not self.enable_rev
