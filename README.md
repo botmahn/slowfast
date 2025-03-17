@@ -11,7 +11,7 @@ This repository attempts to reproduce the methodologies and results from the pap
 ### Key Features
 
 - Specialized dataloader for multi-view (6 cameras) driving sequences.
-- Custom model architecture with early fusion for the first 5 views and late fusion for the last (gaze) view.
+- M2MVT architecture with spatio-temporal tubes, early fusion for the first 5 views and late fusion for the last (gaze) view.
 - Additional learnable memory tokens.
 - Built on Facebook AI Research's PySlowFast framework.
 
