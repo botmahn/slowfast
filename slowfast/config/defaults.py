@@ -670,7 +670,7 @@ _C.DATA.PATH_PREFIX = ""
 _C.DATA.NUM_FRAMES = 8
 
 # Number of Views for Multi-View Training. For DAAD it is 6 views.
-_C.DATA.NUM_VIEWS = 0
+_C.DATA.NUM_VIEWS = 1
 
 # The video sampling rate of the input clip.
 _C.DATA.SAMPLING_RATE = 8

@@ -11,7 +11,7 @@ import slowfast.utils.weight_init_helper as init_helper
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from slowfast.models.attention import MultiScaleBlock
+from slowfast.models.attention import MultiScaleBlock, MultiScaleBlockWithMemory
 from slowfast.models.batchnorm_helper import get_norm
 from slowfast.models.common import TwoStreamFusion
 from slowfast.models.reversible_mvit import ReversibleMViT
@@ -1469,7 +1469,7 @@ class DAADMViT(nn.Module):
                         dim_mul[i + 1],
                         divisor=round_width(num_heads, head_mul[i + 1]),
                     )
-                attention_block = MultiScaleBlock(
+                attention_block = MultiScaleBlockWithMemory(
                     dim=embed_dim,
                     dim_out=dim_out,
                     num_heads=num_heads,
