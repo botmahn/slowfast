@@ -476,7 +476,7 @@ class Daadsequential(torch.utils.data.Dataset):
                     {}
                 )
             
-            # Return the processed frames
+
             return (
                 tuple(frames_out[view_name] for view_name in view_names),
                 label,
