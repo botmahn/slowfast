@@ -475,7 +475,7 @@ class Daadsequential(torch.utils.data.Dataset):
                     tuple(time_idx_out[view_name] for view_name in view_names),
                     {}
                 )
-                
+            
             # Return the processed frames
             return (
                 tuple(frames_out[view_name] for view_name in view_names),
@@ -487,7 +487,7 @@ class Daadsequential(torch.utils.data.Dataset):
             
         # Failed to fetch video after all retries
         logger.warning(f"Failed to fetch video after {self._num_retries} retries.")
-        return None
+        #return None
 
     def _gen_mask(self):
         """Generate mask for masking augmentation."""

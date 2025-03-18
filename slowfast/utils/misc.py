@@ -101,6 +101,13 @@ def _get_model_analysis_input(cfg, use_train_input):
                 cfg.DATA.TRAIN_CROP_SIZE,
                 cfg.DATA.TRAIN_CROP_SIZE * num_views,
             )
+        elif "sequential" in cfg.TRAIN.DATASET:
+            input_tensors = torch.rand(
+                rgb_dimension,
+                cfg.DATA.NUM_FRAMES,
+                cfg.DATA.TRAIN_CROP_SIZE,
+                cfg.DATA.TRAIN_CROP_SIZE,
+            )
         else:
             input_tensors = torch.rand(
                 rgb_dimension,
@@ -115,6 +122,13 @@ def _get_model_analysis_input(cfg, use_train_input):
                 cfg.DATA.TEST_CROP_SIZE,
                 cfg.DATA.TEST_CROP_SIZE * num_views,
             )
+        elif "sequential" in cfg.TRAIN.DATASET:
+            input_tensors = torch.rand(
+                rgb_dimension,
+                cfg.DATA.NUM_FRAMES,
+                cfg.DATA.TEST_CROP_SIZE,
+                cfg.DATA.TEST_CROP_SIZE,
+            )
         else:
             input_tensors = torch.rand(
                 rgb_dimension,
@@ -127,6 +141,8 @@ def _get_model_analysis_input(cfg, use_train_input):
         model_inputs[i] = model_inputs[i].unsqueeze(0)
         if cfg.NUM_GPUS:
             model_inputs[i] = model_inputs[i].cuda(non_blocking=True)
+        if "sequential" in cfg.TRAIN.DATASET:
+            model_inputs[i] = [model_inputs[i].expand(cfg.DATA.NUM_VIEWS, -1, -1, -1, -1)]
 
     # If detection is enabled, count flops for one proposal.
     if cfg.DETECTION.ENABLE:

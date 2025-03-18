@@ -518,7 +518,7 @@ class TransformerBasicHead(nn.Module):
         self.projection = nn.Linear(dim_in, num_classes, bias=True)
 
         if cfg.CONTRASTIVE.NUM_MLP_LAYERS == 1:
-            if cfg.TRAIN.DATASET == "daad":
+            if "daad" in cfg.TRAIN.DATASET:
                 self.projection = nn.Linear(2 * dim_in, num_classes, bias=True)
             else:
                 self.projection = nn.Linear(dim_in, num_classes, bias=True)

@@ -1270,6 +1270,12 @@ class DAADMViT(nn.Module):
         self.enable_detection = cfg.DETECTION.ENABLE
         self.enable_rev = cfg.MVIT.REV.ENABLE
         self.patch_stride = cfg.MVIT.PATCH_STRIDE
+
+        if "sequential" in cfg.TRAIN.DATASET:
+            self.loading = "sequential"
+        else:
+            self.loading = "stacked"
+
         if self.use_2d_patch:
             self.patch_stride = [1] + self.patch_stride
         self.num_views = 6
@@ -1654,10 +1660,29 @@ class DAADMViT(nn.Module):
 
     def forward(self, x, bboxes=None, return_attn=False):
         
-        x = x[0]
+        # For sequential dataloading, the shape of the input tensor is:
+        # [num_views x batch_size, num_channels, num_frames, height, width]
+        # Example: [24, 3, 16, 224, 224]
+        # Access: x[0][0]
+        # whereas for stacked loading, the shape is:
+        # batch_size, num_channels, num_frames, height, num_views x width]
+        # Example: [4, 3, 16, 224, 1344]
+        # Access: x[0]
 
-        x_ = torch.split(x, x.shape[4] // self.num_views, dim=-1)
-        x1, x2, x3, x4, x5, x6 = x_
+        #x = x[0]
+        #x_ = torch.split(x, x.shape[4] // self.num_views, dim=-1)
+
+        #Sequential Dataloader:
+        if self.loading == "sequential":
+            x = x[0][0]
+            batch_size = x.shape[0] // self.num_views
+            x = [x[i * batch_size : (i + 1) * batch_size] for i in range(self.num_views)]
+
+        else:
+            x = x[0]
+            x = torch.split(x, x.shape[4] // self.num_views, dim=-1)
+
+        x1, x2, x3, x4, x5, x6 = x
 
         x1, bcthw = self.patch_embed(x1) #[batch_size, num_tokens, embed_dim]
         x1 = self.projection(x1) #[batch_size, num_tokens, embed_dim]
