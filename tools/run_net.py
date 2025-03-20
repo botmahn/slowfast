@@ -15,6 +15,9 @@ from test_net import test
 from train_net import train
 from visualization import visualize
 
+import shutup
+shutup.please()
+
 def main():
     """
     Main function to spawn the train and test process.

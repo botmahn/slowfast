@@ -4,3 +4,5 @@ data/
 checkpoints/
 logs/
 *.log
+scripts/
+trained_weights/

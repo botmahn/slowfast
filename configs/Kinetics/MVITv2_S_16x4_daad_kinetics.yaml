@@ -16,7 +16,7 @@ DATA:
   TRAIN_CROP_SIZE: 224
   TEST_CROP_SIZE: 224
   INPUT_CHANNEL_NUM: [3]
-  PATH_TO_DATA_DIR: /scratch/naman/slowfast/data/daad/trainval_front_view_only/
+  PATH_TO_DATA_DIR: "/scratch/naman/slowfast/data/daad/trainval_single_view/"
   TRAIN_JITTER_SCALES_RELATIVE: [0.08, 1.0]
   TRAIN_JITTER_ASPECT_RELATIVE: [0.75, 1.3333]
 MVIT:
@@ -87,7 +87,8 @@ TEST:
   DATASET: kinetics
   BATCH_SIZE: 4
   NUM_SPATIAL_CROPS: 1
-  NUM_ENSEMBLE_VIEWS: 5
+  NUM_ENSEMBLE_VIEWS: 1
+  #CHECKPOINT_FILE_PATH: "/scratch/naman/slowfast/checkpoints/mvitv2_daadfrontviewonly_experiment_0/checkpoint_epoch_00036_best_top1err_50.pyth"
 DATA_LOADER:
   NUM_WORKERS: 8
   PIN_MEMORY: True
