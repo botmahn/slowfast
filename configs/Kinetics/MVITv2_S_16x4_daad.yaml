@@ -1,17 +1,17 @@
 TRAIN:
   ENABLE: True
   #DATASET: kinetics
-  DATASET: daad
-  #DATASET: daadsequential
+  #DATASET: daad
+  DATASET: daadsequential
   #BATCH_SIZE: 16
-  BATCH_SIZE: 2
+  BATCH_SIZE: 1
   EVAL_PERIOD: 1
   CHECKPOINT_PERIOD: 1
-  AUTO_RESUME: True
+  AUTO_RESUME: False
 DATA:
   USE_OFFSET_SAMPLING: True
   DECODING_BACKEND: torchvision
-  NUM_FRAMES: 4
+  NUM_FRAMES: 16
   NUM_VIEWS: 6
   SAMPLING_RATE: 4
   TRAIN_JITTER_SCALES: [256, 320]
@@ -90,8 +90,8 @@ MODEL:
 TEST:
   ENABLE: True
   #DATASET: kinetics
-  DATASET: daad
-  #DATASET: daadsequential
+  #DATASET: daad
+  DATASET: daadsequential
   BATCH_SIZE: 4
   NUM_SPATIAL_CROPS: 1
   NUM_ENSEMBLE_VIEWS: 1

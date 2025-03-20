@@ -142,7 +142,7 @@ def _get_model_analysis_input(cfg, use_train_input):
         if cfg.NUM_GPUS:
             model_inputs[i] = model_inputs[i].cuda(non_blocking=True)
         if "sequential" in cfg.TRAIN.DATASET:
-            model_inputs[i] = [model_inputs[i].expand(cfg.DATA.NUM_VIEWS, -1, -1, -1, -1)]
+            model_inputs[i] = model_inputs[i].expand(cfg.DATA.NUM_VIEWS * cfg.AUG.NUM_SAMPLE, -1, -1, -1, -1)
 
     # If detection is enabled, count flops for one proposal.
     if cfg.DETECTION.ENABLE:

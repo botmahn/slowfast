@@ -4,6 +4,7 @@
 import os
 import random
 from functools import partial
+from collections import OrderedDict
 from typing import List, Dict, Tuple, Optional, Any
 
 import numpy as np
@@ -386,8 +387,8 @@ class Daadsequential(torch.utils.data.Dataset):
                 target_fps += random.uniform(0.0, self.cfg.DATA.TRAIN_JITTER_FPS)
 
             # Step 2: Decode all videos
-            frames_decoded = {}
-            time_idx_decoded = {}
+            frames_decoded = OrderedDict()
+            time_idx_decoded = OrderedDict()
             
             all_decoded_valid = True
             
@@ -436,15 +437,13 @@ class Daadsequential(torch.utils.data.Dataset):
             relative_aspect = None if (self.mode not in ["train"] or len(asp) == 0) else asp
             
             # Process all frames with augmentations
-            idx = -1
+            # idx = -1
             label = self._labels[index]
             
             for i in range(num_decode):
-                for _ in range(num_aug):
-                    idx += 1
-                    
-                    # Process all views with the same augmentation
-                    for view_name in view_names:
+                # Process all views with the same augmentation
+                for view_name in view_names:
+                    for idx in range(num_out):
                         f_outs[view_name][idx], time_idx_outs[view_name][idx] = self._process_frame(
                             frames_decoded[view_name][i],
                             time_idx_decoded[view_name],
@@ -454,8 +453,8 @@ class Daadsequential(torch.utils.data.Dataset):
                         )
             
             # Prepare final output
-            frames_out = {}
-            time_idx_out = {}
+            frames_out = OrderedDict()
+            time_idx_out = OrderedDict()
             
             for view_name in view_names:
                 frames_out[view_name] = f_outs[view_name][0] if num_out == 1 else f_outs[view_name]
@@ -465,23 +464,39 @@ class Daadsequential(torch.utils.data.Dataset):
             if (num_aug * num_decode > 1 and not self.cfg.MODEL.MODEL_NAME == "ContrastiveModel"):
                 label = [label] * num_aug * num_decode
                 index = [index] * num_aug * num_decode
-                
+
+            
+            output_frames = []
+            for view_name in view_names:
+                for tensor in frames_out[view_name]:
+                    output_frames.append(tensor)
+            output_frames = tuple(output_frames)
+
+            output_time_indices = []
+            for view_name in view_names:
+                for time_tensor in time_idx_outs[view_name]:
+                    output_time_indices.append(time_tensor)
+            output_time_indices = tuple(output_time_indices)
+
             # Handle dummy output case
             if self.cfg.DATA.DUMMY_LOAD and self.dummy_output is None:
                 self.dummy_output = (
-                    tuple(frames_out[view_name] for view_name in view_names),
+                    # tuple(frames_out[view_name] for view_name in view_names),
+                    output_frames,
                     label,
                     index,
-                    tuple(time_idx_out[view_name] for view_name in view_names),
+                    # tuple(time_idx_out[view_name] for view_name in view_names),
+                    output_time_indices,
                     {}
                 )
-            
 
             return (
-                tuple(frames_out[view_name] for view_name in view_names),
+                # tuple(frames_out[view_name] for view_name in view_names),
+                output_frames,
                 label,
                 index,
-                tuple(time_idx_out[view_name] for view_name in view_names),
+                # tuple(time_idx_out[view_name] for view_name in view_names),
+                output_time_indices,
                 {}
             )
             

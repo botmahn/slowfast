@@ -1305,6 +1305,7 @@ class DAADMViT(nn.Module):
         self.rel_pos_temporal = cfg.MVIT.REL_POS_TEMPORAL
         self.num_outview_memory_tokens = cfg.MVIT.NUM_OUTVIEW_MEMORY_TOKENS
         self.num_gaze_memory_tokens = cfg.MVIT.NUM_GAZE_MEMORY_TOKENS
+        self.num_aug_samples = cfg.AUG.NUM_SAMPLE
         if cfg.MVIT.NORM == "layernorm":
             norm_layer = partial(nn.LayerNorm, eps=1e-6)
         else:
@@ -1663,23 +1664,18 @@ class DAADMViT(nn.Module):
         # For sequential dataloading, the shape of the input tensor is:
         # [num_views x batch_size, num_channels, num_frames, height, width]
         # Example: [24, 3, 16, 224, 224]
-        # Access: x[0][0]
         # whereas for stacked loading, the shape is:
         # batch_size, num_channels, num_frames, height, num_views x width]
         # Example: [4, 3, 16, 224, 1344]
-        # Access: x[0]
 
-        #x = x[0]
-        #x_ = torch.split(x, x.shape[4] // self.num_views, dim=-1)
+        x = x[0]
 
-        #Sequential Dataloader:
         if self.loading == "sequential":
-            x = x[0][0]
+            #sequential dataloader
             batch_size = x.shape[0] // self.num_views
             x = [x[i * batch_size : (i + 1) * batch_size] for i in range(self.num_views)]
-
         else:
-            x = x[0]
+            #stacked dataloader
             x = torch.split(x, x.shape[4] // self.num_views, dim=-1)
 
         x1, x2, x3, x4, x5, x6 = x
