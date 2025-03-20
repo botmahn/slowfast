@@ -458,7 +458,7 @@ class Daadsequential(torch.utils.data.Dataset):
             
             for view_name in view_names:
                 frames_out[view_name] = f_outs[view_name][0] if num_out == 1 else f_outs[view_name]
-                time_idx_out[view_name] = np.array(time_idx_outs[view_name])
+                time_idx_out[view_name] = [x.tolist() for x in time_idx_outs[view_name]]
             
             # Adjust label and index for multi-augmentation case
             if (num_aug * num_decode > 1 and not self.cfg.MODEL.MODEL_NAME == "ContrastiveModel"):
@@ -474,28 +474,25 @@ class Daadsequential(torch.utils.data.Dataset):
 
             output_time_indices = []
             for view_name in view_names:
-                for time_tensor in time_idx_outs[view_name]:
-                    output_time_indices.append(time_tensor)
-            output_time_indices = tuple(output_time_indices)
+                inview = []
+                for time_tensor in time_idx_out[view_name]:
+                    inview.append(time_tensor)
+                output_time_indices.append(torch.tensor(inview, dtype=torch.float64))
 
             # Handle dummy output case
             if self.cfg.DATA.DUMMY_LOAD and self.dummy_output is None:
                 self.dummy_output = (
-                    # tuple(frames_out[view_name] for view_name in view_names),
                     output_frames,
                     label,
                     index,
-                    # tuple(time_idx_out[view_name] for view_name in view_names),
                     output_time_indices,
                     {}
                 )
 
             return (
-                # tuple(frames_out[view_name] for view_name in view_names),
                 output_frames,
                 label,
                 index,
-                # tuple(time_idx_out[view_name] for view_name in view_names),
                 output_time_indices,
                 {}
             )

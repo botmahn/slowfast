@@ -299,6 +299,7 @@ def eval_epoch(val_loader, model, val_meter, cur_epoch, cfg, train_loader, write
     val_meter.iter_tic()
 
     for cur_iter, (inputs, labels, index, time, meta) in enumerate(val_loader):
+        print(f"Inputs Shape: {inputs[0].shape}")
         if cfg.NUM_GPUS:
             # Transferthe data to the current GPU device.
             if isinstance(inputs, (list,)):
@@ -314,6 +315,9 @@ def eval_epoch(val_loader, model, val_meter, cur_epoch, cfg, train_loader, write
                 else:
                     meta[key] = val.cuda(non_blocking=True)
             index = index.cuda()
+            if isinstance(time, list):
+                time = torch.stack(time)
+            print(f"Time: {time}")
             time = time.cuda()
         batch_size = (
             inputs[0][0].size(0) if isinstance(inputs[0], list) else inputs[0].size(0)
@@ -655,6 +659,17 @@ def train(cfg):
             train_loader.dataset._set_epoch_num(cur_epoch)
         # Train for one epoch.
         epoch_timer.epoch_tic()
+        if cur_epoch == 0:
+            print(f"Starting pre-training validation...")
+            eval_epoch(
+                val_loader,
+                model,
+                val_meter,
+                cur_epoch,
+                cfg,
+                train_loader,
+                writer,
+            )
         train_epoch(
             train_loader,
             model,

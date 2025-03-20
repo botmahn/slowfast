@@ -371,6 +371,7 @@ class Kinetics(torch.utils.data.Dataset):
                     idx += 1
                     f_out[idx] = frames_decoded[i].clone()
                     time_idx_out[idx] = time_idx_decoded[i, :]
+                    print("***", time_idx_out[idx])
 
                     f_out[idx] = f_out[idx].float()
                     f_out[idx] = f_out[idx] / 255.0
@@ -461,6 +462,8 @@ class Kinetics(torch.utils.data.Dataset):
             if self.cfg.DATA.DUMMY_LOAD:
                 if self.dummy_output is None:
                     self.dummy_output = (frames, label, index, time_idx, {})
+
+            print("Time Index: ", time_idx)
             return frames, label, index, time_idx, {}
         else:
             logger.warning(

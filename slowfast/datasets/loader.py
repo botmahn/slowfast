@@ -159,6 +159,7 @@ def construct_loader(cfg, split, is_precise_bn=False):
                 )
             else:
                 collate_func = None
+
             loader = torch.utils.data.DataLoader(
                 dataset,
                 batch_size=batch_size,
