@@ -152,6 +152,8 @@ video_tensor = torch.from_numpy(np.frombuffer(np.array(video_handle), dtype=np.u
 
 Using custom data is taken from [here](https://github.com/facebookresearch/SlowFast/issues/149#issuecomment-723265461).
 
+Download the DAAD dataset from [here](https://cvit.iiit.ac.in/research/projects/cvit-projects/daad)
+
 Follow these steps to prepare your custom dataset:
 
 1. Create the following directory structure:
