@@ -81,6 +81,7 @@ class Daadsequential(torch.utils.data.Dataset):
         self.use_temporal_gradient = False
         self.temporal_gradient_rate = 0.0
         self.cur_epoch = 0
+        self.synchronize_across_views = self.cfg.DATA.SYNC_VIEWS
 
         if self.mode == "train" and self.cfg.AUG.ENABLE:
             self.aug = True
@@ -164,7 +165,8 @@ class Daadsequential(torch.utils.data.Dataset):
             return None
 
     def _decode_video(self, index, container, sampling_rate, num_frames, 
-                     temporal_sample_index, target_fps, min_scale):
+                     temporal_sample_index, target_fps, min_scale,
+                     get_time_idx_only=False, time_idx_override=None):
         """Helper function to decode a single video view."""
         if container is None:
             return None, None
@@ -184,6 +186,8 @@ class Daadsequential(torch.utils.data.Dataset):
             temporally_rnd_clips=True,
             min_delta=self.cfg.CONTRASTIVE.DELTA_CLIPS_MIN,
             max_delta=self.cfg.CONTRASTIVE.DELTA_CLIPS_MAX,
+            get_time_idx_only=get_time_idx_only,
+            time_idx_override=time_idx_override,
         )
         return frames, time_idx
 
@@ -392,6 +396,21 @@ class Daadsequential(torch.utils.data.Dataset):
             
             all_decoded_valid = True
             
+            if self.synchronize_across_views:
+                candidate_view = 'front'
+                _, sync_time_idx = self._decode_video(
+                        index,
+                        video_containers[candidate_view], 
+                        sampling_rate,
+                        num_frames,
+                        temporal_sample_index,
+                        target_fps,
+                        min_scale,
+                        get_time_idx_only=True,
+                    )
+            else:
+                sync_time_idx = None
+
             for view_name in view_names:
                 frames, time_idx = self._decode_video(
                     index,
@@ -400,7 +419,9 @@ class Daadsequential(torch.utils.data.Dataset):
                     num_frames,
                     temporal_sample_index,
                     target_fps,
-                    min_scale
+                    min_scale,
+                    get_time_idx_only=False,
+                    time_idx_override=sync_time_idx,
                 )
                 
                 if frames is None or None in frames:
@@ -471,12 +492,19 @@ class Daadsequential(torch.utils.data.Dataset):
                 for tensor in frames_out[view_name]:
                     output_frames.append(tensor)
             output_frames = tuple(output_frames)
-
+            
             output_time_indices = []
             for view_name in view_names:
                 inview = []
                 for time_tensor in time_idx_out[view_name]:
                     inview.append(time_tensor)
+
+                if self.synchronize_across_views:
+                    # Assert all tensors in `inview` are equal
+                    first = inview[0]
+                    assert all(t == first for t in inview), \
+                        f"Not all time tensors in view '{view_name}' are equal"
+
                 output_time_indices.append(torch.tensor(inview, dtype=torch.float64))
 
             # Handle dummy output case
@@ -488,7 +516,7 @@ class Daadsequential(torch.utils.data.Dataset):
                     output_time_indices,
                     {}
                 )
-
+            
             return (
                 output_frames,
                 label,

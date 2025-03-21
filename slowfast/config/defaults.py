@@ -810,6 +810,10 @@ _C.DATA.IN_VAL_CROP_RATIO = 0.875  # 224/256 = 0.875
 # don't use real video for kinetics.py
 _C.DATA.DUMMY_LOAD = False
 
+# Synchronize time indices for all views for DAAD Sequential dataloader.
+# All views are decoded at the same time index.
+_C.DATA.SYNC_VIEWS = False
+
 # ---------------------------------------------------------------------------- #
 # Optimizer options
 # ---------------------------------------------------------------------------- #
