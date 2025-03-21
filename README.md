@@ -194,17 +194,32 @@ SlowFast/
 
 5. Create configuration file by copying an existing one and changing "kinetics" to "mydata"
 
-## Training
+## Training and Testing
 
 To train the model:
 
 ```bash
-python tools/run_net.py --cfg configs/Kinetics/MVITv2_S_16x4_daad.yaml >& ./logs/log_m2mvt_daad.txt &
+python tools/run_net.py --cfg configs/DAAD/MVITv2_S_16x4_daad.yaml >& ./logs/log_m2mvt_daadsixviews.txt &
+```
+
+To test the model:
+
+```bash
+vim configs/DAAD/MVITv2_S_16x4_daad.yaml
+
+set TRAIN.ENABLE to False
+set TEST.ENABLE to True
+set NUM_GPUS = 1
+
+RUN:
+python tools/run_net.py --cfg configs/DAAD/MVITv2_S_16x4_daad.yaml
 ```
 
 ## Model Zoo
 
-For pre-trained models and baseline results, refer to the PySlowFast [Model Zoo](MODEL_ZOO.md).
+For pre-trained models and baseline results, refer to the PySlowFast [Model Zoo](https://github.com/facebookresearch/SlowFast/blob/main/MODEL_ZOO.md). 
+
+For M2MVT x DAAD weights, refer to our [MODEL ZOO](MODEL_ZOO.md).
 
 ## Acknowledgements
 
