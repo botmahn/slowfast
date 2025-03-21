@@ -1669,7 +1669,6 @@ class DAADMViT(nn.Module):
         # Example: [4, 3, 16, 224, 1344]
 
         x = x[0]
-        print("X FWD", x.shape)
         if self.loading == "sequential":
             #sequential dataloader
             batch_size = x.shape[0] // self.num_views
