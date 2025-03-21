@@ -177,4 +177,3 @@ dependencies:
       - torchvision==0.14.0a0+5ce4506
       - tzdata==2025.1
       - yacs==0.1.8
-prefix: /home2/naman.mishra/anaconda3/envs/slowfast_v2
