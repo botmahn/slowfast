@@ -88,9 +88,9 @@ class Daadsequentialwithtime(torch.utils.data.Dataset):
             if self.cfg.AUG.RE_PROB > 0:
                 self.rand_erase = True
     
-    def _time_to_frame(time: str, fps: int = 30) -> int:
-        hours, minutes = map(int, time.split(':'))
-        total_seconds = hours * 3600 + minutes * 60
+    def _time_to_frame(self, time: str, fps: int = 30) -> int:
+        minutes, seconds = map(int, time.split(':'))
+        total_seconds = minutes * 60 + seconds
         return float(total_seconds * fps)
 
     def _construct_loader(self):
@@ -133,9 +133,9 @@ class Daadsequentialwithtime(torch.utils.data.Dataset):
                 view_names = ['front', 'left', 'right', 'rear', 'driver', 'gaze']
                 
                 if start_time is not None:
-                    start_time = _time_to_frame(start_time)
+                    start_time = self._time_to_frame(start_time)
                 if end_time is not None:
-                    end_time = _time_to_frame(end_time)
+                    end_time = self._time_to_frame(end_time)
 
                 for idx in range(self._num_clips):
                     # Add all video paths with prefix
@@ -420,7 +420,8 @@ class Daadsequentialwithtime(torch.utils.data.Dataset):
             sync_time_idx = None
 
             if start_time is not None and end_time is not None:
-                sync_time_idx = [[start_time, end_time, 0.0]]
+                sync_time_idx = np.array((start_time, end_time, 0.0))
+                sync_time_idx = sync_time_idx[np.newaxis, :]
 
             else:
                 candidate_view = 'front'

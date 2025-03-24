@@ -358,7 +358,6 @@ def torchvision_decode(
             pts_per_frame = video_meta["video_denominator"] / video_meta["video_fps"]
             video_start_pts = int(start_end_delta_time[k, 0] * pts_per_frame)
             video_end_pts = int(start_end_delta_time[k, 1] * pts_per_frame)
-
             # Decode the raw video with the tv decoder.
             v_frames, _ = io._read_video_from_memory(
                 video_tensor,

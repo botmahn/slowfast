@@ -1,7 +1,8 @@
 TRAIN:
   ENABLE: True
   #DATASET: daad
-  DATASET: daadsequential
+  #DATASET: daadsequential
+  DATASET: daadsequentialwithtime
   BATCH_SIZE: 4
   EVAL_PERIOD: 1
   CHECKPOINT_PERIOD: 1
@@ -45,8 +46,8 @@ MVIT:
   DROPOUT_RATE: 0.0
   DIM_MUL_IN_ATT: True
   RESIDUAL_POOLING: True
-  NUM_OUTVIEW_MEMORY_TOKENS: 10
-  NUM_GAZE_MEMORY_TOKENS: 2
+  NUM_OUTVIEW_MEMORY_TOKENS: 0
+  NUM_GAZE_MEMORY_TOKENS: 0
 AUG:
   NUM_SAMPLE: 1
   ENABLE: False
@@ -89,7 +90,8 @@ MODEL:
 TEST:
   ENABLE: True
   #DATASET: daad
-  DATASET: daadsequential
+  #DATASET: daadsequential
+  DATASET: Daadsequentialwithtime
   BATCH_SIZE: 4
   NUM_SPATIAL_CROPS: 1
   NUM_ENSEMBLE_VIEWS: 1
