@@ -46,6 +46,37 @@ def multiple_samples_collate(batch, fold=False):
     else:
         return inputs, labels, video_idx, time, extra_data
 
+def multiple_samples_single_view_collate(batch, fold=False):
+    """
+    Collate function for repeated augmentation. Each instance in the batch has
+    more than one sample.
+    Args:
+        batch (tuple or list): data batch to collate.
+    Returns:
+        (tuple): collated data batch.
+    """
+    inputs, labels, video_idx, time, extra_data = zip(*batch)
+    if not isinstance(labels, list):
+        labels = [labels]
+    if not isinstance(video_idx, list):
+        video_idx = [video_idx]
+    inputs = [item for sublist in inputs for item in sublist]
+    labels = [item for sublist in labels for item in sublist]
+    video_idx = [item for sublist in video_idx for item in sublist]
+    time = [item for sublist in time for item in sublist]
+
+    inputs, labels, video_idx, time, extra_data = (
+        default_collate(inputs),
+        default_collate(labels),
+        default_collate(video_idx),
+        default_collate(time),
+        default_collate(extra_data),
+    )
+    if fold:
+        return [inputs], labels, video_idx, time, extra_data
+    else:
+        return inputs, labels, video_idx, time, extra_data
+
 def multiple_views_collate(batch, fold=False):
     """
     Collate function for repeated augmentation. Each instance in the batch has
@@ -189,6 +220,9 @@ def construct_loader(cfg, split, is_precise_bn=False):
                 collate_func = partial(
                     multiple_samples_collate, fold="imagenet" in dataset_name
                 )
+
+            elif "daad" in cfg.TRAIN.DATASET and cfg.AUG.NUM_SAMPLE == 1 and split in ["train"]:
+                collate_func = partial(multiple_samples_single_view_collate, fold="imagenet" in dataset_name)
 
             elif split in ["val", "test"]:
                 collate_func = partial(multiple_views_collate, fold="imagenet" in dataset_name)

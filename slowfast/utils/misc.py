@@ -93,7 +93,6 @@ def _get_model_analysis_input(cfg, use_train_input):
     """
     rgb_dimension = 3
     num_views = cfg.DATA.NUM_VIEWS if hasattr(cfg.DATA, "NUM_VIEWS") else 1
-    print(f"Num Views: {num_views}")
     if use_train_input:
         if "imagenet" in cfg.TRAIN.DATASET:
             input_tensors = torch.rand(

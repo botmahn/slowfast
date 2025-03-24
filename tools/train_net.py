@@ -76,6 +76,8 @@ def train_epoch(
     loss_fun = losses.get_loss_func(cfg.MODEL.LOSS_FUNC)(reduction="mean")
 
     for cur_iter, (inputs, labels, index, time, meta) in enumerate(train_loader):
+        if cfg.TRAIN.DATASET == "daadsequential" and cfg.AUG.NUM_SAMPLE == 1 and not isinstance(inputs, list):
+            inputs = [inputs]
         # Transfer the data to the current GPU device.
         if cfg.NUM_GPUS:
             if isinstance(inputs, (list,)):
@@ -90,7 +92,10 @@ def train_epoch(
             if not isinstance(labels, list):
                 labels = labels.cuda(non_blocking=True)
                 index = index.cuda(non_blocking=True)
-                time = time.cuda(non_blocking=True)
+                if isinstance(time, list):
+                    time = time[0].cuda(non_blocking=True)
+                else:
+                    time = time.cuda(non_blocking=True)
             for key, val in meta.items():
                 if isinstance(val, (list,)):
                     for i in range(len(val)):

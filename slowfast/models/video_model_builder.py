@@ -1736,7 +1736,7 @@ class DAADMViT(nn.Module):
         # whereas for stacked loading, the shape is:
         # batch_size, num_channels, num_frames, height, num_views x width]
         # Example: [4, 3, 16, 224, 1344]
-
+        
         x = x[0]
         if self.loading == "sequential":
             #sequential dataloader

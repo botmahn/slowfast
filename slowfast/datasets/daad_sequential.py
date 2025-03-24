@@ -202,7 +202,7 @@ class Daadsequential(torch.utils.data.Dataset):
         f_out = f_out.float() / 255.0
 
         # Apply color jitter if in training mode and enabled
-        if self.mode in ["train"] and self.cfg.DATA.SSL_COLOR_JITTER:
+        if self.mode in ["train"] and self.cfg.DATA.SSL_COLOR_JITTER and self.aug:
             f_out = transform.color_jitter_video_ssl(
                 f_out,
                 bri_con_sat=self.cfg.DATA.SSL_COLOR_BRI_CON_SAT,
@@ -240,7 +240,7 @@ class Daadsequential(torch.utils.data.Dataset):
             min_scale=min_scale[i],
             max_scale=max_scale[i],
             crop_size=crop_size[i],
-            random_horizontal_flip=self.cfg.DATA.RANDOM_FLIP,
+            random_horizontal_flip=False,
             inverse_uniform_sampling=self.cfg.DATA.INV_UNIFORM_SAMPLE,
             aspect_ratio=relative_aspect,
             scale=relative_scales,
@@ -491,6 +491,7 @@ class Daadsequential(torch.utils.data.Dataset):
             for view_name in view_names:
                 for tensor in frames_out[view_name]:
                     output_frames.append(tensor)
+
             output_frames = tuple(output_frames)
             
             output_time_indices = []
