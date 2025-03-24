@@ -9,6 +9,7 @@ from .kinetics import Kinetics  # noqa
 from .daad import Daad
 from .daad_sequential import Daadsequential
 from .ssv2 import Ssv2  # noqa
+from .dipx import Customdataset
 
 try:
     from .ptv_datasets import Ptvcharades, Ptvkinetics, Ptvssv2  # noqa

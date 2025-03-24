@@ -1312,7 +1312,43 @@ class DAADMViT(nn.Module):
             raise NotImplementedError("Only supports layernorm.")
         self.num_classes = num_classes
 
-        self.patch_embed = stem_helper.PatchEmbed(
+        self.x1_patch_embed = stem_helper.PatchEmbed(
+            dim_in=in_chans,
+            dim_out=embed_dim,
+            kernel=cfg.MVIT.PATCH_KERNEL,
+            stride=cfg.MVIT.PATCH_STRIDE,
+            padding=cfg.MVIT.PATCH_PADDING,
+            conv_2d=self.use_2d_patch,
+        )
+
+        self.x2_patch_embed = stem_helper.PatchEmbed(
+            dim_in=in_chans,
+            dim_out=embed_dim,
+            kernel=cfg.MVIT.PATCH_KERNEL,
+            stride=cfg.MVIT.PATCH_STRIDE,
+            padding=cfg.MVIT.PATCH_PADDING,
+            conv_2d=self.use_2d_patch,
+        )
+
+        self.x3_patch_embed = stem_helper.PatchEmbed(
+            dim_in=in_chans,
+            dim_out=embed_dim,
+            kernel=cfg.MVIT.PATCH_KERNEL,
+            stride=cfg.MVIT.PATCH_STRIDE,
+            padding=cfg.MVIT.PATCH_PADDING,
+            conv_2d=self.use_2d_patch,
+        )
+
+        self.x4_patch_embed = stem_helper.PatchEmbed(
+            dim_in=in_chans,
+            dim_out=embed_dim,
+            kernel=cfg.MVIT.PATCH_KERNEL,
+            stride=cfg.MVIT.PATCH_STRIDE,
+            padding=cfg.MVIT.PATCH_PADDING,
+            conv_2d=self.use_2d_patch,
+        )
+
+        self.x5_patch_embed = stem_helper.PatchEmbed(
             dim_in=in_chans,
             dim_out=embed_dim,
             kernel=cfg.MVIT.PATCH_KERNEL,
@@ -1330,7 +1366,11 @@ class DAADMViT(nn.Module):
             conv_2d=self.use_2d_patch,
         )
 
-        self.projection = nn.Linear(embed_dim, embed_dim)
+        self.x1_projection = nn.Linear(embed_dim, embed_dim)
+        self.x2_projection = nn.Linear(embed_dim, embed_dim)
+        self.x3_projection = nn.Linear(embed_dim, embed_dim)
+        self.x4_projection = nn.Linear(embed_dim, embed_dim)
+        self.x5_projection = nn.Linear(embed_dim, embed_dim)
         self.x6_projection = nn.Linear(embed_dim, embed_dim)
 
         if cfg.MODEL.ACT_CHECKPOINT:
@@ -1476,30 +1516,59 @@ class DAADMViT(nn.Module):
                         dim_mul[i + 1],
                         divisor=round_width(num_heads, head_mul[i + 1]),
                     )
-                attention_block = MultiScaleBlockWithMemory(
-                    dim=embed_dim,
-                    dim_out=dim_out,
-                    num_heads=num_heads,
-                    input_size=input_size,
-                    mlp_ratio=mlp_ratio,
-                    qkv_bias=qkv_bias,
-                    drop_rate=self.drop_rate,
-                    drop_path=dpr[i],
-                    norm_layer=norm_layer,
-                    kernel_q=pool_q[i] if len(pool_q) > i else [],
-                    kernel_kv=pool_kv[i] if len(pool_kv) > i else [],
-                    stride_q=stride_q[i] if len(stride_q) > i else [],
-                    stride_kv=stride_kv[i] if len(stride_kv) > i else [],
-                    mode=mode,
-                    has_cls_embed=self.cls_embed_on,
-                    pool_first=pool_first,
-                    rel_pos_spatial=self.rel_pos_spatial,
-                    rel_pos_temporal=self.rel_pos_temporal,
-                    rel_pos_zero_init=cfg.MVIT.REL_POS_ZERO_INIT,
-                    residual_pooling=cfg.MVIT.RESIDUAL_POOLING,
-                    dim_mul_in_att=cfg.MVIT.DIM_MUL_IN_ATT,
-                    separate_qkv=cfg.MVIT.SEPARATE_QKV,
-                )
+
+                if self.num_outview_memory_tokens > 0 or self.num_gaze_memory_tokens > 0:
+                    attention_block = MultiScaleBlockWithMemory(
+                        dim=embed_dim,
+                        dim_out=dim_out,
+                        num_heads=num_heads,
+                        input_size=input_size,
+                        mlp_ratio=mlp_ratio,
+                        qkv_bias=qkv_bias,
+                        drop_rate=self.drop_rate,
+                        drop_path=dpr[i],
+                        norm_layer=norm_layer,
+                        kernel_q=pool_q[i] if len(pool_q) > i else [],
+                        kernel_kv=pool_kv[i] if len(pool_kv) > i else [],
+                        stride_q=stride_q[i] if len(stride_q) > i else [],
+                        stride_kv=stride_kv[i] if len(stride_kv) > i else [],
+                        mode=mode,
+                        has_cls_embed=self.cls_embed_on,
+                        pool_first=pool_first,
+                        rel_pos_spatial=self.rel_pos_spatial,
+                        rel_pos_temporal=self.rel_pos_temporal,
+                        rel_pos_zero_init=cfg.MVIT.REL_POS_ZERO_INIT,
+                        residual_pooling=cfg.MVIT.RESIDUAL_POOLING,
+                        dim_mul_in_att=cfg.MVIT.DIM_MUL_IN_ATT,
+                        separate_qkv=cfg.MVIT.SEPARATE_QKV,
+                    )
+
+                else:
+
+                    attention_block = MultiScaleBlock(
+                        dim=embed_dim,
+                        dim_out=dim_out,
+                        num_heads=num_heads,
+                        input_size=input_size,
+                        mlp_ratio=mlp_ratio,
+                        qkv_bias=qkv_bias,
+                        drop_rate=self.drop_rate,
+                        drop_path=dpr[i],
+                        norm_layer=norm_layer,
+                        kernel_q=pool_q[i] if len(pool_q) > i else [],
+                        kernel_kv=pool_kv[i] if len(pool_kv) > i else [],
+                        stride_q=stride_q[i] if len(stride_q) > i else [],
+                        stride_kv=stride_kv[i] if len(stride_kv) > i else [],
+                        mode=mode,
+                        has_cls_embed=self.cls_embed_on,
+                        pool_first=pool_first,
+                        rel_pos_spatial=self.rel_pos_spatial,
+                        rel_pos_temporal=self.rel_pos_temporal,
+                        rel_pos_zero_init=cfg.MVIT.REL_POS_ZERO_INIT,
+                        residual_pooling=cfg.MVIT.RESIDUAL_POOLING,
+                        dim_mul_in_att=cfg.MVIT.DIM_MUL_IN_ATT,
+                        separate_qkv=cfg.MVIT.SEPARATE_QKV,
+                    )
 
                 if cfg.MODEL.ACT_CHECKPOINT:
                     attention_block = checkpoint_wrapper(attention_block)
@@ -1679,20 +1748,20 @@ class DAADMViT(nn.Module):
 
         x1, x2, x3, x4, x5, x6 = x
 
-        x1, bcthw = self.patch_embed(x1) #[batch_size, num_tokens, embed_dim]
-        x1 = self.projection(x1) #[batch_size, num_tokens, embed_dim]
+        x1, bcthw = self.x1_patch_embed(x1) #[batch_size, num_tokens, embed_dim]
+        x1 = self.x1_projection(x1) #[batch_size, num_tokens, embed_dim]
 
-        x2, _ = self.patch_embed(x2) 
-        x2 = self.projection(x2) #[batch_size, num_tokens, embed_dim]
+        x2, _ = self.x2_patch_embed(x2) 
+        x2 = self.x2_projection(x2) #[batch_size, num_tokens, embed_dim]
         
-        x3, _ = self.patch_embed(x3) #[batch_size, num_tokens, embed_dim]
-        x3 = self.projection(x3) #[batch_size, num_tokens, embed_dim]
+        x3, _ = self.x3_patch_embed(x3) #[batch_size, num_tokens, embed_dim]
+        x3 = self.x3_projection(x3) #[batch_size, num_tokens, embed_dim]
 
-        x4, _ = self.patch_embed(x4) #[batch_size, num_tokens, embed_dim]
-        x4 = self.projection(x4) #[batch_size, num_tokens, embed_dim]
+        x4, _ = self.x4_patch_embed(x4) #[batch_size, num_tokens, embed_dim]
+        x4 = self.x4_projection(x4) #[batch_size, num_tokens, embed_dim]
 
-        x5, _ = self.patch_embed(x5) #[batch_size, num_tokens, embed_dim]
-        x5 = self.projection(x5) #[batch_size, num_tokens, embed_dim]
+        x5, _ = self.x5_patch_embed(x5) #[batch_size, num_tokens, embed_dim]
+        x5 = self.x5_projection(x5) #[batch_size, num_tokens, embed_dim]
         
         #Separate patch embed and projection used for gaze view.
         x6, _ = self.x6_patch_embed(x6) #[batch_size, num_tokens, embed_dim]
@@ -1778,8 +1847,16 @@ class DAADMViT(nn.Module):
 
         else:
             for blk in self.blocks:
-                x, thw = blk(x, thw, num_memory_tokens=self.num_outview_memory_tokens)
-                x6, x6_thw = blk(x6, x6_thw, num_memory_tokens=self.num_gaze_memory_tokens)
+
+                if self.num_outview_memory_tokens > 0:
+                    x, thw = blk(x, thw, num_memory_tokens=self.num_outview_memory_tokens)
+                else:
+                    x, thw = blk(x, thw)
+
+                if self.num_gaze_memory_tokens > 0:
+                    x6, x6_thw = blk(x6, x6_thw, num_memory_tokens=self.num_gaze_memory_tokens)
+                else:
+                    x6, x6_thw = blk(x6, x6_thw)
             
             # Do not use 2 separate for loops -- inefficient.
             # for blk in self.blocks:
