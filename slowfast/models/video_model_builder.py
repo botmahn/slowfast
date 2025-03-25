@@ -1320,7 +1320,7 @@ class DAADMViT(nn.Module):
             padding=cfg.MVIT.PATCH_PADDING,
             conv_2d=self.use_2d_patch,
         )
-
+        
         self.x2_patch_embed = stem_helper.PatchEmbed(
             dim_in=in_chans,
             dim_out=embed_dim,
@@ -1747,10 +1747,11 @@ class DAADMViT(nn.Module):
             x = torch.split(x, x.shape[4] // self.num_views, dim=-1)
 
         x1, x2, x3, x4, x5, x6 = x
+        #x1, _, _, _, _, x6 = x
 
         x1, bcthw = self.x1_patch_embed(x1) #[batch_size, num_tokens, embed_dim]
         x1 = self.x1_projection(x1) #[batch_size, num_tokens, embed_dim]
-
+        
         x2, _ = self.x2_patch_embed(x2) 
         x2 = self.x2_projection(x2) #[batch_size, num_tokens, embed_dim]
         
@@ -1762,7 +1763,7 @@ class DAADMViT(nn.Module):
 
         x5, _ = self.x5_patch_embed(x5) #[batch_size, num_tokens, embed_dim]
         x5 = self.x5_projection(x5) #[batch_size, num_tokens, embed_dim]
-        
+
         #Separate patch embed and projection used for gaze view.
         x6, _ = self.x6_patch_embed(x6) #[batch_size, num_tokens, embed_dim]
         x6 = self.x6_projection(x6) #[batch_size, num_tokens, embed_dim]
@@ -1772,6 +1773,8 @@ class DAADMViT(nn.Module):
         x = x1 + x2 + x3 + x4 + x5
         x = F.normalize(x, p=2, dim=-1)
         
+        #x = x1
+
         # Let's concat and see what happens
         # x = torch.cat([x1, x2, x3, x4, x5], dim=1)
 
