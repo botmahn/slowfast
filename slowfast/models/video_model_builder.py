@@ -1771,6 +1771,9 @@ class DAADMViT(nn.Module):
         #Add and norm acc to https://arxiv.org/pdf/2210.00843 paper.
         x = x1 + x2 + x3 + x4 + x5
         x = F.normalize(x, p=2, dim=-1)
+        
+        # Let's concat and see what happens
+        # x = torch.cat([x1, x2, x3, x4, x5], dim=1)
 
         bcthw = list(bcthw)
         if len(bcthw) == 4:  # Fix bcthw in case of 4D tensor
