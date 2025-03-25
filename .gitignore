@@ -6,3 +6,4 @@ logs/
 *.log
 scripts/
 trained_weights/
+debug_images/

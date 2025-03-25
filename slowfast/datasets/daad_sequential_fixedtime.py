@@ -6,6 +6,7 @@ import random
 from functools import partial
 from collections import OrderedDict
 from typing import List, Dict, Tuple, Optional, Any
+from PIL import Image
 
 import numpy as np
 import torch
@@ -88,6 +89,56 @@ class Daadsequentialwithtime(torch.utils.data.Dataset):
             if self.cfg.AUG.RE_PROB > 0:
                 self.rand_erase = True
     
+
+    def _save_images(self, view_names, decoded_frames):
+        """Function to save some decoded frames.
+           Stack frames horizontally according to views:
+           front, left, right, rear, driver, gaze.
+           Save 3 stacked images: first frame, middle frame, and last frame.
+        """
+        images = OrderedDict()
+        for view_name in view_names:
+            frames = decoded_frames[view_name]
+            if isinstance(frames, list):
+                frames = frames[0]  # Choose the first batch
+
+            # Assume frames is a tensor of shape [T, H, W, C]
+            first = frames[0]
+            middle = frames[self.cfg.DATA.NUM_FRAMES // 2]
+            last = frames[-1]
+
+            def to_pil(img_tensor):
+                if img_tensor.is_floating_point():
+                    img_tensor = img_tensor.clamp(0, 1).mul(255).byte()
+                img_np = img_tensor.cpu().numpy()  # [H, W, C]
+                return Image.fromarray(img_np)
+
+            images[view_name] = [to_pil(first), to_pil(middle), to_pil(last)]
+
+        # Prepare output directory
+        output_dir = "./debug_images"
+        os.makedirs(output_dir, exist_ok=True)
+
+        # Save first, middle, and last frame stacked across views
+        for i, tag in enumerate(["first", "middle", "last"]):
+            stacked_images = [images[view][i] for view in view_names]
+
+            # Resize all to the same height for clean stacking
+            min_height = min(img.height for img in stacked_images)
+            resized = [img.resize((int(img.width * min_height / img.height), min_height)) for img in stacked_images]
+
+            total_width = sum(img.width for img in resized)
+            stacked = Image.new("RGB", (total_width, min_height))
+
+            x_offset = 0
+            for img in resized:
+                stacked.paste(img, (x_offset, 0))
+                x_offset += img.width
+
+            out_path = os.path.join(output_dir, f"{tag}_frame.jpg")
+            stacked.save(out_path)
+            print(f"Saved {tag} frame to {out_path}")
+
     def _time_to_frame(self, time: str, fps: int = 30) -> int:
         minutes, seconds = map(int, time.split(':'))
         total_seconds = minutes * 60 + seconds
@@ -447,7 +498,7 @@ class Daadsequentialwithtime(torch.utils.data.Dataset):
                     min_scale,
                     get_time_idx_only=False,
                     time_idx_override=sync_time_idx,
-                )
+                ) #Frames is a list of length: batch_size. Each frame is of shape: [num_frames, height, width, channels]. Example: [16, 256, 455, 3]
                 
                 if frames is None or None in frames:
                     all_decoded_valid = False
@@ -457,7 +508,11 @@ class Daadsequentialwithtime(torch.utils.data.Dataset):
                 
                 frames_decoded[view_name] = frames
                 time_idx_decoded[view_name] = time_idx
-            
+           
+            #chance = random.randint(0,10)
+            #if chance >= 8:
+            #    self._save_images(view_names, frames_decoded)
+
             if not all_decoded_valid:
                 continue
             
@@ -540,7 +595,9 @@ class Daadsequentialwithtime(torch.utils.data.Dataset):
                     label,
                     index,
                     output_time_indices,
-                    {}
+                    {},
+                    frames_decoded,
+                    view_names,
                 )
             
             return (
@@ -548,7 +605,9 @@ class Daadsequentialwithtime(torch.utils.data.Dataset):
                 label,
                 index,
                 output_time_indices,
-                {}
+                {},
+                frames_decoded,
+                view_names,
             )
             
         # Failed to fetch video after all retries
