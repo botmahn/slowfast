@@ -1,79 +1,278 @@
-# PySlowFast
+# M2MVT x DAAD in PySlowFast
 
-PySlowFast is an open source video understanding codebase from FAIR that provides state-of-the-art video classification models with efficient training. This repository includes implementations of the following methods:
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
-- [SlowFast Networks for Video Recognition](https://arxiv.org/abs/1812.03982)
-- [Non-local Neural Networks](https://arxiv.org/abs/1711.07971)
-- [A Multigrid Method for Efficiently Training Video Models](https://arxiv.org/abs/1912.00998)
-- [X3D: Progressive Network Expansion for Efficient Video Recognition](https://arxiv.org/abs/2004.04730)
-- [Multiscale Vision Transformers](https://arxiv.org/abs/2104.11227)
-- [A Large-Scale Study on Unsupervised Spatiotemporal Representation Learning](https://arxiv.org/abs/2104.14558)
-- [MViTv2: Improved Multiscale Vision Transformers for Classification and Detection](https://arxiv.org/abs/2112.01526)
-- [Masked Feature Prediction for Self-Supervised Visual Pre-Training](https://arxiv.org/abs/2112.09133)
-- [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113)
-- [Reversible Vision Transformers](https://openaccess.thecvf.com/content/CVPR2022/papers/Mangalam_Reversible_Vision_Transformers_CVPR_2022_paper.pdf)
+An unofficial pytorch implementation for [Early Anticipation of Driving Maneuvers](https://cvit.iiit.ac.in/research/projects/cvit-projects/daad) based on the [PySlowFast](https://github.com/facebookresearch/SlowFast) framework.
 
-<div align="center">
-  <img src="demo/ava_demo.gif" width="600px"/>
-</div>
+## Overview
 
-## Introduction
+This repository attempts to reproduce the methodologies and results from the paper [Early Anticipation of Driving Maneuvers](https://cvit.iiit.ac.in/research/projects/cvit-projects/daad) (Abdul Wasi et al., ECCV 2024). The implementation processes multi-view and multi-modal driving sequences using 6 different camera views.
 
-The goal of PySlowFast is to provide a high-performance, light-weight pytorch codebase provides state-of-the-art video backbones for video understanding research on different tasks (classification, detection, and etc). It is designed in order to support rapid implementation and evaluation of novel video research ideas. PySlowFast includes implementations of the following backbone network architectures:
+### Key Features
 
-- SlowFast
-- Slow
-- C2D
-- I3D
-- Non-local Network
-- X3D
-- MViTv1 and MViTv2
-- Rev-ViT and Rev-MViT
-
-## Updates
- - We now [Reversible Vision Transformers](https://openaccess.thecvf.com/content/CVPR2022/papers/Mangalam_Reversible_Vision_Transformers_CVPR_2022_paper.pdf). Both Reversible ViT and MViT models released. See [`projects/rev`](./projects/rev/README.md).
- - We now support [MAE for Video](https://arxiv.org/abs/2104.11227.pdf). See [`projects/mae`](./projects/mae/README.md) for more information.
- - We now support [MaskFeat](https://arxiv.org/abs/2112.09133). See [`projects/maskfeat`](./projects/maskfeat/README.md) for more information.
- - We now support [MViTv2](https://arxiv.org/abs/2104.11227.pdf) in PySlowFast. See [`projects/mvitv2`](./projects/mvitv2/README.md) for more information.
- - We now support [A Large-Scale Study on Unsupervised Spatiotemporal Representation Learning](https://arxiv.org/abs/2104.14558). See [`projects/contrastive_ssl`](./projects/contrastive_ssl/README.md) for more information.
- - We now support [Multiscale Vision Transformers](https://arxiv.org/abs/2104.11227.pdf) on Kinetics and ImageNet. See [`projects/mvit`](./projects/mvit/README.md) for more information.
- - We now support [PyTorchVideo](https://github.com/facebookresearch/pytorchvideo) models and datasets. See [`projects/pytorchvideo`](./projects/pytorchvideo/README.md) for more information.
- - We now support [X3D Models](https://arxiv.org/abs/2004.04730). See [`projects/x3d`](./projects/x3d/README.md) for more information.
- - We now support [Multigrid Training](https://arxiv.org/abs/1912.00998) for efficiently training video models. See [`projects/multigrid`](./projects/multigrid/README.md) for more information.
- - PySlowFast is released in conjunction with our [ICCV 2019 Tutorial](https://alexander-kirillov.github.io/tutorials/visual-recognition-iccv19/).
-
-## License
-
-PySlowFast is released under the [Apache 2.0 license](LICENSE).
-
-## Model Zoo and Baselines
-
-We provide a large set of baseline results and trained models available for download in the PySlowFast [Model Zoo](MODEL_ZOO.md).
+- Specialized dataloader for multi-view (6 cameras) driving sequences.
+- M2MVT architecture with spatio-temporal tubes, early fusion for the first 5 views and late fusion for the last (gaze) view.
+- Additional learnable memory tokens.
+- Built on Facebook AI Research's PySlowFast framework.
 
 ## Installation
 
-Please find installation instructions for PyTorch and PySlowFast in [INSTALL.md](INSTALL.md). You may follow the instructions in [DATASET.md](slowfast/datasets/DATASET.md) to prepare the datasets.
+Installation steps are taken from [here](https://github.com/facebookresearch/SlowFast/issues/743#issue-2750996881).
 
-## Quick Start
+### Prerequisites
 
-Follow the example in [GETTING_STARTED.md](GETTING_STARTED.md) to start playing video models with PySlowFast.
+- Python 3.8
+- CUDA 11.7
+- PyTorch 1.13.0
+- TorchVision 0.14.0 (compiled from source)
 
-## Visualization Tools
+### Setup Environment
 
-We offer a range of visualization tools for the train/eval/test processes, model analysis, and for running inference with trained model.
-More information at [Visualization Tools](VISUALIZATION_TOOLS.md).
+```bash
+# Create and activate conda environment
+conda create -n slowfast python=3.8
+conda activate slowfast
 
-## Contributors
-PySlowFast is written and maintained by [Haoqi Fan](https://haoqifan.github.io/), [Yanghao Li](https://lyttonhao.github.io/), [Bo Xiong](https://www.cs.utexas.edu/~bxiong/), [Wan-Yen Lo](https://www.linkedin.com/in/wanyenlo/), [Christoph Feichtenhofer](https://feichtenhofer.github.io/).
+# Install PyTorch ecosystem with CUDA support
+conda install -y pytorch==1.13.0 torchvision==0.14.0 torchaudio==0.13.0 pytorch-cuda=11.7 -c pytorch -c nvidia
 
-## Citing PySlowFast
-If you find PySlowFast useful in your research, please use the following BibTeX entry for citation.
-```BibTeX
-@misc{fan2020pyslowfast,
-  author =       {Haoqi Fan and Yanghao Li and Bo Xiong and Wan-Yen Lo and
-                  Christoph Feichtenhofer},
-  title =        {PySlowFast},
-  howpublished = {\url{https://github.com/facebookresearch/slowfast}},
-  year =         {2020}
-}
+# Install FFmpeg
+conda install -y -c conda-forge ffmpeg=4.2
 ```
+
+### Rebuild TorchVision from Source
+
+This step is necessary to fix video decoding issues:
+
+```bash
+# Uninstall current torchvision
+pip uninstall -y torchvision
+
+# Clone and build TorchVision v0.14.0
+git clone https://github.com/pytorch/vision.git
+cd vision
+git checkout v0.14.0
+python setup.py install
+cd ..
+```
+
+### Install Dependencies
+
+```bash
+# Install PyTorchVideo from source
+pip install "git+https://github.com/facebookresearch/pytorchvideo.git"
+
+# Core dependencies
+pip install simplejson opencv-python psutil
+conda install -y -c conda-forge iopath
+conda install -y tensorboard
+
+# Analysis and data tools
+pip install scikit-learn pandas
+conda install -y -c conda-forge moviepy
+
+# Additional frameworks
+pip install 'git+https://github.com/facebookresearch/fairscale'
+pip install cython
+pip install -U 'git+https://github.com/facebookresearch/fvcore.git' 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
+
+# Install Detectron2
+git clone https://github.com/facebookresearch/detectron2 detectron2_repo
+pip install -e detectron2_repo
+```
+
+### Install PySlowFast
+
+```bash
+# Clone repository
+git clone https://github.com/facebookresearch/slowfast
+
+# Add to PYTHONPATH
+echo 'export PYTHONPATH=/path/to/slowfast:$PYTHONPATH' >> ~/.bashrc
+source ~/.bashrc
+
+# Build PySlowFast
+cd slowfast
+python setup.py build develop
+```
+
+## Fixing Known Issues
+
+After installation, you'll need to apply these critical fixes:
+
+### 1. Fix Import Paths in tools/run_net.py
+
+Replace:
+```python
+# from vision.fair.slowfast.tools.demo_net import demo
+# from vision.fair.slowfast.tools.test_net import test
+# from vision.fair.slowfast.tools.train_net import train
+# from vision.fair.slowfast.tools.visualization import visualize
+```
+
+With:
+```python
+from demo_net import demo
+from test_net import test
+from train_net import train
+from visualization import visualize
+```
+
+### 2. Fix Import Paths in slowfast/utils/ava_eval_helper.py
+
+Replace:
+```python
+# from vision.fair.slowfast.ava_evaluation import (
+#     object_detection_evaluation,
+#     standard_fields,
+# )
+```
+
+With:
+```python
+from ava_evaluation import (
+    object_detection_evaluation,
+    standard_fields,
+)
+```
+
+### 3. Fix "NumPy array not writable" Error in slowfast/datasets/decoder.py
+
+Replace:
+```python
+# video_tensor = torch.from_numpy(np.frombuffer(video_handle, dtype=np.uint8))
+```
+
+With:
+```python
+video_tensor = torch.from_numpy(np.frombuffer(np.array(video_handle), dtype=np.uint8))
+```
+
+## Using Custom Data
+
+Using custom data is taken from [here](https://github.com/facebookresearch/SlowFast/issues/149#issuecomment-723265461).
+
+Download the DAAD dataset from [here](https://cvit.iiit.ac.in/research/projects/cvit-projects/daad)
+
+Follow these steps to prepare your custom dataset:
+
+1. Create the following directory structure:
+```
+SlowFast/
+├── configs/
+│       └── MyData/
+│               └── I3D_8x8_R50.yaml
+├── data/
+│       └── MyData/
+│               ├── ClassA/
+│               │      └── video1.mp4
+│               ├── ClassB/
+│               │      └── video2.mp4
+│               ├── ClassC/
+│               |      └── video3.mp4
+│               ├── train.csv
+│               ├── test.csv
+│               ├── val.csv
+│               └── classids.json
+```
+
+2. Create dataset handler:
+   - Duplicate `slowfast/datasets/kinetics.py` and rename it to `mydata.py`
+   - Replace all occurrences of "Kinetics" with "Mydata" (case-sensitive)
+   - Add `from .mydata import Mydata` to `slowfast/datasets/__init__.py`
+
+3. Create JSON class mapping file (`classids.json`):
+```json
+{"ClassA": 0, "ClassB": 1, "ClassC": 2}
+```
+
+4. Create CSV dataset split files with format:
+```
+/path/to/SlowFast/data/MyData/ClassA/video1.mp4 0
+/path/to/SlowFast/data/MyData/ClassC/video3.mp4 2
+```
+
+5. Create configuration file by copying an existing one and changing "kinetics" to "mydata"
+
+## Training and Testing
+
+To train the model:
+
+```bash
+python tools/run_net.py --cfg configs/DAAD/MVITv2_S_16x4_daad.yaml >& ./logs/log_m2mvt_daadsixviews.txt &
+```
+
+To test the model:
+
+```bash
+vim configs/DAAD/MVITv2_S_16x4_daad.yaml
+
+set TRAIN.ENABLE to False
+set TEST.ENABLE to True
+set NUM_GPUS = 1
+
+RUN:
+python tools/run_net.py --cfg configs/DAAD/MVITv2_S_16x4_daad.yaml
+```
+
+## Model Zoo
+
+For pre-trained models and baseline results, refer to the PySlowFast [Model Zoo](https://github.com/facebookresearch/SlowFast/blob/main/MODEL_ZOO.md). 
+
+For M2MVT x DAAD weights, refer to our [MODEL ZOO](MODEL_ZOO.md).
+
+## Acknowledgements
+
+This work builds upon several important contributions:
+
+- The PySlowFast framework developed by [Feichtenhofer et al.](https://github.com/facebookresearch/SlowFast)
+- The driving anticipation methodologies presented in [DAAD](https://cvit.iiit.ac.in/research/projects/cvit-projects/daad)
+- Fusion techniques explored in [Early or Late Fusion Matters: Efficient RGB-D Fusion in Vision Transformers for 3D Object Recognition](https://arxiv.org/pdf/2210.00843)
+- Learnable Memory explored in [Fine-tuning Image Transformers using Learnable Memory](https://arxiv.org/abs/2203.15243) and [lucidrains implementation](https://github.com/lucidrains/vit-pytorch?tab=readme-ov-file#learnable-memory-vit)
+
+
+```bibtex
+@inproceedings{feichtenhofer2019slowfast,
+  title={Slowfast networks for video recognition},
+  author={Feichtenhofer, Christoph and Fan, Haoqi and Malik, Jitendra and He, Kaiming},
+  booktitle={Proceedings of the IEEE/CVF international conference on computer vision},
+  pages={6202--6211},
+  year={2019}
+}
+
+@inproceedings{adm2024daad,
+  author       = {Abdul Wasi, Shankar Gangisetty, Shyam Nandan Rai and C. V. Jawahar},
+  title        = {Early Anticipation of Driving Maneuvers},
+  booktitle    = {ECCV (70)},
+  series       = {Lecture Notes in Computer Science},
+  volume       = {15128},
+  pages        = {152--169},
+  publisher    = {Springer},
+  year         = {2024}
+}
+
+@misc{tziafas2023earlylatefusionmatters,
+      title={Early or Late Fusion Matters: Efficient RGB-D Fusion in Vision Transformers for 3D Object Recognition}, 
+      author={Georgios Tziafas and Hamidreza Kasaei},
+      year={2023},
+      eprint={2210.00843},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2210.00843}, 
+}
+
+@misc{sandler2022finetuningimagetransformersusing,
+      title={Fine-tuning Image Transformers using Learnable Memory}, 
+      author={Mark Sandler and Andrey Zhmoginov and Max Vladymyrov and Andrew Jackson},
+      year={2022},
+      eprint={2203.15243},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2203.15243}, 
+}
+
+```
+
+## License
+
+This project is released under the [Apache 2.0 license](LICENSE), in accordance with the original PySlowFast repository.

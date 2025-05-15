@@ -557,6 +557,10 @@ _C.MVIT.USE_MEAN_POOLING = False
 # If True, use frozen sin cos positional embedding.
 _C.MVIT.USE_FIXED_SINCOS_POS = False
 
+# Add learnable memory tokens to the model.
+_C.MVIT.NUM_OUTVIEW_MEMORY_TOKENS = 0
+_C.MVIT.NUM_GAZE_MEMORY_TOKENS = 0
+
 # -----------------------------------------------------------------------------
 # Masked pretraining options
 # -----------------------------------------------------------------------------
@@ -664,6 +668,9 @@ _C.DATA.PATH_PREFIX = ""
 
 # The number of frames of the input clip.
 _C.DATA.NUM_FRAMES = 8
+
+# Number of Views for Multi-View Training. For DAAD it is 6 views.
+_C.DATA.NUM_VIEWS = 1
 
 # The video sampling rate of the input clip.
 _C.DATA.SAMPLING_RATE = 8
@@ -802,6 +809,10 @@ _C.DATA.IN_VAL_CROP_RATIO = 0.875  # 224/256 = 0.875
 
 # don't use real video for kinetics.py
 _C.DATA.DUMMY_LOAD = False
+
+# Synchronize time indices for all views for DAAD Sequential dataloader.
+# All views are decoded at the same time index.
+_C.DATA.SYNC_VIEWS = False
 
 # ---------------------------------------------------------------------------- #
 # Optimizer options

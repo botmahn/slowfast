@@ -238,6 +238,8 @@ def torchvision_decode(
     use_offset=False,
     min_delta=-math.inf,
     max_delta=math.inf,
+    time_idx_override=None,
+    get_time_idx_only=False,
 ):
     """
     If video_meta is not empty, perform temporal selective decoding to sample a
@@ -263,13 +265,19 @@ def torchvision_decode(
             edge size during decoding.
         min_delta (int): minimum distance between clips when sampling multiple.
         max_delta (int): max distance between clips when sampling multiple.
+        time_idx_override (numpy.ndarray): If provided, use these time indices
+            instead of generating new ones. Specifically used for DAAD to ensure
+            sync between different views.
+        get_time_idx_only (bool): If true, calculate the time indices without
+            any decoding. Used as the index for all views initially in DAAD.
     Returns:
         frames (tensor): decoded frames from the video.
         fps (float): the number of frames per second of the video.
         decode_all_video (bool): if True, the entire video was decoded.
     """
     # Convert the bytes to a tensor.
-    video_tensor = torch.from_numpy(np.frombuffer(video_handle, dtype=np.uint8))
+    #video_tensor = torch.from_numpy(np.frombuffer(video_handle, dtype=np.uint8))
+    video_tensor = torch.from_numpy(np.frombuffer(np.array(video_handle), dtype=np.uint8))
 
     decode_all_video = True
     video_start_pts, video_end_pts = 0, -1
@@ -292,35 +300,64 @@ def torchvision_decode(
         video_meta["audio_sample_rate"] = meta.audio_sample_rate
 
     fps = video_meta["video_fps"]
+    
+    if time_idx_override is None:
+        if len(video_meta) > 0 and (
+            video_meta["has_video"]
+            and video_meta["video_denominator"] > 0
+            and video_meta["video_duration"] > 0
+            and fps * video_meta["video_duration"]
+            > sum(T * tau for T, tau in zip(num_frames, sampling_rate))
+        ):
+            decode_all_video = False  # try selective decoding
 
-    if len(video_meta) > 0 and (
-        video_meta["has_video"]
-        and video_meta["video_denominator"] > 0
-        and video_meta["video_duration"] > 0
-        and fps * video_meta["video_duration"]
-        > sum(T * tau for T, tau in zip(num_frames, sampling_rate))
-    ):
-        decode_all_video = False  # try selective decoding
+            clip_sizes = [
+                np.maximum(1.0, sampling_rate[i] * num_frames[i] / target_fps * fps)
+                for i in range(len(sampling_rate))
+            ]
+            start_end_delta_time = get_multiple_start_end_idx(
+                fps * video_meta["video_duration"],
+                clip_sizes,
+                clip_idx,
+                num_clips_uniform,
+                min_delta=min_delta,
+                max_delta=max_delta,
+                use_offset=use_offset,
+            )
+            frames_out = [None] * len(num_frames)
+            for k in range(len(num_frames)):
+                pts_per_frame = video_meta["video_denominator"] / video_meta["video_fps"]
+                video_start_pts = int(start_end_delta_time[k, 0] * pts_per_frame)
+                video_end_pts = int(start_end_delta_time[k, 1] * pts_per_frame)
 
-        clip_sizes = [
-            np.maximum(1.0, sampling_rate[i] * num_frames[i] / target_fps * fps)
-            for i in range(len(sampling_rate))
-        ]
-        start_end_delta_time = get_multiple_start_end_idx(
-            fps * video_meta["video_duration"],
-            clip_sizes,
-            clip_idx,
-            num_clips_uniform,
-            min_delta=min_delta,
-            max_delta=max_delta,
-            use_offset=use_offset,
-        )
+                # Decode the raw video with the tv decoder.
+                v_frames, _ = io._read_video_from_memory(
+                    video_tensor,
+                    seek_frame_margin=1.0,
+                    read_video_stream="visual" in modalities,
+                    video_width=0,
+                    video_height=0,
+                    video_min_dimension=max_spatial_scale,
+                    video_pts_range=(video_start_pts, video_end_pts),
+                    video_timebase_numerator=video_meta["video_numerator"],
+                    video_timebase_denominator=video_meta["video_denominator"],
+                    read_audio_stream=0,
+                )
+                if v_frames is None or v_frames.shape == torch.Size([0]):
+                    decode_all_video = True
+                    logger.info("TV decode FAILED try decode all")
+                    break
+                frames_out[k] = v_frames
+    else:
+        # Use provided time indices
+        decode_all_video = False
+        start_end_delta_time = time_idx_override
         frames_out = [None] * len(num_frames)
+
         for k in range(len(num_frames)):
             pts_per_frame = video_meta["video_denominator"] / video_meta["video_fps"]
             video_start_pts = int(start_end_delta_time[k, 0] * pts_per_frame)
             video_end_pts = int(start_end_delta_time[k, 1] * pts_per_frame)
-
             # Decode the raw video with the tv decoder.
             v_frames, _ = io._read_video_from_memory(
                 video_tensor,
@@ -363,7 +400,8 @@ def torchvision_decode(
 
         frames_out = [v_frames]
 
-    if any([t.shape[0] < 0 for t in frames_out]):
+    #if any([t.shape[0] < 0 for t in frames_out]):
+    if any([t is None or t.shape[0] < 0 for t in frames_out if t is not None]):
         frames_out = [None]
         logger.info("TV decode FAILED: Decoded empty video")
 
@@ -465,6 +503,8 @@ def decode(
     min_delta=-math.inf,
     max_delta=math.inf,
     temporally_rnd_clips=True,
+    time_idx_override=None,
+    get_time_idx_only=False,
 ):
     """
     Decode the video and perform temporal sampling.
@@ -487,9 +527,16 @@ def decode(
             default one is `pyav`.
         max_spatial_scale (int): keep the aspect ratio and resize the frame so
             that shorter edge size is max_spatial_scale. Only used in
-            `torchvision` backend.
+            `torchvision` backend
+        time_idx_override (numpy.ndarray): If provided, use these time indices
+            instead of generating new ones. Specifically used for DAAD to ensure
+            sync between different views.
+        get_time_idx_only (bool): If true, calculate the time indices without
+            any decoding. Used as the index for all views initially in DAAD..
     Returns:
         frames (tensor): decoded frames from the video.
+        time_idx (numpy.ndarray): time indices used for decoding.
+        time_diff_aug (list): time diff augmentation info.
     """
     # Currently support two decoders: 1) PyAV, and 2) TorchVision.
     assert clip_idx >= -1, "Not valied clip_idx {}".format(clip_idx)
@@ -535,7 +582,12 @@ def decode(
                 use_offset=use_offset,
                 min_delta=min_delta,
                 max_delta=max_delta,
+                time_idx_override=time_idx_override,
+                get_time_idx_only=get_time_idx_only,
             )
+
+            if get_time_idx_only and frames_decoded is None:
+                return frames_decoded, start_end_delta_time, None
         else:
             raise NotImplementedError("Unknown decoding backend {}".format(backend))
     except Exception as e:
@@ -556,15 +608,18 @@ def decode(
 
     if decode_all_video:  # full video was decoded (not trimmed yet)
         assert num_decoded == 1 and start_end_delta_time is None
-        start_end_delta_time = get_multiple_start_end_idx(
-            frames_decoded[0].shape[0],
-            clip_sizes,
-            clip_idx if decode_all_video else 0,
-            num_clips_uniform if decode_all_video else 1,
-            min_delta=min_delta,
-            max_delta=max_delta,
-            use_offset=use_offset,
-        )
+        if time_idx_override is not None:
+            start_end_delta_time = time_idx_override
+        else:
+            start_end_delta_time = get_multiple_start_end_idx(
+                frames_decoded[0].shape[0],
+                clip_sizes,
+                clip_idx if decode_all_video else 0,
+                num_clips_uniform if decode_all_video else 1,
+                min_delta=min_delta,
+                max_delta=max_delta,
+                use_offset=use_offset,
+            )
 
     frames_out, start_inds, time_diff_aug = (
         [None] * num_decode,

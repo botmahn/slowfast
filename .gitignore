@@ -1,0 +1,9 @@
+pretrained_weights/
+__pycache__/
+data/
+checkpoints/
+logs/
+*.log
+scripts/
+trained_weights/
+debug_images/

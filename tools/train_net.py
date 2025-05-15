@@ -2,10 +2,12 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 
 """Train a video classification model."""
-
+import os
 import math
 import pprint
 
+from PIL import Image
+from collections import OrderedDict
 import numpy as np
 
 import slowfast.models.losses as losses
@@ -30,6 +32,62 @@ from slowfast.utils.multigrid import MultigridSchedule
 
 logger = logging.get_logger(__name__)
 
+
+def save_images(cfg, epoch, iteration, view_names, decoded_frames):
+    """Function to save some decoded frames.
+       Stack frames horizontally according to views:
+       front, left, right, rear, driver, gaze.
+       Save 3 stacked images: first frame, middle frame, and last frame.
+    """
+
+    if isinstance(decoded_frames, list):
+        decoded_frames = decoded_frames[0]
+    
+    if isinstance(view_names, list):
+        view_names = view_names[0]
+
+    images = OrderedDict()
+    for view_name in view_names:
+        frames = decoded_frames[view_name]
+        if isinstance(frames, list):
+            frames = frames[0]  # Choose the first batch
+
+        # Assume frames is a tensor of shape [T, H, W, C]
+        first = frames[0]
+        middle = frames[cfg.DATA.NUM_FRAMES // 2]
+        last = frames[-1]
+
+        def to_pil(img_tensor):
+            if img_tensor.is_floating_point():
+                img_tensor = img_tensor.clamp(0, 1).mul(255).byte()
+            img_np = img_tensor.cpu().numpy()  # [H, W, C]
+            return Image.fromarray(img_np)
+
+        images[view_name] = [to_pil(first), to_pil(middle), to_pil(last)]
+
+    # Prepare output directory
+    output_dir = "./debug_images"
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Save first, middle, and last frame stacked across views
+    for i, tag in enumerate(["first", "middle", "last"]):
+        stacked_images = [images[view][i] for view in view_names]
+
+        # Resize all to the same height for clean stacking
+        min_height = min(img.height for img in stacked_images)
+        resized = [img.resize((int(img.width * min_height / img.height), min_height)) for img in stacked_images]
+
+        total_width = sum(img.width for img in resized)
+        stacked = Image.new("RGB", (total_width, min_height))
+
+        x_offset = 0
+        for img in resized:
+            stacked.paste(img, (x_offset, 0))
+            x_offset += img.width
+
+        out_path = os.path.join(output_dir, f"{epoch}_{iteration}_{tag}_frame.jpg")
+        stacked.save(out_path)
+        print(f"Saved {out_path}")
 
 def train_epoch(
     train_loader,
@@ -75,7 +133,11 @@ def train_epoch(
     # Explicitly declare reduction to mean.
     loss_fun = losses.get_loss_func(cfg.MODEL.LOSS_FUNC)(reduction="mean")
 
-    for cur_iter, (inputs, labels, index, time, meta) in enumerate(train_loader):
+    for cur_iter, (inputs, labels, index, time, meta, decoded_frames, view_names) in enumerate(train_loader):
+        if cur_iter == 0 or cur_iter == len(train_loader) // 2 or cur_iter == len(train_loader):
+            save_images(cfg, cur_epoch, cur_iter, view_names, decoded_frames)
+        if "sequential" in cfg.TRAIN.DATASET and cfg.AUG.NUM_SAMPLE == 1 and not isinstance(inputs, list):
+            inputs = [inputs]
         # Transfer the data to the current GPU device.
         if cfg.NUM_GPUS:
             if isinstance(inputs, (list,)):
@@ -90,7 +152,10 @@ def train_epoch(
             if not isinstance(labels, list):
                 labels = labels.cuda(non_blocking=True)
                 index = index.cuda(non_blocking=True)
-                time = time.cuda(non_blocking=True)
+                if isinstance(time, list):
+                    time = time[0].cuda(non_blocking=True)
+                else:
+                    time = time.cuda(non_blocking=True)
             for key, val in meta.items():
                 if isinstance(val, (list,)):
                     for i in range(len(val)):
@@ -298,7 +363,7 @@ def eval_epoch(val_loader, model, val_meter, cur_epoch, cfg, train_loader, write
     model.eval()
     val_meter.iter_tic()
 
-    for cur_iter, (inputs, labels, index, time, meta) in enumerate(val_loader):
+    for cur_iter, (inputs, labels, index, time, meta, _, _) in enumerate(val_loader):
         if cfg.NUM_GPUS:
             # Transferthe data to the current GPU device.
             if isinstance(inputs, (list,)):
@@ -655,6 +720,19 @@ def train(cfg):
             train_loader.dataset._set_epoch_num(cur_epoch)
         # Train for one epoch.
         epoch_timer.epoch_tic()
+        """ 
+        if cur_epoch == 0:
+            print(f"Starting pre-training validation...")
+            eval_epoch(
+                val_loader,
+                model,
+                val_meter,
+                cur_epoch,
+                cfg,
+                train_loader,
+                writer,
+            )
+        """
         train_epoch(
             train_loader,
             model,
